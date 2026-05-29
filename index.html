@@ -1,94 +1,48 @@
-:root {
-  --sky-blue: #87CEEB;
-  --dark-blue: #0077be;
-  --bg-color: #0d1b2a;
-  --font-color: #e0f7fa;
-}
+<style>
+  :root {
+    --sky-blue: #87CEEB;
+    --dark-blue: #0077be;
+    --bg-color: #0d1b2a;
+    --font-color: #e0f7fa;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  body {
+    background-color: var(--bg-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+  }
 
-body {
-  background-color: var(--bg-color);
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container {
-  background-color: #1b263b;
-  width: 800px;
-  height: 600px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* Burbujas decorativas en tonos azules */
-.bubble {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.6;
-}
-
-.blue-bubble {
-  width: 500px;
-  height: 500px;
-  right: -100px;
-  top: -100px;
-  background-color: var(--dark-blue);
-  filter: blur(80px);
-}
-
-.sky-bubble {
-  width: 300px;
-  height: 300px;
-  left: -50px;
-  bottom: -50px;
-  background-color: var(--sky-blue);
-  filter: blur(100px);
-}
-
-/* UI Central */
-.app-ui {
-  background-color: #1b263b;
-  width: 400px;
-  height: 500px;
-  position: absolute;
-  left: 200px;
-  top: 50px;
-  border-radius: 30px;
-  border: 1px solid var(--sky-blue);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: var(--font-color);
-  font-family: sans-serif;
-}
-
-h1 {
-  color: var(--sky-blue);
-  font-size: 24px;
-}
-
-p {
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-/* Responsividad simple */
-@media only screen and (max-width: 768px) {
   .container {
-    width: 90%;
-    height: 400px;
+    background-color: #1b263b;
+    width: 350px;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--sky-blue);
+    text-align: center;
+    color: var(--font-color);
   }
-  .app-ui {
-    left: 10%;
-    width: 80%;
+
+  h1 { color: var(--sky-blue); font-size: 28px; margin-bottom: 10px; }
+  
+  .profile-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--dark-blue);
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: bold;
   }
-}
+</style>
+
+<div class="container">
+  <h1>Rog3r</h1>
+  <p>Bienvenido a mi espacio personal.</p>
+  <a href="https://xat.me/Rendezvoused" class="profile-link">Ver perfil de Xat</a>
+</div>
