@@ -1,48 +1,43 @@
-<style>
-  :root {
-    --sky-blue: #87CEEB;
-    --dark-blue: #0077be;
-    --bg-color: #0d1b2a;
-    --font-color: #e0f7fa;
-  }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+    <style>
+        body {
+            background-color: #0d1b2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        .caja-musica {
+            width: 300px;
+            background: rgba(20, 25, 40, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #87CEEB;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .caja-musica img {
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        h1 { color: #87CEEB; margin: 0; font-size: 20px; }
+    </style>
+</head>
+<body>
 
-  body {
-    background-color: var(--bg-color);
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Roboto', sans-serif;
-  }
+    <div class="caja-musica">
+        <img src="https://xatimg.com/image/FvxzX661moRe.jpg" alt="Perfil">
+        <h1>Rog3r</h1>
+    </div>
 
-  .container {
-    background-color: #1b263b;
-    width: 350px;
-    padding: 40px;
-    border-radius: 30px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--sky-blue);
-    text-align: center;
-    color: var(--font-color);
-  }
-
-  h1 { color: var(--sky-blue); font-size: 28px; margin-bottom: 10px; }
-  
-  .profile-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: var(--dark-blue);
-    color: white;
-    text-decoration: none;
-    border-radius: 15px;
-    font-weight: bold;
-  }
-</style>
-
-<div class="container">
-  <h1>Rog3r</h1>
-  <p>Bienvenido a mi espacio personal.</p>
-  <a href="https://xat.me/Rog3r" class="profile-link">Ver perfil de Xat</a>
-</div>
+</body>
+</html>
