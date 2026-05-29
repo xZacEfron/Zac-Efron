@@ -4,42 +4,37 @@
     <meta charset="UTF-8">
     <style>
         body {
-            background-color: #121212;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: sans-serif;
         }
         .player {
             width: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
+            /* Aquí cargamos la imagen que me enviaste */
+            background-image: url('https://xatimg.com/image/FvxzX661moRe.jpg');
+            background-size: cover;
+            background-position: center;
             border-radius: 20px;
             padding: 20px;
             text-align: center;
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Este filtro le da el toque oscuro para que se lea el texto */
+            box-shadow: inset 0 0 0 200px rgba(0,0,0,0.5); 
         }
-        .album-art {
-            width: 150px;
-            height: 150px;
-            background: #333;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255,255,255,0.2);
-        }
+        h2 { margin: 10px 0 5px 0; }
+        p { margin: 0; font-size: 0.9em; opacity: 0.8; }
     </style>
 </head>
 <body>
 
 <div class="player">
-    <div class="album-art"></div>
-    <h2>Título de la Canción</h2>
-    <p>Nombre del Artista</p>
-    <div style="background: #fff; height: 5px; border-radius: 5px; margin-top: 15px;"></div>
+    <h2>Mi Reproductor</h2>
+    <p>¡Diseño personalizado!</p>
 </div>
 
 </body>
