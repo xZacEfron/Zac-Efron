@@ -25,15 +25,14 @@
 
     .app-container {
       display: flex;
-      flex-direction: row;
-      gap: 25px;
-      max-width: 800px;
+      gap: 30px;
+      max-width: 900px;
       width: 100%;
       justify-content: center;
-      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
-    /* Tarjeta Base */
+    /* Tarjeta Base (Tamaño original amplio) */
     .card {
       background: rgba(15, 20, 28, 0.85);
       backdrop-filter: blur(16px);
@@ -41,7 +40,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 24px;
-      width: 350px;
+      width: 360px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       display: flex;
       flex-direction: column;
@@ -56,8 +55,8 @@
     }
 
     .profile-img-container {
-      width: 170px;
-      height: 170px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       overflow: hidden;
       margin: 0 auto 20px auto;
@@ -143,7 +142,7 @@
       color: #94a3b8;
     }
 
-    /* Reproductor Lateral */
+    /* Reproductor Lateral (Restaurado a su tamaño grande original) */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -161,8 +160,8 @@
     }
 
     .disc-container {
-      width: 180px;
-      height: 180px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
       margin-bottom: 24px;
@@ -194,14 +193,6 @@
       border-radius: 10px;
       filter: invert(0.9) hue-rotate(180deg);
     }
-
-    /* Adaptación para pantallas móviles pequeñas */
-    @media (max-width: 768px) {
-      .app-container {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
   </style>
 </head>
 <body>
@@ -218,7 +209,7 @@
 
       <div class="playlist-title">Your Playlist</div>
       
-      <div class="song-list" id="song-list-container">
+      <div class="song-list">
         <!-- 1. MGMT - Kids -->
         <div class="song-item" onclick="playSongByIndex(0)">
           <img src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="Kids">
@@ -375,7 +366,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta Derecha (Reproductor Lateral) -->
+    <!-- Tarjeta Derecha (Reproductor Lateral Restaurado) -->
     <div class="card player-card">
       <div class="now-playing-label">Now Playing</div>
       
@@ -386,7 +377,7 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Reproductor de Audio (sin loop para que avance automáticamente) -->
+      <!-- Reproductor de Audio -->
       <audio id="main-audio" controls src="MGMT - Kids.mp3"></audio>
     </div>
 
@@ -435,9 +426,9 @@
       document.getElementById('player-cover').src = song.cover;
     }
 
-    // Evento que se dispara automáticamente al terminar la canción actual
+    // Auto-avance al terminar la canción
     audio.addEventListener('ended', function() {
-      currentIndex = (currentIndex + 1) % playlist.length; // Avanza a la siguiente y vuelve a 0 al llegar al final
+      currentIndex = (currentIndex + 1) % playlist.length;
       playSongByIndex(currentIndex);
     });
   </script>
