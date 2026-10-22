@@ -76,12 +76,13 @@
       text-align: center;
     }
 
-    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
+    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) CON SHIMMER --- */
     .flip-card-container {
       width: 100%;
       flex: 1;
       perspective: 1000px;
       cursor: pointer;
+      position: relative;
     }
 
     .flip-card-inner {
@@ -110,6 +111,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    /* Destello de luz al pasar el mouse por la foto */
+    .flip-front::after, .flip-back::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.75s ease;
+    }
+
+    .flip-card-container:hover .flip-front::after,
+    .flip-card-container:hover .flip-back::after {
+      left: 150%;
     }
 
     .flip-back {
@@ -196,12 +215,12 @@
       color: #94a3b8;
     }
 
-    /* Ecualizador Animado "Playing" */
+    /* Ecualizador Animado MÁS RÁPIDO Y DINÁMICO */
     .equalizer {
       display: none;
       align-items: flex-end;
       gap: 3px;
-      height: 16px;
+      height: 18px;
       padding-right: 4px;
     }
 
@@ -213,21 +232,22 @@
       width: 3px;
       background-color: #ffffff;
       border-radius: 2px;
-      height: 4px; /* Altura estática por defecto */
-      transition: height 0.2s ease;
+      height: 4px;
+      transition: height 0.15s ease;
     }
 
-    /* Solo anima cuando la clase 'playing' está activa */
+    /* Animación optimizada a 0.4s */
     .song-item.playing .eq-bar {
-      animation: eqBounce 0.8s ease-in-out infinite alternate;
+      animation: eqBounceFast 0.4s ease-in-out infinite alternate;
     }
 
-    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; }
-    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; }
-    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; }
+    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.05s; }
+    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.2s; }
+    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.1s; }
+    .song-item.playing .eq-bar:nth-child(4) { animation-delay: 0.25s; }
 
-    @keyframes eqBounce {
-      0% { height: 20%; }
+    @keyframes eqBounceFast {
+      0% { height: 15%; }
       100% { height: 100%; }
     }
 
@@ -264,12 +284,18 @@
     }
 
     .rotating {
-      animation: spinDisc 12s linear infinite;
+      animation: spinDisc 12s linear infinite, discGlow 2s ease-in-out infinite alternate;
     }
 
     @keyframes spinDisc {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
+    }
+
+    /* Resplandor pulsante mientras gira el disco */
+    @keyframes discGlow {
+      from { box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
+      to { box-shadow: 0 0 30px rgba(255, 255, 255, 0.25); }
     }
 
     .current-title {
@@ -325,7 +351,7 @@
 
     <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
-      <div class="disc-container">
+      <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
       </div>
 
@@ -371,6 +397,7 @@
     let currentIndex = 0;
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
+    const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
 
     function renderPlaylist() {
@@ -387,6 +414,7 @@
             <div class="song-artist">${song.artist}</div>
           </div>
           <div class="equalizer">
+            <div class="eq-bar"></div>
             <div class="eq-bar"></div>
             <div class="eq-bar"></div>
             <div class="eq-bar"></div>
@@ -421,7 +449,7 @@
         if (index === currentIndex) {
           item.classList.add('active');
           if (!audio.paused) {
-            item.classList.add('playing'); // Solo anima si realmente está sonando
+            item.classList.add('playing');
           } else {
             item.classList.remove('playing');
           }
@@ -432,12 +460,12 @@
     }
 
     audio.addEventListener('play', () => {
-      playerCover.classList.add('rotating');
+      discWrapper.classList.add('rotating');
       updateActiveSongClass();
     });
 
     audio.addEventListener('pause', () => {
-      playerCover.classList.remove('rotating');
+      discWrapper.classList.remove('rotating');
       updateActiveSongClass();
     });
 
