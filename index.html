@@ -297,11 +297,8 @@
       <div class="current-title" id="player-title">Freeze</div>
       <div class="current-artist" id="player-artist">Kygo</div>
 
-      <!-- Reproductor de Audio -->
-      <audio id="main-audio" controls autoplay loop>
-        <source id="audio-source" src="Kygo - Freeze.mp3" type="audio/mpeg">
-        Tu navegador no soporta el reproductor de audio.
-      </audio>
+      <!-- Reproductor de Audio (sin bloqueo de autoplay) -->
+      <audio id="main-audio" controls loop src="Kygo - Freeze.mp3"></audio>
     </div>
 
   </div>
@@ -309,6 +306,26 @@
   <script>
     function playSong(file, title, artist, cover) {
       const audio = document.getElementById('main-audio');
-      const source = document.getElementById('audio-source');
       const titleEl = document.getElementById('player-title');
-      const artistEl =
+      const artistEl = document.getElementById('player-artist');
+      const coverEl = document.getElementById('player-cover');
+
+      audio.src = file;
+      audio.load();
+      
+      // Promesa de reproducción para omitir bloqueos del navegador
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Esperando interacción del usuario.");
+        });
+      }
+
+      titleEl.textContent = title;
+      artistEl.textContent = artist;
+      coverEl.src = cover;
+    }
+  </script>
+
+</body>
+</html>
