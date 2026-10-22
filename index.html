@@ -215,12 +215,12 @@
       color: #94a3b8;
     }
 
-    /* Ecualizador Animado MÁS RÁPIDO Y DINÁMICO */
+    /* Ecualizador Animado (Velocidad anterior de 0.8s) */
     .equalizer {
       display: none;
       align-items: flex-end;
       gap: 3px;
-      height: 18px;
+      height: 16px;
       padding-right: 4px;
     }
 
@@ -233,21 +233,19 @@
       background-color: #ffffff;
       border-radius: 2px;
       height: 4px;
-      transition: height 0.15s ease;
+      transition: height 0.2s ease;
     }
 
-    /* Animación optimizada a 0.4s */
     .song-item.playing .eq-bar {
-      animation: eqBounceFast 0.4s ease-in-out infinite alternate;
+      animation: eqBounce 0.8s ease-in-out infinite alternate;
     }
 
-    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.05s; }
-    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.2s; }
-    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.1s; }
-    .song-item.playing .eq-bar:nth-child(4) { animation-delay: 0.25s; }
+    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; }
+    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; }
+    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; }
 
-    @keyframes eqBounceFast {
-      0% { height: 15%; }
+    @keyframes eqBounce {
+      0% { height: 20%; }
       100% { height: 100%; }
     }
 
@@ -284,7 +282,7 @@
     }
 
     .rotating {
-      animation: spinDisc 12s linear infinite, discGlow 2s ease-in-out infinite alternate;
+      animation: spinDisc 12s linear infinite, discGlowDark 2.5s ease-in-out infinite alternate;
     }
 
     @keyframes spinDisc {
@@ -292,10 +290,10 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Resplandor pulsante mientras gira el disco */
-    @keyframes discGlow {
-      from { box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
-      to { box-shadow: 0 0 30px rgba(255, 255, 255, 0.25); }
+    /* Resplandor oscuro / sutil mientras gira el disco */
+    @keyframes discGlowDark {
+      from { box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5); }
+      to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 25px rgba(0, 0, 0, 0.9); }
     }
 
     .current-title {
@@ -414,7 +412,6 @@
             <div class="song-artist">${song.artist}</div>
           </div>
           <div class="equalizer">
-            <div class="eq-bar"></div>
             <div class="eq-bar"></div>
             <div class="eq-bar"></div>
             <div class="eq-bar"></div>
