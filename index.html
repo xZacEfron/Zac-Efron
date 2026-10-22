@@ -45,7 +45,7 @@
       z-index: 1;
     }
 
-    /* Tarjetas principales con Aura de Ki sutil al hacer Hover */
+    /* Tarjetas principales con hover limpio original */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
@@ -62,8 +62,8 @@
     }
 
     .card:hover {
-      border-color: rgba(255, 200, 100, 0.3); /* Aura dorada sutil */
-      box-shadow: 0 0 30px rgba(255, 170, 50, 0.12), 0 20px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.08), 0 20px 40px rgba(0, 0, 0, 0.9);
       transform: translateY(-2px);
     }
 
@@ -74,63 +74,6 @@
       margin-bottom: 12px;
       color: #f8fafc;
       text-align: center;
-    }
-
-    /* --- CONTROL DE VOLUMEN FLOTANTE MINIMALISTA --- */
-    .volume-widget {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: rgba(15, 15, 18, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px 16px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 10;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .volume-widget:hover {
-      border-color: rgba(255, 200, 100, 0.3);
-      box-shadow: 0 0 20px rgba(255, 170, 50, 0.1);
-    }
-
-    .volume-icon {
-      font-size: 14px;
-      color: #94a3b8;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .volume-slider {
-      -webkit-appearance: none;
-      width: 90px;
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.15);
-      outline: none;
-      transition: background 0.3s;
-    }
-
-    .volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #ffffff;
-      cursor: pointer;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-      transition: transform 0.2s;
-    }
-
-    .volume-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
     }
 
     /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
@@ -363,11 +306,16 @@
       margin-bottom: 20px;
     }
 
+    /* Reproductor de audio integrado con el tono oscuro/estético deseado */
     audio {
       width: 100%;
       margin-top: 15px;
-      border-radius: 10px;
-      filter: invert(0.9) hue-rotate(180deg);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      filter: invert(0.9) hue-rotate(180deg) brightness(0.95);
     }
   </style>
 </head>
@@ -375,12 +323,6 @@
 
   <!-- Canvas para Partículas y Esferas -->
   <canvas id="particles-canvas"></canvas>
-
-  <!-- Widget Flotante de Control de Volumen -->
-  <div class="volume-widget">
-    <span class="volume-icon" id="vol-icon" onclick="toggleMute()" title="Silenciar / Activar">🔊</span>
-    <input type="range" class="volume-slider" id="vol-slider" min="0" max="1" step="0.05" value="1" oninput="changeVolume(this.value)">
-  </div>
 
   <div class="app-container">
     
@@ -415,7 +357,7 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Reproductor de Audio -->
+      <!-- Reproductor de Audio Original con Estética Ajustada -->
       <audio id="main-audio" controls controlsList="nodownload" src="MGMT - Kids.mp3"></audio>
     </div>
 
@@ -455,33 +397,6 @@
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
-    const volSlider = document.getElementById('vol-slider');
-    const volIcon = document.getElementById('vol-icon');
-    let lastVolume = 1;
-
-    function changeVolume(val) {
-      audio.volume = val;
-      if (val == 0) {
-        volIcon.textContent = '🔇';
-      } else if (val < 0.5) {
-        volIcon.textContent = '🔉';
-      } else {
-        volIcon.textContent = '🔊';
-      }
-    }
-
-    function toggleMute() {
-      if (audio.volume > 0) {
-        lastVolume = audio.volume;
-        audio.volume = 0;
-        volSlider.value = 0;
-        volIcon.textContent = '🔇';
-      } else {
-        audio.volume = lastVolume;
-        volSlider.value = lastVolume;
-        changeVolume(lastVolume);
-      }
-    }
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
