@@ -14,13 +14,25 @@
 
     body {
       background-color: #000000;
-      background-image: radial-gradient(circle at 50% 50%, #050505 0%, #000000 100%);
       color: #ffffff;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fondo de Partículas Canvas */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .app-container {
@@ -30,14 +42,15 @@
       width: 100%;
       justify-content: center;
       flex-wrap: wrap;
+      z-index: 1;
     }
 
-    /* Tarjetas principales */
+    /* Tarjetas principales con efecto Glow Hover */
     .card {
-      background: rgba(10, 10, 12, 0.9);
+      background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 24px;
       width: 340px;
@@ -45,6 +58,13 @@
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.08), 0 20px 40px rgba(0, 0, 0, 0.9);
+      transform: translateY(-2px);
     }
 
     .header-title {
@@ -56,7 +76,6 @@
       text-align: center;
     }
 
-    /* Contenedor para la foto completa vertical (PC por defecto) */
     .full-img-container {
       width: 100%;
       flex: 1;
@@ -76,7 +95,6 @@
       object-fit: cover;
     }
 
-    /* REGLA ESPECIAL SOLO PARA CELULARES */
     @media (max-width: 768px) {
       .full-img-container img {
         object-fit: contain;
@@ -104,9 +122,6 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
     }
-    .song-list::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
 
     .song-item {
       display: flex;
@@ -115,13 +130,21 @@
       padding: 10px;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
       cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
     .song-item:hover {
       background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.03);
       transform: translateX(4px);
+    }
+
+    .song-item.active {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .song-item img {
@@ -146,6 +169,40 @@
       color: #94a3b8;
     }
 
+    /* Ecualizador Animado "Playing" */
+    .equalizer {
+      display: none;
+      align-items: flex-end;
+      gap: 3px;
+      height: 16px;
+      padding-right: 4px;
+    }
+
+    .song-item.active .equalizer {
+      display: flex;
+    }
+
+    .eq-bar {
+      width: 3px;
+      background-color: #ffffff;
+      border-radius: 2px;
+      animation: eqBounce 0.8s ease-in-out infinite alternate;
+    }
+
+    .eq-bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+    .eq-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+    .eq-bar:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+
+    .paused .eq-bar {
+      animation-play-state: paused;
+      height: 3px !important;
+    }
+
+    @keyframes eqBounce {
+      0% { height: 20%; }
+      100% { height: 100%; }
+    }
+
     /* Reproductor Lateral */
     .player-card {
       display: flex;
@@ -164,6 +221,12 @@
       margin-bottom: 24px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .player-card:hover .disc-container {
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
     .disc-container img {
@@ -172,7 +235,6 @@
       object-fit: cover;
     }
 
-    /* Animación de giro para el disco */
     .rotating {
       animation: spinDisc 12s linear infinite;
     }
@@ -204,6 +266,9 @@
 </head>
 <body>
 
+  <!-- Canvas para Efecto de Partículas -->
+  <canvas id="particles-canvas"></canvas>
+
   <div class="app-container">
     
     <!-- Tarjeta 1: Tu Nombre (𝑹𝒖) + Foto Completa -->
@@ -216,187 +281,8 @@
 
     <!-- Tarjeta 2: Playlist -->
     <div class="card">
-      <div class="song-list">
-        <!-- 1. MGMT - Kids -->
-        <div class="song-item" onclick="playSongByIndex(0)">
-          <img src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
-          <div class="song-info">
-            <div class="song-name">Kids</div>
-            <div class="song-artist">MGMT</div>
-          </div>
-        </div>
-
-        <!-- 2. Green Day - Whatsername -->
-        <div class="song-item" onclick="playSongByIndex(1)">
-          <img src="https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg" alt="Whatsername">
-          <div class="song-info">
-            <div class="song-name">Whatsername</div>
-            <div class="song-artist">Green Day</div>
-          </div>
-        </div>
-
-        <!-- 3. NF - HAPPY -->
-        <div class="song-item" onclick="playSongByIndex(2)">
-          <img src="https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg" alt="HAPPY">
-          <div class="song-info">
-            <div class="song-name">HAPPY</div>
-            <div class="song-artist">NF</div>
-          </div>
-        </div>
-
-        <!-- 4. TV on the Radio - Wolf Like Me -->
-        <div class="song-item" onclick="playSongByIndex(3)">
-          <img src="https://i.postimg.cc/wjH32D9Y/images.jpg" alt="Wolf Like Me">
-          <div class="song-info">
-            <div class="song-name">Wolf Like Me</div>
-            <div class="song-artist">TV on the Radio</div>
-          </div>
-        </div>
-
-        <!-- 5. Avicii - Fade Into Darkness -->
-        <div class="song-item" onclick="playSongByIndex(4)">
-          <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="Fade Into Darkness">
-          <div class="song-info">
-            <div class="song-name">Fade Into Darkness</div>
-            <div class="song-artist">Avicii</div>
-          </div>
-        </div>
-
-        <!-- 6. NF - SORRY -->
-        <div class="song-item" onclick="playSongByIndex(5)">
-          <img src="https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg" alt="SORRY">
-          <div class="song-info">
-            <div class="song-name">SORRY</div>
-            <div class="song-artist">NF</div>
-          </div>
-        </div>
-
-        <!-- 7. Avicii - I Could Be The One -->
-        <div class="song-item" onclick="playSongByIndex(6)">
-          <img src="https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg" alt="I Could Be The One">
-          <div class="song-info">
-            <div class="song-name">I Could Be The One</div>
-            <div class="song-artist">Avicii Vs. Nicky Romero</div>
-          </div>
-        </div>
-
-        <!-- 8. Kygo - Freeze -->
-        <div class="song-item" onclick="playSongByIndex(7)">
-          <img src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="Freeze">
-          <div class="song-info">
-            <div class="song-name">Freeze</div>
-            <div class="song-artist">Kygo</div>
-          </div>
-        </div>
-
-        <!-- 9. Tiësto - Red Lights -->
-        <div class="song-item" onclick="playSongByIndex(8)">
-          <img src="https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg" alt="Red Lights">
-          <div class="song-info">
-            <div class="song-name">Red Lights</div>
-            <div class="song-artist">Tiësto</div>
-          </div>
-        </div>
-
-        <!-- 10. Avicii - The Nights -->
-        <div class="song-item" onclick="playSongByIndex(9)">
-          <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="The Nights">
-          <div class="song-info">
-            <div class="song-name">The Nights</div>
-            <div class="song-artist">Avicii</div>
-          </div>
-        </div>
-
-        <!-- 11. Kygo - Save My Love -->
-        <div class="song-item" onclick="playSongByIndex(10)">
-          <img src="https://i.postimg.cc/kMt9LD5c/images.jpg" alt="Save My Love">
-          <div class="song-info">
-            <div class="song-name">Save My Love</div>
-            <div class="song-artist">Kygo</div>
-          </div>
-        </div>
-
-        <!-- 12. Kygo - Stargazing -->
-        <div class="song-item" onclick="playSongByIndex(11)">
-          <img src="https://i.postimg.cc/xC7SZVHk/images-(2).jpg" alt="Stargazing">
-          <div class="song-info">
-            <div class="song-name">Stargazing</div>
-            <div class="song-artist">Kygo</div>
-          </div>
-        </div>
-
-        <!-- 13. Martin Garrix - The Only Way Is Up -->
-        <div class="song-item" onclick="playSongByIndex(12)">
-          <img src="https://i.postimg.cc/CxDHBGmM/images-(1).jpg" alt="The Only Way Is Up">
-          <div class="song-info">
-            <div class="song-name">The Only Way Is Up</div>
-            <div class="song-artist">Martin Garrix</div>
-          </div>
-        </div>
-
-        <!-- 14. Eminem - Somebody Save Me -->
-        <div class="song-item" onclick="playSongByIndex(13)">
-          <img src="https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg" alt="Somebody Save Me">
-          <div class="song-info">
-            <div class="song-name">Somebody Save Me</div>
-            <div class="song-artist">Eminem</div>
-          </div>
-        </div>
-
-        <!-- 15. Marshmello - Be Kind -->
-        <div class="song-item" onclick="playSongByIndex(14)">
-          <img src="https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg" alt="Be Kind">
-          <div class="song-info">
-            <div class="song-name">Be Kind</div>
-            <div class="song-artist">Marshmello</div>
-          </div>
-        </div>
-
-        <!-- 16. Justin Bieber - Ghost -->
-        <div class="song-item" onclick="playSongByIndex(15)">
-          <img src="https://i.postimg.cc/MpdVgzZ5/images.jpg" alt="Ghost">
-          <div class="song-info">
-            <div class="song-name">Ghost</div>
-            <div class="song-artist">Justin Bieber</div>
-          </div>
-        </div>
-
-        <!-- 17. A Flock of Seagulls - I Ran (So Far Away) -->
-        <div class="song-item" onclick="playSongByIndex(16)">
-          <img src="https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg" alt="I Ran (So Far Away)">
-          <div class="song-info">
-            <div class="song-name">I Ran (So Far Away)</div>
-            <div class="song-artist">A Flock of Seagulls</div>
-          </div>
-        </div>
-
-        <!-- 18. OneRepublic - Apologize -->
-        <div class="song-item" onclick="playSongByIndex(17)">
-          <img src="https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg" alt="Apologize">
-          <div class="song-info">
-            <div class="song-name">Apologize</div>
-            <div class="song-artist">OneRepublic</div>
-          </div>
-        </div>
-
-        <!-- 19. Kid Ink - Money and the Power -->
-        <div class="song-item" onclick="playSongByIndex(18)">
-          <img src="https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg" alt="Money and the Power">
-          <div class="song-info">
-            <div class="song-name">Money and the Power</div>
-            <div class="song-artist">Kid Ink</div>
-          </div>
-        </div>
-
-        <!-- 20. Brandon Heath - Whole Heart -->
-        <div class="song-item" onclick="playSongByIndex(19)">
-          <img src="https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg" alt="Whole Heart">
-          <div class="song-info">
-            <div class="song-name">Whole Heart</div>
-            <div class="song-artist">Brandon Heath</div>
-          </div>
-        </div>
-
+      <div class="song-list" id="song-list-container">
+        <!-- Las canciones se cargan dinámicamente -->
       </div>
     </div>
 
@@ -442,6 +328,31 @@
     let currentIndex = 0;
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
+    const songListContainer = document.getElementById('song-list-container');
+
+    // Renderizar la lista con ecualizador integrado
+    function renderPlaylist() {
+      songListContainer.innerHTML = '';
+      playlist.forEach((song, index) => {
+        const item = document.createElement('div');
+        item.className = `song-item ${index === currentIndex ? 'active' : ''}`;
+        item.onclick = () => playSongByIndex(index);
+
+        item.innerHTML = `
+          <img src="${song.cover}" alt="${song.title}">
+          <div class="song-info">
+            <div class="song-name">${song.title}</div>
+            <div class="song-artist">${song.artist}</div>
+          </div>
+          <div class="equalizer">
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+          </div>
+        `;
+        songListContainer.appendChild(item);
+      });
+    }
 
     function playSongByIndex(index) {
       currentIndex = index;
@@ -452,28 +363,96 @@
       
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log("Esperando interacción del usuario.");
-        });
+        playPromise.catch(() => {});
       }
 
       document.getElementById('player-title').textContent = song.title;
       document.getElementById('player-artist').textContent = song.artist;
       playerCover.src = song.cover;
+
+      updateActiveSongClass();
+    }
+
+    function updateActiveSongClass() {
+      const items = document.querySelectorAll('.song-item');
+      items.forEach((item, index) => {
+        if (index === currentIndex) {
+          item.classList.add('active');
+          if (audio.paused) {
+            item.classList.add('paused');
+          } else {
+            item.classList.remove('paused');
+          }
+        } else {
+          item.classList.remove('active', 'paused');
+        }
+      });
     }
 
     audio.addEventListener('play', () => {
       playerCover.classList.add('rotating');
+      updateActiveSongClass();
     });
 
     audio.addEventListener('pause', () => {
       playerCover.classList.remove('rotating');
+      updateActiveSongClass();
     });
 
-    audio.addEventListener('ended', function() {
+    audio.addEventListener('ended', () => {
       currentIndex = (currentIndex + 1) % playlist.length;
       playSongByIndex(currentIndex);
     });
+
+    // Inicializar Playlist
+    renderPlaylist();
+
+    /* --- SISTEMA DE PARTÍCULAS DE FONDO --- */
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    const particleCount = 45;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.5 + 0.1,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
   </script>
 
 </body>
