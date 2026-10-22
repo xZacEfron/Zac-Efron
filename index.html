@@ -161,49 +161,11 @@
       margin-bottom: 20px;
     }
 
-    .progress-bar {
+    audio {
       width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 3px;
-      margin-bottom: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      width: 45%;
-      height: 100%;
-      background: #38bdf8;
-      border-radius: 3px;
-    }
-
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .btn-control {
-      background: none;
-      border: none;
-      color: #f8fafc;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .btn-play {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #38bdf8;
-      color: #0f172a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 22px;
-      border: none;
-      cursor: pointer;
+      margin-top: 15px;
+      border-radius: 10px;
+      filter: invert(0.9) hue-rotate(180deg);
     }
   </style>
 </head>
@@ -224,7 +186,15 @@
       
       <div class="song-list">
         <div class="song-item">
-          <img src="https://xatimg.com/image/6Oubxy9Z0xPq.png" alt="Cover">
+          <img src="https://i.scdn.co/image/ab67616d0000b273fa138c29b7941fa9e4e6f4a8" alt="Red Lights">
+          <div class="song-info">
+            <div class="song-name">Red Lights</div>
+            <div class="song-artist">Tiësto</div>
+          </div>
+        </div>
+
+        <div class="song-item">
+          <img src="https://i.scdn.co/image/ab67616d0000b2738a9d18b32338ff9134a94829" alt="Freeze">
           <div class="song-info">
             <div class="song-name">Freeze</div>
             <div class="song-artist">Kygo</div>
@@ -232,18 +202,10 @@
         </div>
 
         <div class="song-item">
-          <img src="https://xatimg.com/image/6Oubxy9Z0xPq.png" alt="Cover">
+          <img src="https://i.scdn.co/image/ab67616d0000b27361730f08a54d5c90715e4a83" alt="HAPPY">
           <div class="song-info">
             <div class="song-name">HAPPY</div>
             <div class="song-artist">NF</div>
-          </div>
-        </div>
-
-        <div class="song-item">
-          <img src="https://xatimg.com/image/6Oubxy9Z0xPq.png" alt="Cover">
-          <div class="song-info">
-            <div class="song-name">This Is What It Feels Like</div>
-            <div class="song-artist">Armin van Buuren</div>
           </div>
         </div>
       </div>
@@ -254,21 +216,17 @@
       <div class="now-playing-label">Now Playing</div>
       
       <div class="disc-container">
-        <img src="https://xatimg.com/image/6Oubxy9Z0xPq.png" alt="Disco">
+        <img src="https://i.scdn.co/image/ab67616d0000b273fa138c29b7941fa9e4e6f4a8" alt="Tiësto - Red Lights">
       </div>
 
-      <div class="current-title">Freeze</div>
-      <div class="current-artist">Kygo</div>
+      <div class="current-title">Red Lights</div>
+      <div class="current-artist">Tiësto</div>
 
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-
-      <div class="controls">
-        <button class="btn-control">⏮</button>
-        <button class="btn-play">▶</button>
-        <button class="btn-control">⏭</button>
-      </div>
+      <!-- Enlace al archivo subido -->
+      <audio controls autoplay loop>
+        <source src="Tiësto - Red Lights.mp3" type="audio/mpeg">
+        Tu navegador no soporta el reproductor de audio.
+      </audio>
     </div>
 
   </div>
