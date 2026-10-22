@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Fondo de Partículas Suaves (Canvas) */
+    /* Fondo de Canvas */
     #particles-canvas {
       position: fixed;
       top: 0;
@@ -76,7 +76,7 @@
       text-align: center;
     }
 
-    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) CON SHIMMER --- */
+    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
     .flip-card-container {
       width: 100%;
       flex: 1;
@@ -113,7 +113,6 @@
       justify-content: center;
     }
 
-    /* Destello de luz al pasar el mouse por la foto */
     .flip-front::after, .flip-back::after {
       content: '';
       position: absolute;
@@ -317,7 +316,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas y Objetos Voladores -->
+  <!-- Canvas para Partículas y Vuelos -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -327,11 +326,9 @@
       <div class="header-title">𝑹𝒖</div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
-          <!-- Frente: Tu foto actual -->
           <div class="flip-front full-img-container">
             <img src="https://xatimg.com/image/Pkjoaoso0fgK.jpg" alt="Ru Photo 1">
           </div>
-          <!-- Dorso: La segunda foto -->
           <div class="flip-back full-img-container">
             <img src="https://xatimg.com/image/Jg23jlU0z2hq.png" alt="Ru Photo 2">
           </div>
@@ -362,7 +359,6 @@
   </div>
 
   <script>
-    // Función para girar la tarjeta al hacer clic
     function toggleCardFlip() {
       const card = document.getElementById('flip-card');
       card.classList.toggle('flipped');
@@ -472,7 +468,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE FONDO (PARTÍCULAS + OBJETOS OCASIONALES CADA 20-30s) --- */
+    /* --- SISTEMA DE FONDO (PARTÍCULAS + HEROE/OBJETOS CADA 10-12s EN AMBAS DIRECCIONES) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -483,11 +479,9 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // 1. Partículas de fondo normales (Bolitas)
+    // 1. Partículas sutiles de fondo
     const particles = [];
-    const particleCount = 40;
-
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < 40; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -498,75 +492,120 @@
       });
     }
 
-    // 2. Sistema de Objeto Especial (Cápsula DBZ / Estrella / Bola Dragon)
-    const specialTypes = ['capsule', 'star', 'dragonball'];
-    let currentSpecial = null;
+    // 2. Objetos / Héroe volando
+    const objectTypes = ['hero', 'dragonball', 'capsule', 'comet'];
+    let activeObject = null;
 
-    function spawnSpecialObject() {
-      const type = specialTypes[Math.floor(Math.random() * specialTypes.length)];
-      currentSpecial = {
+    function spawnRandomFlyer() {
+      const type = objectTypes[Math.floor(Math.random() * objectTypes.length)];
+      const fromLeft = Math.random() > 0.5; // Dirección aleatoria (izquierda -> derecha O derecha -> izquierda)
+      
+      const speed = Math.random() * 1.8 + 1.2;
+      
+      activeObject = {
         type: type,
-        x: -50,
-        y: Math.random() * (canvas.height * 0.6), // Aparece en la mitad superior
-        speedX: Math.random() * 1.5 + 1.2,        // Movimiento horizontal
-        speedY: Math.random() * 0.8 + 0.3,        // Movimiento ligeramente diagonal
-        size: Math.random() * 6 + 12,
-        rotation: 0,
-        spinSpeed: (Math.random() - 0.5) * 0.03
+        fromLeft: fromLeft,
+        x: fromLeft ? -60 : canvas.width + 60,
+        y: Math.random() * (canvas.height * 0.7) + 50,
+        speedX: fromLeft ? speed : -speed,
+        speedY: (Math.random() - 0.5) * 0.4,
+        scale: Math.random() * 0.4 + 0.7
       };
     }
 
-    function scheduleNextSpecial() {
-      // Intervalo aleatorio entre 20,000ms (20s) y 30,000ms (30s)
-      const nextDelay = Math.random() * 10000 + 20000;
+    function scheduleNextFlyer() {
+      // Tiempo entre 10 y 12 segundos (10000ms a 12000ms)
+      const nextDelay = Math.random() * 2000 + 10000;
       setTimeout(() => {
-        spawnSpecialObject();
+        spawnRandomFlyer();
       }, nextDelay);
     }
 
-    // Iniciar primer disparo a los 10 segundos
-    setTimeout(spawnSpecialObject, 10000);
+    // Iniciar primer vuelo tras 3 segundos
+    setTimeout(spawnRandomFlyer, 3000);
 
-    function drawSpecialObject(obj) {
+    function drawFlyer(obj) {
       ctx.save();
       ctx.translate(obj.x, obj.y);
-      ctx.rotate(obj.rotation);
+      if (!obj.fromLeft) {
+        ctx.scale(-1, 1); // Invertir si viene de la derecha
+      }
+      ctx.scale(obj.scale, obj.scale);
 
-      if (obj.type === 'star') {
-        // Estrella fugaz con estela
+      if (obj.type === 'hero') {
+        // Silueta de Superhéroe / Saiyan Volando con Aura
+        // Estela / Aura
+        ctx.beginPath();
+        ctx.moveTo(-25, 0);
+        ctx.lineTo(-5, -6);
+        ctx.lineTo(-5, 6);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.fill();
+
+        // Capa
+        ctx.beginPath();
+        ctx.moveTo(-12, 0);
+        ctx.lineTo(-22, -8);
+        ctx.lineTo(-20, 2);
+        ctx.fillStyle = 'rgba(200, 200, 220, 0.3)';
+        ctx.fill();
+
+        // Cuerpo / Silueta
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 10, 4, 0, 0, Math.PI * 2); // Torso estirado
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fill();
+
+        // Cabeza
+        ctx.beginPath();
+        ctx.arc(8, -1, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fill();
+
+        // Brazo estirado al frente
+        ctx.beginPath();
+        ctx.moveTo(8, 0);
+        ctx.lineTo(16, 0);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+      } else if (obj.type === 'comet') {
+        // Cometa / Ráfaga
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.lineTo(-40, -10);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
-        ctx.lineWidth = 1.5;
+        ctx.lineTo(-45, -5);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 2;
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.fill();
+
       } else if (obj.type === 'capsule') {
-        // Cápsula Capsule Corp (Blanca y Azul estilizada)
+        // Cápsula Capsule Corp
         ctx.beginPath();
-        ctx.roundRect(-8, -4, 16, 8, 4);
-        ctx.fillStyle = 'rgba(240, 240, 245, 0.35)';
+        ctx.roundRect(-10, -5, 20, 10, 5);
+        ctx.fillStyle = 'rgba(240, 240, 245, 0.4)';
         ctx.fill();
 
         ctx.beginPath();
-        ctx.roundRect(0, -4, 8, 8, [0, 4, 4, 0]);
-        ctx.fillStyle = 'rgba(100, 180, 255, 0.35)';
+        ctx.roundRect(0, -5, 10, 10, [0, 5, 5, 0]);
+        ctx.fillStyle = 'rgba(90, 170, 255, 0.45)';
         ctx.fill();
+
       } else if (obj.type === 'dragonball') {
-        // Esfera del Dragón (Naranja translúcido con brillo)
+        // Esfera del Dragón
         ctx.beginPath();
-        ctx.arc(0, 0, 6, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 170, 50, 0.4)';
+        ctx.arc(0, 0, 7, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 160, 40, 0.5)';
         ctx.fill();
 
-        // Pequeño centro
         ctx.beginPath();
-        ctx.arc(-1, -1, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 200, 0.5)';
+        ctx.arc(-2, -2, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 220, 0.6)';
         ctx.fill();
       }
 
@@ -576,7 +615,7 @@
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Dibujar partículas normales
+      // Dibujar partículas simples
       particles.forEach(p => {
         p.x += p.speedX;
         p.y += p.speedY;
@@ -592,18 +631,21 @@
         ctx.fill();
       });
 
-      // Dibujar y mover objeto especial si está activo
-      if (currentSpecial) {
-        currentSpecial.x += currentSpecial.speedX;
-        currentSpecial.y += currentSpecial.speedY;
-        currentSpecial.rotation += currentSpecial.spinSpeed;
+      // Mover y dibujar objeto volador activo
+      if (activeObject) {
+        activeObject.x += activeObject.speedX;
+        activeObject.y += activeObject.speedY;
 
-        drawSpecialObject(currentSpecial);
+        drawFlyer(activeObject);
 
-        // Si sale de la pantalla por la derecha o abajo
-        if (currentSpecial.x > canvas.width + 60 || currentSpecial.y > canvas.height + 60) {
-          currentSpecial = null;
-          scheduleNextSpecial(); // Programar la siguiente aparición en 20-30 segundos
+        // Comprobar si salió de la pantalla
+        const isOut = activeObject.fromLeft 
+          ? (activeObject.x > canvas.width + 80)
+          : (activeObject.x < -80);
+
+        if (isOut) {
+          activeObject = null;
+          scheduleNextFlyer(); // Programa el siguiente en 10-12s
         }
       }
 
