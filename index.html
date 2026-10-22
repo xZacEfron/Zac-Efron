@@ -468,7 +468,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (1-7 ESTRELLAS CADA 7-10s) --- */
+    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (CUALQUIER ALTURA, INCLUYENDO LA PARTE SUPERIOR) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -500,29 +500,31 @@
       const speed = Math.random() * 1.5 + 1.2;
       const starsCount = Math.floor(Math.random() * 7) + 1; // 1 a 7 estrellas
 
+      // DISTRIBUCIÓN DE ALTURA: Se prioriza también la zona superior (desde arriba hasta abajo)
+      const randomY = Math.random() * (canvas.height * 0.85) + 30;
+
       activeBall = {
         fromLeft: fromLeft,
         x: fromLeft ? -60 : canvas.width + 60,
-        y: Math.random() * (canvas.height * 0.75) + 40,
+        y: randomY,
         speedX: fromLeft ? speed : -speed,
-        speedY: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.25,
         stars: starsCount,
-        radius: 14 // Tamaño claro para distinguir bien las estrellas
+        radius: 14
       };
     }
 
     function scheduleNextDragonBall() {
-      // Intervalo entre 7 y 10 segundos (7000ms a 10000ms)
+      // Intervalo entre 7 y 10 segundos
       const nextDelay = Math.random() * 3000 + 7000;
       setTimeout(() => {
         spawnDragonBall();
       }, nextDelay);
     }
 
-    // Lanzar la primera esfera tras 2 segundos
+    // Primera esfera a los 2 segundos
     setTimeout(spawnDragonBall, 2000);
 
-    // Dibujar Esfera con sus Estrellas Rojas
     function drawDragonBall(ball) {
       ctx.save();
       ctx.translate(ball.x, ball.y);
@@ -556,9 +558,8 @@
       ctx.restore();
     }
 
-    // Función auxiliar para ordenar y dibujar de 1 a 7 estrellas rojas
     function drawRedStars(ctx, count, radius) {
-      ctx.fillStyle = '#d91414'; // Rojo dragón
+      ctx.fillStyle = '#d91414';
       ctx.font = `${radius * 0.9}px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -604,7 +605,6 @@
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Partículas sutiles
       particles.forEach(p => {
         p.x += p.speedX;
         p.y += p.speedY;
@@ -620,7 +620,6 @@
         ctx.fill();
       });
 
-      // Mover y dibujar la Esfera del Dragón activa
       if (activeBall) {
         activeBall.x += activeBall.speedX;
         activeBall.y += activeBall.speedY;
@@ -633,7 +632,7 @@
 
         if (isOut) {
           activeBall = null;
-          scheduleNextDragonBall(); // Siguiente esfera en 7-10s
+          scheduleNextDragonBall();
         }
       }
 
