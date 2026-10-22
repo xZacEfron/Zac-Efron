@@ -32,7 +32,7 @@
       flex-wrap: wrap;
     }
 
-    /* Tarjeta Base con efecto de luces sutiles en el fondo */
+    /* Ambas tarjetas con exactamente el mismo estilo, color y sin efectos de luces */
     .card {
       background: rgba(15, 20, 28, 0.85);
       backdrop-filter: blur(16px);
@@ -44,39 +44,6 @@
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       display: flex;
       flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Animación de luces suaves para el fondo de la tarjeta del reproductor */
-    .player-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.07) 0%, rgba(168, 85, 247, 0.04) 40%, transparent 70%);
-      animation: pulseLight 8s ease-in-out infinite;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    @keyframes pulseLight {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.4;
-      }
-      50% {
-        transform: scale(1.15);
-        opacity: 0.9;
-      }
-    }
-
-    /* Asegurar que el contenido esté por encima de la luz de fondo */
-    .card > * {
-      position: relative;
-      z-index: 1;
     }
 
     .header-title {
@@ -208,18 +175,14 @@
       object-fit: cover;
     }
 
-    /* Clase para hacer girar la imagen como disco cuando esté reproduciendo */
+    /* Animación de giro para el disco */
     .rotating {
       animation: spinDisc 12s linear infinite;
     }
 
     @keyframes spinDisc {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .current-title {
@@ -440,12 +403,13 @@
       </div>
     </div>
 
-    <!-- Tarjeta Derecha (Reproductor Lateral con luces y disco giratorio) -->
+    <!-- Tarjeta Derecha (Reproductor Lateral limpio) -->
     <div class="card player-card">
       <div class="now-playing-label">Now Playing</div>
       
       <div class="disc-container">
-        <img id="player-cover" class="rotating" src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="MGMT - Kids">
+        <!-- Sin la clase rotating al inicio -->
+        <img id="player-cover" src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="MGMT - Kids">
       </div>
 
       <div class="current-title" id="player-title">Kids</div>
@@ -504,7 +468,7 @@
       playerCover.src = song.cover;
     }
 
-    // Controlar que el disco gire solo cuando está reproduciendo y se pause si se pausa la música
+    // El disco gira unicamente cuando se presiona reproducir y se detiene al pausar
     audio.addEventListener('play', () => {
       playerCover.classList.add('rotating');
     });
