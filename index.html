@@ -25,11 +25,12 @@
 
     .app-container {
       display: flex;
-      gap: 30px;
-      max-width: 900px;
+      flex-direction: row; /* Fuerza a que queden lado a lado */
+      gap: 25px;
+      max-width: 800px;
       width: 100%;
       justify-content: center;
-      flex-wrap: wrap;
+      align-items: flex-start;
     }
 
     /* Tarjeta Base */
@@ -40,7 +41,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 24px;
-      width: 360px;
+      width: 350px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       display: flex;
       flex-direction: column;
@@ -55,8 +56,8 @@
     }
 
     .profile-img-container {
-      width: 180px;
-      height: 180px;
+      width: 170px;
+      height: 170px;
       border-radius: 50%;
       overflow: hidden;
       margin: 0 auto 20px auto;
@@ -160,8 +161,8 @@
     }
 
     .disc-container {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       overflow: hidden;
       margin-bottom: 24px;
@@ -192,6 +193,14 @@
       margin-top: 15px;
       border-radius: 10px;
       filter: invert(0.9) hue-rotate(180deg);
+    }
+
+    /* Adaptación para pantallas móviles pequeñas */
+    @media (max-width: 768px) {
+      .app-container {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
