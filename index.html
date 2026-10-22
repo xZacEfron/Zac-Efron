@@ -25,7 +25,7 @@
 
     .app-container {
       display: flex;
-      flex-direction: row; /* Fuerza a que queden lado a lado */
+      flex-direction: row;
       gap: 25px;
       max-width: 800px;
       width: 100%;
@@ -218,9 +218,9 @@
 
       <div class="playlist-title">Your Playlist</div>
       
-      <div class="song-list">
+      <div class="song-list" id="song-list-container">
         <!-- 1. MGMT - Kids -->
-        <div class="song-item" onclick="playSong('MGMT - Kids.mp3', 'Kids', 'MGMT', 'https://i.postimg.cc/RCPfpsNc/images-(2).jpg')">
+        <div class="song-item" onclick="playSongByIndex(0)">
           <img src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="Kids">
           <div class="song-info">
             <div class="song-name">Kids</div>
@@ -229,7 +229,7 @@
         </div>
 
         <!-- 2. NF - HAPPY -->
-        <div class="song-item" onclick="playSong('NF - HAPPY.mp3', 'HAPPY', 'NF', 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg')">
+        <div class="song-item" onclick="playSongByIndex(1)">
           <img src="https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg" alt="HAPPY">
           <div class="song-info">
             <div class="song-name">HAPPY</div>
@@ -237,17 +237,17 @@
           </div>
         </div>
 
-        <!-- 3. Avicii - The Nights -->
-        <div class="song-item" onclick="playSong('Avicii - The Nights.mp3', 'The Nights', 'Avicii', 'https://i.postimg.cc/nLcpWksX/0x1900-000000-80-0-0.jpg')">
-          <img src="https://i.postimg.cc/nLcpWksX/0x1900-000000-80-0-0.jpg" alt="The Nights">
+        <!-- 3. Avicii - Fade Into Darkness -->
+        <div class="song-item" onclick="playSongByIndex(2)">
+          <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="Fade Into Darkness">
           <div class="song-info">
-            <div class="song-name">The Nights</div>
+            <div class="song-name">Fade Into Darkness</div>
             <div class="song-artist">Avicii</div>
           </div>
         </div>
 
         <!-- 4. TV on the Radio - Wolf Like Me -->
-        <div class="song-item" onclick="playSong('TV on the Radio - Wolf Like Me.mp3', 'Wolf Like Me', 'TV on the Radio', 'https://i.postimg.cc/wjH32D9Y/images.jpg')">
+        <div class="song-item" onclick="playSongByIndex(3)">
           <img src="https://i.postimg.cc/wjH32D9Y/images.jpg" alt="Wolf Like Me">
           <div class="song-info">
             <div class="song-name">Wolf Like Me</div>
@@ -256,7 +256,7 @@
         </div>
 
         <!-- 5. Avicii - I Could Be The One -->
-        <div class="song-item" onclick="playSong('Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', 'I Could Be The One', 'Avicii Vs. Nicky Romero', 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg')">
+        <div class="song-item" onclick="playSongByIndex(4)">
           <img src="https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg" alt="I Could Be The One">
           <div class="song-info">
             <div class="song-name">I Could Be The One</div>
@@ -265,7 +265,7 @@
         </div>
 
         <!-- 6. Kygo - Freeze -->
-        <div class="song-item" onclick="playSong('Kygo - Freeze.mp3', 'Freeze', 'Kygo', 'https://i.postimg.cc/htHm0kzP/Kygo.jpg')">
+        <div class="song-item" onclick="playSongByIndex(5)">
           <img src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="Freeze">
           <div class="song-info">
             <div class="song-name">Freeze</div>
@@ -273,17 +273,8 @@
           </div>
         </div>
 
-        <!-- 7. Avicii - Fade Into Darkness -->
-        <div class="song-item" onclick="playSong('Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', 'Fade Into Darkness', 'Avicii', 'https://i.postimg.cc/nLcpWksX/0x1900-000000-80-0-0.jpg')">
-          <img src="https://i.postimg.cc/nLcpWksX/0x1900-000000-80-0-0.jpg" alt="Fade Into Darkness">
-          <div class="song-info">
-            <div class="song-name">Fade Into Darkness</div>
-            <div class="song-artist">Avicii</div>
-          </div>
-        </div>
-
-        <!-- 8. Tiësto - Red Lights -->
-        <div class="song-item" onclick="playSong('Tiësto - Red Lights.mp3', 'Red Lights', 'Tiësto', 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg')">
+        <!-- 7. Tiësto - Red Lights -->
+        <div class="song-item" onclick="playSongByIndex(6)">
           <img src="https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg" alt="Red Lights">
           <div class="song-info">
             <div class="song-name">Red Lights</div>
@@ -291,8 +282,17 @@
           </div>
         </div>
 
+        <!-- 8. Avicii - The Nights -->
+        <div class="song-item" onclick="playSongByIndex(7)">
+          <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="The Nights">
+          <div class="song-info">
+            <div class="song-name">The Nights</div>
+            <div class="song-artist">Avicii</div>
+          </div>
+        </div>
+
         <!-- 9. Kygo - Save My Love -->
-        <div class="song-item" onclick="playSong('Kygo - Save My Love.mp3', 'Save My Love', 'Kygo', 'https://i.postimg.cc/kMt9LD5c/images.jpg')">
+        <div class="song-item" onclick="playSongByIndex(8)">
           <img src="https://i.postimg.cc/kMt9LD5c/images.jpg" alt="Save My Love">
           <div class="song-info">
             <div class="song-name">Save My Love</div>
@@ -301,7 +301,7 @@
         </div>
 
         <!-- 10. OneRepublic - Apologize -->
-        <div class="song-item" onclick="playSong('OneRepublic - Apologize.mp3', 'Apologize', 'OneRepublic', 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg')">
+        <div class="song-item" onclick="playSongByIndex(9)">
           <img src="https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg" alt="Apologize">
           <div class="song-info">
             <div class="song-name">Apologize</div>
@@ -310,7 +310,7 @@
         </div>
 
         <!-- 11. Kygo - Stargazing -->
-        <div class="song-item" onclick="playSong('Kygo - Stargazing.mp3', 'Stargazing', 'Kygo', 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg')">
+        <div class="song-item" onclick="playSongByIndex(10)">
           <img src="https://i.postimg.cc/xC7SZVHk/images-(2).jpg" alt="Stargazing">
           <div class="song-info">
             <div class="song-name">Stargazing</div>
@@ -319,7 +319,7 @@
         </div>
 
         <!-- 12. Martin Garrix - The Only Way Is Up -->
-        <div class="song-item" onclick="playSong('Martin Garrix - The Only Way Is Up.mp3', 'The Only Way Is Up', 'Martin Garrix', 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg')">
+        <div class="song-item" onclick="playSongByIndex(11)">
           <img src="https://i.postimg.cc/CxDHBGmM/images-(1).jpg" alt="The Only Way Is Up">
           <div class="song-info">
             <div class="song-name">The Only Way Is Up</div>
@@ -328,7 +328,7 @@
         </div>
 
         <!-- 13. Eminem - Somebody Save Me -->
-        <div class="song-item" onclick="playSong('Eminem - Somebody Save Me.mp3', 'Somebody Save Me', 'Eminem', 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg')">
+        <div class="song-item" onclick="playSongByIndex(12)">
           <img src="https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg" alt="Somebody Save Me">
           <div class="song-info">
             <div class="song-name">Somebody Save Me</div>
@@ -337,7 +337,7 @@
         </div>
 
         <!-- 14. Marshmello - Be Kind -->
-        <div class="song-item" onclick="playSong('Marshmello - Be Kind.mp3', 'Be Kind', 'Marshmello', 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg')">
+        <div class="song-item" onclick="playSongByIndex(13)">
           <img src="https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg" alt="Be Kind">
           <div class="song-info">
             <div class="song-name">Be Kind</div>
@@ -346,7 +346,7 @@
         </div>
 
         <!-- 15. Justin Bieber - Ghost -->
-        <div class="song-item" onclick="playSong('Justin Bieber - Ghost.mp3', 'Ghost', 'Justin Bieber', 'https://i.postimg.cc/MpdVgzZ5/images.jpg')">
+        <div class="song-item" onclick="playSongByIndex(14)">
           <img src="https://i.postimg.cc/MpdVgzZ5/images.jpg" alt="Ghost">
           <div class="song-info">
             <div class="song-name">Ghost</div>
@@ -355,7 +355,7 @@
         </div>
 
         <!-- 16. Brandon Heath - Whole Heart -->
-        <div class="song-item" onclick="playSong('Brandon Heath - Whole Heart.mp3', 'Whole Heart', 'Brandon Heath', 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg')">
+        <div class="song-item" onclick="playSongByIndex(15)">
           <img src="https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg" alt="Whole Heart">
           <div class="song-info">
             <div class="song-name">Whole Heart</div>
@@ -364,7 +364,7 @@
         </div>
 
         <!-- 17. Kid Ink - Money and the Power -->
-        <div class="song-item" onclick="playSong('Kid Ink - Money and the Power.mp3', 'Money and the Power', 'Kid Ink', 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg')">
+        <div class="song-item" onclick="playSongByIndex(16)">
           <img src="https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg" alt="Money and the Power">
           <div class="song-info">
             <div class="song-name">Money and the Power</div>
@@ -386,20 +386,41 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Reproductor de Audio -->
-      <audio id="main-audio" controls loop src="MGMT - Kids.mp3"></audio>
+      <!-- Reproductor de Audio (sin loop para que avance automáticamente) -->
+      <audio id="main-audio" controls src="MGMT - Kids.mp3"></audio>
     </div>
 
   </div>
 
   <script>
-    function playSong(file, title, artist, cover) {
-      const audio = document.getElementById('main-audio');
-      const titleEl = document.getElementById('player-title');
-      const artistEl = document.getElementById('player-artist');
-      const coverEl = document.getElementById('player-cover');
+    const playlist = [
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/RCPfpsNc/images-(2).jpg' },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
+      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
+      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg' },
+      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg' },
+      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
+      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg' },
+      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg' },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
+      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg' },
+      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg' },
+      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg' },
+      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg' },
+      { file: 'Brandon Heath - Whole Heart.mp3', title: 'Whole Heart', artist: 'Brandon Heath', cover: 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg' },
+      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg' }
+    ];
 
-      audio.src = file;
+    let currentIndex = 0;
+    const audio = document.getElementById('main-audio');
+
+    function playSongByIndex(index) {
+      currentIndex = index;
+      const song = playlist[currentIndex];
+
+      audio.src = song.file;
       audio.load();
       
       const playPromise = audio.play();
@@ -409,10 +430,16 @@
         });
       }
 
-      titleEl.textContent = title;
-      artistEl.textContent = artist;
-      coverEl.src = cover;
+      document.getElementById('player-title').textContent = song.title;
+      document.getElementById('player-artist').textContent = song.artist;
+      document.getElementById('player-cover').src = song.cover;
     }
+
+    // Evento que se dispara automáticamente al terminar la canción actual
+    audio.addEventListener('ended', function() {
+      currentIndex = (currentIndex + 1) % playlist.length; // Avanza a la siguiente y vuelve a 0 al llegar al final
+      playSongByIndex(currentIndex);
+    });
   </script>
 
 </body>
