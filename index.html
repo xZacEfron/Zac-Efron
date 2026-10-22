@@ -56,7 +56,7 @@
       text-align: center;
     }
 
-    /* Contenedor para la foto completa vertical */
+    /* Contenedor para la foto completa vertical (PC por defecto) */
     .full-img-container {
       width: 100%;
       flex: 1;
@@ -67,12 +67,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: #000000;
     }
 
     .full-img-container img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* En PC se ve rellenando perfecto */
+    }
+
+    /* REGLA ESPECIAL SOLO PARA CELULARES (Pantallas menores a 768px) */
+    @media (max-width: 768px) {
+      .full-img-container img {
+        object-fit: contain; /* En celular se aleja para verse completa sin zoom exagerado */
+      }
     }
 
     /* Lista de canciones */
@@ -206,7 +214,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist con nuevo orden -->
+    <!-- Tarjeta 2: Playlist -->
     <div class="card">
       <div class="song-list">
         <!-- 1. A Flock of Seagulls - I Ran (So Far Away) -->
@@ -392,7 +400,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral (Inicia por defecto con I Ran) -->
+    <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
       <div class="disc-container">
         <img id="player-cover" src="https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg" alt="I Ran (So Far Away)">
