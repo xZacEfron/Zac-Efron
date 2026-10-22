@@ -88,11 +88,12 @@
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
     }
 
     .song-item:hover {
       background: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
     }
 
     .song-item img {
@@ -185,24 +186,27 @@
       <div class="playlist-title">Your Playlist</div>
       
       <div class="song-list">
-        <div class="song-item">
-          <img src="https://i.scdn.co/image/ab67616d0000b273fa138c29b7941fa9e4e6f4a8" alt="Red Lights">
-          <div class="song-info">
-            <div class="song-name">Red Lights</div>
-            <div class="song-artist">Tiësto</div>
-          </div>
-        </div>
-
-        <div class="song-item">
-          <img src="https://i.scdn.co/image/ab67616d0000b2738a9d18b32338ff9134a94829" alt="Freeze">
+        <!-- Canción 1 -->
+        <div class="song-item" onclick="playSong('Kygo - Freeze.mp3', 'Freeze', 'Kygo', 'https://m.media-amazon.com/images/I/81xU9d4NfNL._SS500_.jpg')">
+          <img src="https://m.media-amazon.com/images/I/81xU9d4NfNL._SS500_.jpg" alt="Freeze">
           <div class="song-info">
             <div class="song-name">Freeze</div>
             <div class="song-artist">Kygo</div>
           </div>
         </div>
 
+        <!-- Canción 2 -->
+        <div class="song-item" onclick="playSong('Tiësto - Red Lights.mp3', 'Red Lights', 'Tiësto', 'https://images.genius.com/0cb2d9f8c05711e749a21e428c0499e9.1000x1000x1.jpg')">
+          <img src="https://images.genius.com/0cb2d9f8c05711e749a21e428c0499e9.1000x1000x1.jpg" alt="Red Lights">
+          <div class="song-info">
+            <div class="song-name">Red Lights</div>
+            <div class="song-artist">Tiësto</div>
+          </div>
+        </div>
+
+        <!-- Canción 3 -->
         <div class="song-item">
-          <img src="https://i.scdn.co/image/ab67616d0000b27361730f08a54d5c90715e4a83" alt="HAPPY">
+          <img src="https://m.media-amazon.com/images/I/81IAnI4G5bL._SS500_.jpg" alt="HAPPY">
           <div class="song-info">
             <div class="song-name">HAPPY</div>
             <div class="song-artist">NF</div>
@@ -216,20 +220,38 @@
       <div class="now-playing-label">Now Playing</div>
       
       <div class="disc-container">
-        <img src="https://i.scdn.co/image/ab67616d0000b273fa138c29b7941fa9e4e6f4a8" alt="Tiësto - Red Lights">
+        <img id="player-cover" src="https://m.media-amazon.com/images/I/81xU9d4NfNL._SS500_.jpg" alt="Kygo - Freeze">
       </div>
 
-      <div class="current-title">Red Lights</div>
-      <div class="current-artist">Tiësto</div>
+      <div class="current-title" id="player-title">Freeze</div>
+      <div class="current-artist" id="player-artist">Kygo</div>
 
-      <!-- Enlace al archivo subido -->
-      <audio controls autoplay loop>
-        <source src="Tiësto - Red Lights.mp3" type="audio/mpeg">
+      <!-- Reproductor de Audio -->
+      <audio id="main-audio" controls autoplay loop>
+        <source id="audio-source" src="Kygo - Freeze.mp3" type="audio/mpeg">
         Tu navegador no soporta el reproductor de audio.
       </audio>
     </div>
 
   </div>
+
+  <script>
+    function playSong(file, title, artist, cover) {
+      const audio = document.getElementById('main-audio');
+      const source = document.getElementById('audio-source');
+      const titleEl = document.getElementById('player-title');
+      const artistEl = document.getElementById('player-artist');
+      const coverEl = document.getElementById('player-cover');
+
+      source.src = file;
+      audio.load();
+      audio.play();
+
+      titleEl.textContent = title;
+      artistEl.textContent = artist;
+      coverEl.src = cover;
+    }
+  </script>
 
 </body>
 </html>
