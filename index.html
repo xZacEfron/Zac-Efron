@@ -32,7 +32,7 @@
       flex-wrap: wrap;
     }
 
-    /* Tarjeta Principal / Perfil */
+    /* Tarjeta Base */
     .card {
       background: rgba(15, 20, 28, 0.85);
       backdrop-filter: blur(16px);
@@ -79,7 +79,7 @@
       margin-bottom: 12px;
     }
 
-    /* Contenedor de Playlist con Scroll Fino */
+    /* Lista de canciones */
     .song-list {
       display: flex;
       flex-direction: column;
@@ -142,7 +142,7 @@
       color: #94a3b8;
     }
 
-    /* Reproductor Player */
+    /* Reproductor Lateral */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -203,7 +203,6 @@
     <div class="card">
       <div class="header-title">Rog3r</div>
       
-      <!-- Foto de Perfil Circular -->
       <div class="profile-img-container">
         <img src="https://xatimg.com/image/3DTp4snrSCDj.jpg" alt="Rog3r">
       </div>
@@ -357,3 +356,55 @@
 
         <!-- 17. Kid Ink - Money and the Power -->
         <div class="song-item" onclick="playSong('Kid Ink - Money and the Power.mp3', 'Money and the Power', 'Kid Ink', 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg')">
+          <img src="https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg" alt="Money and the Power">
+          <div class="song-info">
+            <div class="song-name">Money and the Power</div>
+            <div class="song-artist">Kid Ink</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tarjeta Derecha (Reproductor Lateral) -->
+    <div class="card player-card">
+      <div class="now-playing-label">Now Playing</div>
+      
+      <div class="disc-container">
+        <img id="player-cover" src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="MGMT - Kids">
+      </div>
+
+      <div class="current-title" id="player-title">Kids</div>
+      <div class="current-artist" id="player-artist">MGMT</div>
+
+      <!-- Reproductor de Audio -->
+      <audio id="main-audio" controls loop src="MGMT - Kids.mp3"></audio>
+    </div>
+
+  </div>
+
+  <script>
+    function playSong(file, title, artist, cover) {
+      const audio = document.getElementById('main-audio');
+      const titleEl = document.getElementById('player-title');
+      const artistEl = document.getElementById('player-artist');
+      const coverEl = document.getElementById('player-cover');
+
+      audio.src = file;
+      audio.load();
+      
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Esperando interacción del usuario.");
+        });
+      }
+
+      titleEl.textContent = title;
+      artistEl.textContent = artist;
+      coverEl.src = cover;
+    }
+  </script>
+
+</body>
+</html>
