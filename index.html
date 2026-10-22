@@ -316,7 +316,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas y Esferas HD -->
+  <!-- Canvas para Partículas y Esferas con Brillo de Anime -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -468,7 +468,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (SOLO 1 O 2 ESTRELLAS, SUPERIOR, CADA 18s) --- */
+    /* --- SISTEMA DE ESFERAS CON BRILLO DE ANIME (1-5 ESTRELLAS) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -492,17 +492,15 @@
       });
     }
 
-    // 2. Esfera del Dragón Volando
+    // 2. Esfera del Dragón con Brillo Animado
     let activeBall = null;
 
     function spawnDragonBall() {
-      const fromLeft = Math.random() > 0.5; // Izquierda a derecha o viceversa
+      const fromLeft = Math.random() > 0.5;
       const speed = Math.random() * 0.3 + 0.4; // Flotando lento
-      
-      // LIMITADO EXCLUSIVAMENTE A 1 O 2 ESTRELLAS para evitar saturación y mantener elegancia
-      const starsCount = Math.floor(Math.random() * 2) + 1; // 1 o 2
+      const starsCount = Math.floor(Math.random() * 5) + 1; // 1 a 5 estrellas
 
-      // Estrictamente en la parte SUPERIOR de la pantalla
+      // Estrictamente en la parte superior
       const randomY = Math.random() * (canvas.height * 0.15) + 15;
 
       activeBall = {
@@ -512,20 +510,20 @@
         speedX: fromLeft ? speed : -speed,
         speedY: 0,
         stars: starsCount,
-        radius: 12, // Tamaño compacto y perfecto
+        radius: 12,
         angle: 0,
-        spinSpeed: (Math.random() - 0.5) * 0.02
+        spinSpeed: (Math.random() - 0.5) * 0.02,
+        glowPulse: 0 // Control para el efecto de brillo parpadeante
       };
     }
 
     function scheduleNextDragonBall() {
-      // Cada 18 segundos exactos después de salir la anterior
       setTimeout(() => {
         spawnDragonBall();
-      }, 18000);
+      }, 18000); // Cada 18 segundos
     }
 
-    // Primera aparición exactamente a los 10 segundos de abrir el Space
+    // Primera aparición a los 10 segundos
     setTimeout(spawnDragonBall, 10000);
 
     function drawStarVector(ctx, x, y, radius) {
@@ -550,7 +548,7 @@
       }
       ctx.lineTo(0, -radius);
       ctx.closePath();
-      ctx.fillStyle = '#e60000'; // Rojo brillante HD
+      ctx.fillStyle = '#ff1a1a'; // Rojo intenso brillante
       ctx.fill();
       ctx.restore();
     }
@@ -560,42 +558,62 @@
       ctx.translate(ball.x, ball.y);
       ctx.rotate(ball.angle);
 
-      // Resplandor cálido
-      const glowGradient = ctx.createRadialGradient(0, 0, 2, 0, 0, ball.radius * 1.6);
-      glowGradient.addColorStop(0, 'rgba(255, 180, 50, 0.45)');
-      glowGradient.addColorStop(1, 'rgba(255, 140, 0, 0)');
+      // Efecto de brillo de anime (Aura pulsante)
+      ball.glowPulse += 0.08;
+      const pulseIntensity = ball.radius * (2.2 + Math.sin(ball.glowPulse) * 0.4);
+
+      const glowGradient = ctx.createRadialGradient(0, 0, 2, 0, 0, pulseIntensity);
+      glowGradient.addColorStop(0, 'rgba(255, 200, 50, 0.75)'); // Núcleo muy luminoso
+      glowGradient.addColorStop(0.4, 'rgba(255, 140, 0, 0.4)'); // Aura naranja
+      glowGradient.addColorStop(1, 'rgba(255, 100, 0, 0)');     // Difuminado al espacio
+
       ctx.fillStyle = glowGradient;
       ctx.beginPath();
-      ctx.arc(0, 0, ball.radius * 1.6, 0, Math.PI * 2);
+      ctx.arc(0, 0, pulseIntensity, 0, Math.PI * 2);
       ctx.fill();
 
-      // Esfera de cristal naranja perfecta
+      // Esfera de cristal naranja brillante
       const ballGradient = ctx.createRadialGradient(-3, -3, 1, 0, 0, ball.radius);
-      ballGradient.addColorStop(0, 'rgba(255, 230, 120, 0.98)');
-      ballGradient.addColorStop(0.5, 'rgba(255, 150, 20, 0.92)');
-      ballGradient.addColorStop(1, 'rgba(200, 70, 0, 0.95)');
+      ballGradient.addColorStop(0, 'rgba(255, 240, 150, 1)');
+      ballGradient.addColorStop(0.5, 'rgba(255, 160, 20, 0.95)');
+      ballGradient.addColorStop(1, 'rgba(190, 50, 0, 0.95)');
 
       ctx.beginPath();
       ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
       ctx.fillStyle = ballGradient;
       ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 240, 200, 0.5)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255, 255, 220, 0.8)'; // Brillo en el borde
+      ctx.lineWidth = 1.2;
       ctx.stroke();
 
-      // Dibujar estrellas vectoriales HD (1 o 2 estrellas bien centradas)
+      // Dibujar estrellas (1 a 5 estrellas)
       drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
 
       ctx.restore();
     }
 
     function drawRedStarsVector(ctx, count, R) {
-      const starSize = R * 0.45;
+      const starSize = R * 0.42;
       if (count === 1) {
         drawStarVector(ctx, 0, 0, starSize);
       } else if (count === 2) {
         drawStarVector(ctx, -R * 0.35, 0, starSize);
         drawStarVector(ctx, R * 0.35, 0, starSize);
+      } else if (count === 3) {
+        drawStarVector(ctx, 0, -R * 0.3, starSize);
+        drawStarVector(ctx, -R * 0.4, R * 0.35, starSize);
+        drawStarVector(ctx, R * 0.4, R * 0.35, starSize);
+      } else if (count === 4) {
+        drawStarVector(ctx, -R * 0.35, -R * 0.35, starSize);
+        drawStarVector(ctx, R * 0.35, -R * 0.35, starSize);
+        drawStarVector(ctx, -R * 0.35, R * 0.35, starSize);
+        drawStarVector(ctx, R * 0.35, R * 0.35, starSize);
+      } else if (count === 5) {
+        drawStarVector(ctx, 0, 0, starSize);
+        drawStarVector(ctx, -R * 0.45, -R * 0.45, starSize);
+        drawStarVector(ctx, R * 0.45, -R * 0.45, starSize);
+        drawStarVector(ctx, -R * 0.45, R * 0.45, starSize);
+        drawStarVector(ctx, R * 0.45, R * 0.45, starSize);
       }
     }
 
