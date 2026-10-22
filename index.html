@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Fondo de Elementos Flotantes Combinados (Canvas) */
+    /* Fondo de Partículas Suaves (Canvas) */
     #particles-canvas {
       position: fixed;
       top: 0;
@@ -317,7 +317,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Fondo Combinado (Partículas + R + Notas Musicales) -->
+  <!-- Canvas para Partículas Limpias -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -472,7 +472,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA COMBINADO DE FONDO (BOLITAS + "𝑹" + SIMBOLOS MUSICALES) --- */
+    /* --- SISTEMA DE PARTÍCULAS SUAVES (BOLITAS) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -483,77 +483,41 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const textSymbols = ['𝑹', '♫', '♪', '♬'];
-    const elements = [];
-    
-    // 1. Bolitas / Puntos
-    const dotCount = 35;
-    for (let i = 0; i < dotCount; i++) {
-      elements.push({
-        type: 'dot',
+    const particles = [];
+    const particleCount = 40;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         radius: Math.random() * 1.5 + 0.5,
         alpha: Math.random() * 0.4 + 0.1,
-        speedX: (Math.random() - 0.5) * 0.25,
-        speedY: (Math.random() - 0.5) * 0.25
-      });
-    }
-
-    // 2. Textos (𝑹 y Notas)
-    const textCount = 20;
-    for (let i = 0; i < textCount; i++) {
-      elements.push({
-        type: 'text',
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        char: textSymbols[Math.floor(Math.random() * textSymbols.length)],
-        size: Math.random() * 10 + 10,
-        alpha: Math.random() * 0.35 + 0.15,
         speedX: (Math.random() - 0.5) * 0.2,
-        speedY: (Math.random() - 0.5) * 0.2,
-        angle: Math.random() * Math.PI * 2,
-        spin: (Math.random() - 0.5) * 0.01
+        speedY: (Math.random() - 0.5) * 0.2
       });
     }
 
-    function animateCombinedBackground() {
+    function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      elements.forEach(el => {
-        el.x += el.speedX;
-        el.y += el.speedY;
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
 
-        // Reposicionar al salir de la pantalla
-        if (el.x < -20) el.x = canvas.width + 20;
-        if (el.x > canvas.width + 20) el.x = -20;
-        if (el.y < -20) el.y = canvas.height + 20;
-        if (el.y > canvas.height + 20) el.y = -20;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
 
-        if (el.type === 'dot') {
-          // Dibujar Bolita
-          ctx.beginPath();
-          ctx.arc(el.x, el.y, el.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${el.alpha})`;
-          ctx.fill();
-        } else {
-          // Dibujar Texto (𝑹 o Nota Musical)
-          el.angle += el.spin;
-          ctx.save();
-          ctx.translate(el.x, el.y);
-          ctx.rotate(el.angle);
-          ctx.font = `${el.size}px sans-serif`;
-          ctx.fillStyle = `rgba(255, 255, 255, ${el.alpha})`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(el.char, 0, 0);
-          ctx.restore();
-        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        ctx.fill();
       });
 
-      requestAnimationFrame(animateCombinedBackground);
+      requestAnimationFrame(animateParticles);
     }
-    animateCombinedBackground();
+    animateParticles();
   </script>
 
 </body>
