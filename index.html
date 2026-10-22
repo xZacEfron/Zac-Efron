@@ -316,7 +316,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas y Esferas de Alta Definición -->
+  <!-- Canvas para Partículas y Esferas HD -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -468,7 +468,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (SUPERIOR, ESTRICTAMENTE IZQ/DER, HD, LENTAS, CADA 15s) --- */
+    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (SOLO 1 O 2 ESTRELLAS, SUPERIOR, CADA 18s) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -496,35 +496,37 @@
     let activeBall = null;
 
     function spawnDragonBall() {
-      const fromLeft = Math.random() > 0.5; // Sale de izquierda o derecha
-      const speed = Math.random() * 0.3 + 0.4; // Muy lento, flotando
-      const starsCount = Math.floor(Math.random() * 7) + 1; // 1 a 7 estrellas
+      const fromLeft = Math.random() > 0.5; // Izquierda a derecha o viceversa
+      const speed = Math.random() * 0.3 + 0.4; // Flotando lento
+      
+      // LIMITADO EXCLUSIVAMENTE A 1 O 2 ESTRELLAS para evitar saturación y mantener elegancia
+      const starsCount = Math.floor(Math.random() * 2) + 1; // 1 o 2
 
       // Estrictamente en la parte SUPERIOR de la pantalla
-      const randomY = Math.random() * (canvas.height * 0.22) + 20;
+      const randomY = Math.random() * (canvas.height * 0.15) + 15;
 
       activeBall = {
         fromLeft: fromLeft,
         x: fromLeft ? -50 : canvas.width + 50,
         y: randomY,
         speedX: fromLeft ? speed : -speed,
-        speedY: 0, // Movimiento totalmente horizontal (de lado a lado)
+        speedY: 0,
         stars: starsCount,
-        radius: 12, // Tamaño pequeño y perfecto
+        radius: 12, // Tamaño compacto y perfecto
         angle: 0,
         spinSpeed: (Math.random() - 0.5) * 0.02
       };
     }
 
     function scheduleNextDragonBall() {
-      // Cada 15 segundos exactos
+      // Cada 18 segundos exactos después de salir la anterior
       setTimeout(() => {
         spawnDragonBall();
-      }, 15000);
+      }, 18000);
     }
 
-    // Primera aparición a los 3 segundos
-    setTimeout(spawnDragonBall, 3000);
+    // Primera aparición exactamente a los 10 segundos de abrir el Space
+    setTimeout(spawnDragonBall, 10000);
 
     function drawStarVector(ctx, x, y, radius) {
       ctx.save();
@@ -548,16 +550,13 @@
       }
       ctx.lineTo(0, -radius);
       ctx.closePath();
-      ctx.fillStyle = '#e60000'; // Rojo brillante de alta definición
+      ctx.fillStyle = '#e60000'; // Rojo brillante HD
       ctx.fill();
       ctx.restore();
     }
 
     function drawDragonBall(ball) {
       ctx.save();
-      // Forzar escala uniforme para evitar que se deforme en celulares
-      const scale = Math.min(window.innerWidth / canvas.width, window.innerHeight / canvas.height) || 1;
-      
       ctx.translate(ball.x, ball.y);
       ctx.rotate(ball.angle);
 
@@ -584,49 +583,19 @@
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // Dibujar estrellas vectoriales de alta definición en el centro
+      // Dibujar estrellas vectoriales HD (1 o 2 estrellas bien centradas)
       drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
 
       ctx.restore();
     }
 
     function drawRedStarsVector(ctx, count, R) {
-      const starSize = R * 0.42;
+      const starSize = R * 0.45;
       if (count === 1) {
         drawStarVector(ctx, 0, 0, starSize);
       } else if (count === 2) {
         drawStarVector(ctx, -R * 0.35, 0, starSize);
         drawStarVector(ctx, R * 0.35, 0, starSize);
-      } else if (count === 3) {
-        drawStarVector(ctx, 0, -R * 0.3, starSize);
-        drawStarVector(ctx, -R * 0.4, R * 0.35, starSize);
-        drawStarVector(ctx, R * 0.4, R * 0.35, starSize);
-      } else if (count === 4) {
-        drawStarVector(ctx, -R * 0.35, -R * 0.35, starSize);
-        drawStarVector(ctx, R * 0.35, -R * 0.35, starSize);
-        drawStarVector(ctx, -R * 0.35, R * 0.35, starSize);
-        drawStarVector(ctx, R * 0.35, R * 0.35, starSize);
-      } else if (count === 5) {
-        drawStarVector(ctx, 0, 0, starSize);
-        drawStarVector(ctx, -R * 0.45, -R * 0.45, starSize);
-        drawStarVector(ctx, R * 0.45, -R * 0.45, starSize);
-        drawStarVector(ctx, -R * 0.45, R * 0.45, starSize);
-        drawStarVector(ctx, R * 0.45, R * 0.45, starSize);
-      } else if (count === 6) {
-        drawStarVector(ctx, -R * 0.35, -R * 0.4, starSize);
-        drawStarVector(ctx, R * 0.35, -R * 0.4, starSize);
-        drawStarVector(ctx, -R * 0.5, 0, starSize);
-        drawStarVector(ctx, R * 0.5, 0, starSize);
-        drawStarVector(ctx, -R * 0.35, R * 0.4, starSize);
-        drawStarVector(ctx, R * 0.35, R * 0.4, starSize);
-      } else if (count === 7) {
-        drawStarVector(ctx, 0, 0, starSize);
-        drawStarVector(ctx, 0, -R * 0.55, starSize);
-        drawStarVector(ctx, -R * 0.45, -R * 0.25, starSize);
-        drawStarVector(ctx, R * 0.45, -R * 0.25, starSize);
-        drawStarVector(ctx, -R * 0.45, R * 0.3, starSize);
-        drawStarVector(ctx, R * 0.45, R * 0.3, starSize);
-        drawStarVector(ctx, 0, R * 0.55, starSize);
       }
     }
 
