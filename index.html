@@ -13,8 +13,8 @@
     }
 
     body {
-      background-color: #121824;
-      background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+      background-color: #050508;
+      background-image: radial-gradient(circle at 50% 50%, #0d1117 0%, #000000 100%);
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -34,14 +34,14 @@
 
     /* Tarjeta Principal / Perfil */
     .card {
-      background: rgba(30, 41, 59, 0.7);
+      background: rgba(15, 20, 28, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 24px;
       width: 360px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
     }
 
     .header-title {
@@ -49,15 +49,17 @@
       font-weight: 700;
       margin-bottom: 20px;
       color: #f8fafc;
+      text-align: center;
     }
 
     .profile-img-container {
-      width: 100%;
-      height: 220px;
-      border-radius: 20px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 20px;
-      position: relative;
+      margin: 0 auto 24px auto;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
     }
 
     .profile-img-container img {
@@ -67,7 +69,7 @@
     }
 
     .playlist-title {
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #94a3b8;
@@ -140,7 +142,7 @@
       border-radius: 50%;
       overflow: hidden;
       margin-bottom: 24px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
       border: 4px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -178,17 +180,17 @@
     <div class="card">
       <div class="header-title">Rog3r</div>
       
-      <!-- Foto de Perfil -->
+      <!-- Foto de Perfil Circular -->
       <div class="profile-img-container">
-        <img src="https://xatimg.com/image/6Oubxy9Z0xPq.png" alt="Perfil">
+        <img src="https://xatimg.com/image/3DTp4snrSCDj.jpg" alt="Rog3r">
       </div>
 
       <div class="playlist-title">Your Playlist</div>
       
       <div class="song-list">
         <!-- Canción 1 -->
-        <div class="song-item" onclick="playSong('Kygo - Freeze.mp3', 'Freeze', 'Kygo', 'https://upload.wikimedia.org/wikipedia/en/a/a5/Kygo_-_Freeze.png')">
-          <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Kygo_-_Freeze.png" alt="Freeze">
+        <div class="song-item" onclick="playSong('Kygo - Freeze.mp3', 'Freeze', 'Kygo', 'https://i.postimg.cc/htHm0kzP/Kygo.jpg')">
+          <img src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="Freeze">
           <div class="song-info">
             <div class="song-name">Freeze</div>
             <div class="song-artist">Kygo</div>
@@ -196,8 +198,8 @@
         </div>
 
         <!-- Canción 2 -->
-        <div class="song-item" onclick="playSong('Tiësto - Red Lights.mp3', 'Red Lights', 'Tiësto', 'https://upload.wikimedia.org/wikipedia/en/0/02/Tiesto_red_lights.png')">
-          <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Tiesto_red_lights.png" alt="Red Lights">
+        <div class="song-item" onclick="playSong('Tiësto - Red Lights.mp3', 'Red Lights', 'Tiësto', 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg')">
+          <img src="https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg" alt="Red Lights">
           <div class="song-info">
             <div class="song-name">Red Lights</div>
             <div class="song-artist">Tiësto</div>
@@ -205,8 +207,8 @@
         </div>
 
         <!-- Canción 3 -->
-        <div class="song-item" onclick="playSong('NF - HAPPY.mp3', 'HAPPY', 'NF', 'https://upload.wikimedia.org/wikipedia/en/e/eb/NF_-_Hope.png')">
-          <img src="https://upload.wikimedia.org/wikipedia/en/e/eb/NF_-_Hope.png" alt="HAPPY">
+        <div class="song-item" onclick="playSong('NF - HAPPY.mp3', 'HAPPY', 'NF', 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg')">
+          <img src="https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg" alt="HAPPY">
           <div class="song-info">
             <div class="song-name">HAPPY</div>
             <div class="song-artist">NF</div>
@@ -220,7 +222,7 @@
       <div class="now-playing-label">Now Playing</div>
       
       <div class="disc-container">
-        <img id="player-cover" src="https://upload.wikimedia.org/wikipedia/en/a/a5/Kygo_-_Freeze.png" alt="Kygo - Freeze">
+        <img id="player-cover" src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="Kygo - Freeze">
       </div>
 
       <div class="current-title" id="player-title">Freeze</div>
