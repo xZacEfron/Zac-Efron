@@ -45,7 +45,7 @@
       z-index: 1;
     }
 
-    /* Tarjetas principales con efecto Glow Hover */
+    /* Tarjetas principales con Aura de Ki sutil al hacer Hover */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
@@ -62,8 +62,8 @@
     }
 
     .card:hover {
-      border-color: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.08), 0 20px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 200, 100, 0.3); /* Aura dorada sutil */
+      box-shadow: 0 0 30px rgba(255, 170, 50, 0.12), 0 20px 40px rgba(0, 0, 0, 0.9);
       transform: translateY(-2px);
     }
 
@@ -74,6 +74,63 @@
       margin-bottom: 12px;
       color: #f8fafc;
       text-align: center;
+    }
+
+    /* --- CONTROL DE VOLUMEN FLOTANTE MINIMALISTA --- */
+    .volume-widget {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: rgba(15, 15, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 10;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .volume-widget:hover {
+      border-color: rgba(255, 200, 100, 0.3);
+      box-shadow: 0 0 20px rgba(255, 170, 50, 0.1);
+    }
+
+    .volume-icon {
+      font-size: 14px;
+      color: #94a3b8;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      width: 90px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      transition: background 0.3s;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
     }
 
     /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
@@ -316,8 +373,14 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas y Esferas con Brillo Intermitente -->
+  <!-- Canvas para Partículas y Esferas -->
   <canvas id="particles-canvas"></canvas>
+
+  <!-- Widget Flotante de Control de Volumen -->
+  <div class="volume-widget">
+    <span class="volume-icon" id="vol-icon" onclick="toggleMute()" title="Silenciar / Activar">🔊</span>
+    <input type="range" class="volume-slider" id="vol-slider" min="0" max="1" step="0.05" value="1" oninput="changeVolume(this.value)">
+  </div>
 
   <div class="app-container">
     
@@ -392,6 +455,33 @@
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
+    const volSlider = document.getElementById('vol-slider');
+    const volIcon = document.getElementById('vol-icon');
+    let lastVolume = 1;
+
+    function changeVolume(val) {
+      audio.volume = val;
+      if (val == 0) {
+        volIcon.textContent = '🔇';
+      } else if (val < 0.5) {
+        volIcon.textContent = '🔉';
+      } else {
+        volIcon.textContent = '🔊';
+      }
+    }
+
+    function toggleMute() {
+      if (audio.volume > 0) {
+        lastVolume = audio.volume;
+        audio.volume = 0;
+        volSlider.value = 0;
+        volIcon.textContent = '🔇';
+      } else {
+        audio.volume = lastVolume;
+        volSlider.value = lastVolume;
+        changeVolume(lastVolume);
+      }
+    }
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
@@ -468,7 +558,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS (1-4 ESTRELLAS, ESTRICTAMENTE ARRIBA, BRILLO INTERMITENTE) --- */
+    /* --- SISTEMA DE ESFERAS (1-4 ESTRELLAS, SUPERIOR, CADA 18s, BRILLO INTERMITENTE) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -479,7 +569,6 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // 1. Partículas sutiles de fondo
     const particles = [];
     for (let i = 0; i < 40; i++) {
       particles.push({
@@ -492,15 +581,12 @@
       });
     }
 
-    // 2. Esfera del Dragón
     let activeBall = null;
 
     function spawnDragonBall() {
       const fromLeft = Math.random() > 0.5;
-      const speed = Math.random() * 0.3 + 0.4; // Flotando lento
-      const starsCount = Math.floor(Math.random() * 4) + 1; // 1 a 4 estrellas (sin saturar)
-
-      // ESTRICTAMENTE EN LA FRANJA SUPERIOR (muy por arriba de las tarjetas)
+      const speed = Math.random() * 0.3 + 0.4;
+      const starsCount = Math.floor(Math.random() * 4) + 1;
       const randomY = Math.random() * 35 + 15;
 
       activeBall = {
@@ -510,20 +596,19 @@
         speedX: fromLeft ? speed : -speed,
         speedY: 0,
         stars: starsCount,
-        radius: 11, // Tamaño compacto
+        radius: 11,
         angle: 0,
         spinSpeed: (Math.random() - 0.5) * 0.02,
-        flashTimer: 0 // Control para el destello intermitente
+        flashTimer: 0
       };
     }
 
     function scheduleNextDragonBall() {
       setTimeout(() => {
         spawnDragonBall();
-      }, 18000); // Cada 18 segundos
+      }, 18000);
     }
 
-    // Primera aparición a los 10 segundos
     setTimeout(spawnDragonBall, 10000);
 
     function drawStarVector(ctx, x, y, radius) {
@@ -548,7 +633,7 @@
       }
       ctx.lineTo(0, -radius);
       ctx.closePath();
-      ctx.fillStyle = '#e60000'; // Rojo nítido
+      ctx.fillStyle = '#e60000';
       ctx.fill();
       ctx.restore();
     }
@@ -558,10 +643,8 @@
       ctx.translate(ball.x, ball.y);
       ctx.rotate(ball.angle);
 
-      // Brillo intermitente cada ciertos segundos (efecto pulso suave controlado)
       ball.flashTimer += 0.03;
       const pulse = Math.sin(ball.flashTimer);
-      // Solo brilla intensamente un momento cada ciclo, el resto del tiempo es sutil
       const glowAlpha = pulse > 0.7 ? (pulse - 0.7) * 1.5 : 0.05;
 
       if (glowAlpha > 0.05) {
@@ -574,7 +657,6 @@
         ctx.fill();
       }
 
-      // Esfera de cristal naranja perfecta
       const ballGradient = ctx.createRadialGradient(-2, -2, 1, 0, 0, ball.radius);
       ballGradient.addColorStop(0, 'rgba(255, 230, 120, 0.98)');
       ballGradient.addColorStop(0.5, 'rgba(255, 150, 20, 0.92)');
@@ -588,7 +670,6 @@
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // Dibujar estrellas (1 a 4 estrellas)
       drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
 
       ctx.restore();
