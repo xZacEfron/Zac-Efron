@@ -317,7 +317,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas Limpias -->
+  <!-- Canvas para Partículas y Objetos Voladores -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -472,7 +472,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE PARTÍCULAS SUAVES (BOLITAS) --- */
+    /* --- SISTEMA DE FONDO (PARTÍCULAS + OBJETOS OCASIONALES CADA 20-30s) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -483,6 +483,7 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
+    // 1. Partículas de fondo normales (Bolitas)
     const particles = [];
     const particleCount = 40;
 
@@ -497,9 +498,85 @@
       });
     }
 
+    // 2. Sistema de Objeto Especial (Cápsula DBZ / Estrella / Bola Dragon)
+    const specialTypes = ['capsule', 'star', 'dragonball'];
+    let currentSpecial = null;
+
+    function spawnSpecialObject() {
+      const type = specialTypes[Math.floor(Math.random() * specialTypes.length)];
+      currentSpecial = {
+        type: type,
+        x: -50,
+        y: Math.random() * (canvas.height * 0.6), // Aparece en la mitad superior
+        speedX: Math.random() * 1.5 + 1.2,        // Movimiento horizontal
+        speedY: Math.random() * 0.8 + 0.3,        // Movimiento ligeramente diagonal
+        size: Math.random() * 6 + 12,
+        rotation: 0,
+        spinSpeed: (Math.random() - 0.5) * 0.03
+      };
+    }
+
+    function scheduleNextSpecial() {
+      // Intervalo aleatorio entre 20,000ms (20s) y 30,000ms (30s)
+      const nextDelay = Math.random() * 10000 + 20000;
+      setTimeout(() => {
+        spawnSpecialObject();
+      }, nextDelay);
+    }
+
+    // Iniciar primer disparo a los 10 segundos
+    setTimeout(spawnSpecialObject, 10000);
+
+    function drawSpecialObject(obj) {
+      ctx.save();
+      ctx.translate(obj.x, obj.y);
+      ctx.rotate(obj.rotation);
+
+      if (obj.type === 'star') {
+        // Estrella fugaz con estela
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-40, -10);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fill();
+      } else if (obj.type === 'capsule') {
+        // Cápsula Capsule Corp (Blanca y Azul estilizada)
+        ctx.beginPath();
+        ctx.roundRect(-8, -4, 16, 8, 4);
+        ctx.fillStyle = 'rgba(240, 240, 245, 0.35)';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.roundRect(0, -4, 8, 8, [0, 4, 4, 0]);
+        ctx.fillStyle = 'rgba(100, 180, 255, 0.35)';
+        ctx.fill();
+      } else if (obj.type === 'dragonball') {
+        // Esfera del Dragón (Naranja translúcido con brillo)
+        ctx.beginPath();
+        ctx.arc(0, 0, 6, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 170, 50, 0.4)';
+        ctx.fill();
+
+        // Pequeño centro
+        ctx.beginPath();
+        ctx.arc(-1, -1, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 200, 0.5)';
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
+      // Dibujar partículas normales
       particles.forEach(p => {
         p.x += p.speedX;
         p.y += p.speedY;
@@ -514,6 +591,21 @@
         ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
       });
+
+      // Dibujar y mover objeto especial si está activo
+      if (currentSpecial) {
+        currentSpecial.x += currentSpecial.speedX;
+        currentSpecial.y += currentSpecial.speedY;
+        currentSpecial.rotation += currentSpecial.spinSpeed;
+
+        drawSpecialObject(currentSpecial);
+
+        // Si sale de la pantalla por la derecha o abajo
+        if (currentSpecial.x > canvas.width + 60 || currentSpecial.y > canvas.height + 60) {
+          currentSpecial = null;
+          scheduleNextSpecial(); // Programar la siguiente aparición en 20-30 segundos
+        }
+      }
 
       requestAnimationFrame(animateParticles);
     }
