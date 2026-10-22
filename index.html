@@ -468,7 +468,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (CUALQUIER ALTURA, INCLUYENDO LA PARTE SUPERIOR) --- */
+    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (SUPERIOR, LENTAS, CHICAS, CADA 15s) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -497,49 +497,50 @@
 
     function spawnDragonBall() {
       const fromLeft = Math.random() > 0.5;
-      const speed = Math.random() * 1.5 + 1.2;
+      // Velocidad MUY lenta simulando flotación
+      const speed = Math.random() * 0.4 + 0.5; 
       const starsCount = Math.floor(Math.random() * 7) + 1; // 1 a 7 estrellas
 
-      // DISTRIBUCIÓN DE ALTURA: Se prioriza también la zona superior (desde arriba hasta abajo)
-      const randomY = Math.random() * (canvas.height * 0.85) + 30;
+      // ALTURA LIMITADA A LA ZONA SUPERIOR (por encima de las tarjetas)
+      const topZoneHeight = canvas.height * 0.35; 
+      const randomY = Math.random() * topZoneHeight + 20;
 
       activeBall = {
         fromLeft: fromLeft,
-        x: fromLeft ? -60 : canvas.width + 60,
+        x: fromLeft ? -50 : canvas.width + 50,
         y: randomY,
         speedX: fromLeft ? speed : -speed,
-        speedY: (Math.random() - 0.5) * 0.25,
+        speedY: (Math.random() - 0.5) * 0.1,
         stars: starsCount,
-        radius: 14
+        radius: 9 // Esfera más chica
       };
     }
 
     function scheduleNextDragonBall() {
-      // Intervalo entre 7 y 10 segundos
-      const nextDelay = Math.random() * 3000 + 7000;
+      // Intervalo fijo de 15 segundos exactos (15000ms)
       setTimeout(() => {
         spawnDragonBall();
-      }, nextDelay);
+      }, 15000);
     }
 
-    // Primera esfera a los 2 segundos
-    setTimeout(spawnDragonBall, 2000);
+    // Primera esfera a los 3 segundos
+    setTimeout(spawnDragonBall, 3000);
 
     function drawDragonBall(ball) {
       ctx.save();
       ctx.translate(ball.x, ball.y);
 
       // Resplandor cálido de fondo
-      const glowGradient = ctx.createRadialGradient(0, 0, 2, 0, 0, ball.radius * 1.8);
-      glowGradient.addColorStop(0, 'rgba(255, 180, 50, 0.5)');
+      const glowGradient = ctx.createRadialGradient(0, 0, 1, 0, 0, ball.radius * 1.6);
+      glowGradient.addColorStop(0, 'rgba(255, 180, 50, 0.4)');
       glowGradient.addColorStop(1, 'rgba(255, 140, 0, 0)');
       ctx.fillStyle = glowGradient;
       ctx.beginPath();
-      ctx.arc(0, 0, ball.radius * 1.8, 0, Math.PI * 2);
+      ctx.arc(0, 0, ball.radius * 1.6, 0, Math.PI * 2);
       ctx.fill();
 
       // Esfera de cristal naranja
-      const ballGradient = ctx.createRadialGradient(-3, -3, 2, 0, 0, ball.radius);
+      const ballGradient = ctx.createRadialGradient(-2, -2, 1, 0, 0, ball.radius);
       ballGradient.addColorStop(0, 'rgba(255, 220, 100, 0.95)');
       ballGradient.addColorStop(0.5, 'rgba(255, 150, 20, 0.9)');
       ballGradient.addColorStop(1, 'rgba(210, 80, 0, 0.9)');
@@ -549,10 +550,10 @@
       ctx.fillStyle = ballGradient;
       ctx.fill();
       ctx.strokeStyle = 'rgba(255, 230, 180, 0.4)';
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 0.8;
       ctx.stroke();
 
-      // Dibujar estrellas rojas en el centro
+      // Dibujar estrellas rojas en el centro adaptadas al tamaño chico
       drawRedStars(ctx, ball.stars, ball.radius * 0.55);
 
       ctx.restore();
@@ -560,45 +561,45 @@
 
     function drawRedStars(ctx, count, radius) {
       ctx.fillStyle = '#d91414';
-      ctx.font = `${radius * 0.9}px sans-serif`;
+      ctx.font = `${radius * 0.95}px sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
 
       if (count === 1) {
         ctx.fillText('★', 0, 0);
       } else if (count === 2) {
-        ctx.fillText('★', -radius * 0.4, 0);
-        ctx.fillText('★', radius * 0.4, 0);
+        ctx.fillText('★', -radius * 0.35, 0);
+        ctx.fillText('★', radius * 0.35, 0);
       } else if (count === 3) {
-        ctx.fillText('★', 0, -radius * 0.35);
-        ctx.fillText('★', -radius * 0.45, radius * 0.35);
-        ctx.fillText('★', radius * 0.45, radius * 0.35);
+        ctx.fillText('★', 0, -radius * 0.3);
+        ctx.fillText('★', -radius * 0.4, radius * 0.3);
+        ctx.fillText('★', radius * 0.4, radius * 0.3);
       } else if (count === 4) {
-        ctx.fillText('★', -radius * 0.35, -radius * 0.35);
-        ctx.fillText('★', radius * 0.35, -radius * 0.35);
-        ctx.fillText('★', -radius * 0.35, radius * 0.35);
-        ctx.fillText('★', radius * 0.35, radius * 0.35);
+        ctx.fillText('★', -radius * 0.3, -radius * 0.3);
+        ctx.fillText('★', radius * 0.3, -radius * 0.3);
+        ctx.fillText('★', -radius * 0.3, radius * 0.3);
+        ctx.fillText('★', radius * 0.3, radius * 0.3);
       } else if (count === 5) {
         ctx.fillText('★', 0, 0);
-        ctx.fillText('★', -radius * 0.5, -radius * 0.5);
-        ctx.fillText('★', radius * 0.5, -radius * 0.5);
-        ctx.fillText('★', -radius * 0.5, radius * 0.5);
-        ctx.fillText('★', radius * 0.5, radius * 0.5);
+        ctx.fillText('★', -radius * 0.45, -radius * 0.45);
+        ctx.fillText('★', radius * 0.45, -radius * 0.45);
+        ctx.fillText('★', -radius * 0.45, radius * 0.45);
+        ctx.fillText('★', radius * 0.45, radius * 0.45);
       } else if (count === 6) {
-        ctx.fillText('★', -radius * 0.4, -radius * 0.45);
-        ctx.fillText('★', radius * 0.4, -radius * 0.45);
-        ctx.fillText('★', -radius * 0.5, 0);
-        ctx.fillText('★', radius * 0.5, 0);
-        ctx.fillText('★', -radius * 0.4, radius * 0.45);
-        ctx.fillText('★', radius * 0.4, radius * 0.45);
+        ctx.fillText('★', -radius * 0.35, -radius * 0.4);
+        ctx.fillText('★', radius * 0.35, -radius * 0.4);
+        ctx.fillText('★', -radius * 0.45, 0);
+        ctx.fillText('★', radius * 0.45, 0);
+        ctx.fillText('★', -radius * 0.35, radius * 0.4);
+        ctx.fillText('★', radius * 0.35, radius * 0.4);
       } else if (count === 7) {
         ctx.fillText('★', 0, 0);
-        ctx.fillText('★', 0, -radius * 0.55);
-        ctx.fillText('★', -radius * 0.5, -radius * 0.25);
-        ctx.fillText('★', radius * 0.5, -radius * 0.25);
-        ctx.fillText('★', -radius * 0.5, radius * 0.35);
-        ctx.fillText('★', radius * 0.5, radius * 0.35);
-        ctx.fillText('★', 0, radius * 0.55);
+        ctx.fillText('★', 0, -radius * 0.5);
+        ctx.fillText('★', -radius * 0.45, -radius * 0.2);
+        ctx.fillText('★', radius * 0.45, -radius * 0.2);
+        ctx.fillText('★', -radius * 0.45, radius * 0.3);
+        ctx.fillText('★', radius * 0.45, radius * 0.3);
+        ctx.fillText('★', 0, radius * 0.5);
       }
     }
 
@@ -627,8 +628,8 @@
         drawDragonBall(activeBall);
 
         const isOut = activeBall.fromLeft 
-          ? (activeBall.x > canvas.width + 70)
-          : (activeBall.x < -70);
+          ? (activeBall.x > canvas.width + 60)
+          : (activeBall.x < -60);
 
         if (isOut) {
           activeBall = null;
