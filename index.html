@@ -316,7 +316,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas y Esferas del Dragón -->
+  <!-- Canvas para Partículas y Esferas Giratorias -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -468,7 +468,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (SUPERIOR, LENTAS, CHICAS, CADA 15s) --- */
+    /* --- SISTEMA DE ESFERAS DEL DRAGÓN (TODA LA ALTURA, LENTAS, CHICAS, GIRATORIAS, CADA 15s) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -492,43 +492,44 @@
       });
     }
 
-    // 2. Esferas del Dragón Volando
+    // 2. Esfera del Dragón Volando
     let activeBall = null;
 
     function spawnDragonBall() {
-      const fromLeft = Math.random() > 0.5;
-      // Velocidad MUY lenta simulando flotación
-      const speed = Math.random() * 0.4 + 0.5; 
+      const fromLeft = Math.random() > 0.5; // Sale aleatoriamente de izquierda o derecha
+      const speed = Math.random() * 0.35 + 0.45; // Muy lento, flotando
       const starsCount = Math.floor(Math.random() * 7) + 1; // 1 a 7 estrellas
 
-      // ALTURA LIMITADA A LA ZONA SUPERIOR (por encima de las tarjetas)
-      const topZoneHeight = canvas.height * 0.35; 
-      const randomY = Math.random() * topZoneHeight + 20;
+      // DISTRIBUCIÓN VERTICAL COMPLETA (abarca de arriba a abajo de la pantalla)
+      const randomY = Math.random() * (canvas.height - 100) + 50;
 
       activeBall = {
         fromLeft: fromLeft,
         x: fromLeft ? -50 : canvas.width + 50,
         y: randomY,
         speedX: fromLeft ? speed : -speed,
-        speedY: (Math.random() - 0.5) * 0.1,
+        speedY: (Math.random() - 0.5) * 0.08,
         stars: starsCount,
-        radius: 9 // Esfera más chica
+        radius: 9, // Tamaño chico
+        angle: 0,
+        spinSpeed: (Math.random() - 0.5) * 0.025 // Giro suave
       };
     }
 
     function scheduleNextDragonBall() {
-      // Intervalo fijo de 15 segundos exactos (15000ms)
+      // Intervalo estricto de 15 segundos
       setTimeout(() => {
         spawnDragonBall();
       }, 15000);
     }
 
-    // Primera esfera a los 3 segundos
+    // Primera aparición a los 3 segundos
     setTimeout(spawnDragonBall, 3000);
 
     function drawDragonBall(ball) {
       ctx.save();
       ctx.translate(ball.x, ball.y);
+      ctx.rotate(ball.angle); // Giro constante
 
       // Resplandor cálido de fondo
       const glowGradient = ctx.createRadialGradient(0, 0, 1, 0, 0, ball.radius * 1.6);
@@ -553,7 +554,7 @@
       ctx.lineWidth = 0.8;
       ctx.stroke();
 
-      // Dibujar estrellas rojas en el centro adaptadas al tamaño chico
+      // Dibujar estrellas rojas en el centro
       drawRedStars(ctx, ball.stars, ball.radius * 0.55);
 
       ctx.restore();
@@ -624,6 +625,7 @@
       if (activeBall) {
         activeBall.x += activeBall.speedX;
         activeBall.y += activeBall.speedY;
+        activeBall.angle += activeBall.spinSpeed;
 
         drawDragonBall(activeBall);
 
