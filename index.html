@@ -32,7 +32,7 @@
       flex-wrap: wrap;
     }
 
-    /* Ambas tarjetas con exactamente el mismo estilo, color y sin efectos de luces */
+    /* Tarjetas principales */
     .card {
       background: rgba(15, 20, 28, 0.85);
       backdrop-filter: blur(16px);
@@ -71,14 +71,6 @@
       object-fit: cover;
     }
 
-    .playlist-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #94a3b8;
-      margin-bottom: 12px;
-    }
-
     /* Lista de canciones */
     .song-list {
       display: flex;
@@ -87,6 +79,7 @@
       max-height: 240px;
       overflow-y: auto;
       padding-right: 6px;
+      margin-top: 10px;
     }
 
     .song-list::-webkit-scrollbar {
@@ -151,19 +144,12 @@
       justify-content: center;
     }
 
-    .now-playing-label {
-      font-size: 13px;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
-    }
-
     .disc-container {
       width: 200px;
       height: 200px;
       border-radius: 50%;
       overflow: hidden;
+      margin-top: 15px;
       margin-bottom: 24px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
       border: 4px solid rgba(255, 255, 255, 0.1);
@@ -209,15 +195,13 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta Izquierda (Perfil y Playlist) -->
+    <!-- Tarjeta Izquierda (Perfil y Playlist sin título) -->
     <div class="card">
       <div class="header-title">Rog3r</div>
       
       <div class="profile-img-container">
         <img src="https://xatimg.com/image/3DTp4snrSCDj.jpg" alt="Rog3r">
       </div>
-
-      <div class="playlist-title">Your Playlist</div>
       
       <div class="song-list">
         <!-- 1. MGMT - Kids -->
@@ -394,21 +378,15 @@
         <!-- 20. Brandon Heath - Whole Heart -->
         <div class="song-item" onclick="playSongByIndex(19)">
           <img src="https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg" alt="Whole Heart">
-          <div class="song-info">
-            <div class="song-name">Whole Heart</div>
-            <div class="song-artist">Brandon Heath</div>
-          </div>
+          <div class="song-artist">Brandon Heath</div>
         </div>
 
       </div>
     </div>
 
-    <!-- Tarjeta Derecha (Reproductor Lateral limpio) -->
+    <!-- Tarjeta Derecha (Reproductor Lateral sin título) -->
     <div class="card player-card">
-      <div class="now-playing-label">Now Playing</div>
-      
       <div class="disc-container">
-        <!-- Sin la clase rotating al inicio -->
         <img id="player-cover" src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="MGMT - Kids">
       </div>
 
@@ -468,7 +446,6 @@
       playerCover.src = song.cover;
     }
 
-    // El disco gira unicamente cuando se presiona reproducir y se detiene al pausar
     audio.addEventListener('play', () => {
       playerCover.classList.add('rotating');
     });
@@ -477,7 +454,6 @@
       playerCover.classList.remove('rotating');
     });
 
-    // Auto-avance al terminar la canción
     audio.addEventListener('ended', function() {
       currentIndex = (currentIndex + 1) % playlist.length;
       playSongByIndex(currentIndex);
