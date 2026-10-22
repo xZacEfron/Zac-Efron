@@ -76,17 +76,44 @@
       text-align: center;
     }
 
-    .full-img-container {
+    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
+    .flip-card-container {
       width: 100%;
       flex: 1;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card-container.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front, .flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
       border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      background-color: #000000;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #000000;
+    }
+
+    .flip-back {
+      transform: rotateY(180deg);
     }
 
     .full-img-container img {
@@ -186,17 +213,18 @@
       width: 3px;
       background-color: #ffffff;
       border-radius: 2px;
+      height: 4px; /* Altura estática por defecto */
+      transition: height 0.2s ease;
+    }
+
+    /* Solo anima cuando la clase 'playing' está activa */
+    .song-item.playing .eq-bar {
       animation: eqBounce 0.8s ease-in-out infinite alternate;
     }
 
-    .eq-bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
-    .eq-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
-    .eq-bar:nth-child(3) { height: 40%; animation-delay: 0.2s; }
-
-    .paused .eq-bar {
-      animation-play-state: paused;
-      height: 3px !important;
-    }
+    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; }
+    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; }
+    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; }
 
     @keyframes eqBounce {
       0% { height: 20%; }
@@ -271,18 +299,27 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: Tu Nombre (𝑹𝒖) + Foto Completa -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable (Flip Card) -->
     <div class="card">
       <div class="header-title">𝑹𝒖</div>
-      <div class="full-img-container">
-        <img src="https://xatimg.com/image/Pkjoaoso0fgK.jpg" alt="Ru Photo">
+      <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
+        <div class="flip-card-inner">
+          <!-- Frente: Tu foto actual -->
+          <div class="flip-front full-img-container">
+            <img src="https://xatimg.com/image/Pkjoaoso0fgK.jpg" alt="Ru Photo 1">
+          </div>
+          <!-- Dorso: La segunda foto -->
+          <div class="flip-back full-img-container">
+            <img src="https://xatimg.com/image/Jg23jlU0z2hq.png" alt="Ru Photo 2">
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Tarjeta 2: Playlist -->
     <div class="card">
       <div class="song-list" id="song-list-container">
-        <!-- Las canciones se cargan dinámicamente -->
+        <!-- Canciones cargadas por script -->
       </div>
     </div>
 
@@ -302,6 +339,12 @@
   </div>
 
   <script>
+    // Función para girar la tarjeta al hacer clic
+    function toggleCardFlip() {
+      const card = document.getElementById('flip-card');
+      card.classList.toggle('flipped');
+    }
+
     const playlist = [
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
@@ -330,7 +373,6 @@
     const playerCover = document.getElementById('player-cover');
     const songListContainer = document.getElementById('song-list-container');
 
-    // Renderizar la lista con ecualizador integrado
     function renderPlaylist() {
       songListContainer.innerHTML = '';
       playlist.forEach((song, index) => {
@@ -378,13 +420,13 @@
       items.forEach((item, index) => {
         if (index === currentIndex) {
           item.classList.add('active');
-          if (audio.paused) {
-            item.classList.add('paused');
+          if (!audio.paused) {
+            item.classList.add('playing'); // Solo anima si realmente está sonando
           } else {
-            item.classList.remove('paused');
+            item.classList.remove('playing');
           }
         } else {
-          item.classList.remove('active', 'paused');
+          item.classList.remove('active', 'playing');
         }
       });
     }
@@ -404,7 +446,6 @@
       playSongByIndex(currentIndex);
     });
 
-    // Inicializar Playlist
     renderPlaylist();
 
     /* --- SISTEMA DE PARTÍCULAS DE FONDO --- */
