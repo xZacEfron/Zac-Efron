@@ -42,6 +42,8 @@
       padding: 24px;
       width: 360px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
     }
 
     .header-title {
@@ -53,13 +55,14 @@
     }
 
     .profile-img-container {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       overflow: hidden;
-      margin: 0 auto 24px auto;
+      margin: 0 auto 20px auto;
       border: 3px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      flex-shrink: 0;
     }
 
     .profile-img-container img {
@@ -76,10 +79,29 @@
       margin-bottom: 12px;
     }
 
+    /* Contenedor de Playlist con Scroll Fino */
     .song-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .song-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .song-list::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+    .song-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+    }
+    .song-list::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
 
     .song-item {
@@ -126,6 +148,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      justify-content: center;
     }
 
     .now-playing-label {
@@ -188,7 +211,7 @@
       <div class="playlist-title">Your Playlist</div>
       
       <div class="song-list">
-        <!-- Canción 1 -->
+        <!-- 1. Kygo - Freeze -->
         <div class="song-item" onclick="playSong('Kygo - Freeze.mp3', 'Freeze', 'Kygo', 'https://i.postimg.cc/htHm0kzP/Kygo.jpg')">
           <img src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="Freeze">
           <div class="song-info">
@@ -197,7 +220,7 @@
           </div>
         </div>
 
-        <!-- Canción 2 -->
+        <!-- 2. Tiësto - Red Lights -->
         <div class="song-item" onclick="playSong('Tiësto - Red Lights.mp3', 'Red Lights', 'Tiësto', 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg')">
           <img src="https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg" alt="Red Lights">
           <div class="song-info">
@@ -206,7 +229,7 @@
           </div>
         </div>
 
-        <!-- Canción 3 -->
+        <!-- 3. NF - HAPPY -->
         <div class="song-item" onclick="playSong('NF - HAPPY.mp3', 'HAPPY', 'NF', 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg')">
           <img src="https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg" alt="HAPPY">
           <div class="song-info">
@@ -214,6 +237,52 @@
             <div class="song-artist">NF</div>
           </div>
         </div>
+
+        <!-- 4. Avicii - Fade Into Darkness -->
+        <div class="song-item" onclick="playSong('Avicii - Fade Into Darkness.mp3', 'Fade Into Darkness', 'Avicii', 'https://i.postimg.cc/nLcpWksX/0x1900-000000-80-0-0.jpg')">
+          <img src="https://i.postimg.cc/nLcpWksX/0x1900-000000-80-0-0.jpg" alt="Fade Into Darkness">
+          <div class="song-info">
+            <div class="song-name">Fade Into Darkness</div>
+            <div class="song-artist">Avicii</div>
+          </div>
+        </div>
+
+        <!-- 5. Kygo - Save My Love -->
+        <div class="song-item" onclick="playSong('Kygo - Save My Love.mp3', 'Save My Love', 'Kygo', 'https://i.postimg.cc/kMt9LD5c/images.jpg')">
+          <img src="https://i.postimg.cc/kMt9LD5c/images.jpg" alt="Save My Love">
+          <div class="song-info">
+            <div class="song-name">Save My Love</div>
+            <div class="song-artist">Kygo</div>
+          </div>
+        </div>
+
+        <!-- 6. Mike Posner - I Took A Pill In Ibiza -->
+        <div class="song-item" onclick="playSong('Mike Posner - I Took A Pill In Ibiza.mp3', 'I Took A Pill In Ibiza', 'Mike Posner', 'https://i.postimg.cc/htHm0kzP/Kygo.jpg')">
+          <img src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="I Took A Pill In Ibiza">
+          <div class="song-info">
+            <div class="song-name">I Took A Pill In Ibiza</div>
+            <div class="song-artist">Mike Posner</div>
+          </div>
+        </div>
+
+        <!-- 7. OneRepublic - Apologize -->
+        <div class="song-item" onclick="playSong('OneRepublic - Apologize.mp3', 'Apologize', 'OneRepublic', 'https://i.postimg.cc/J7JVPg6R/ab67616d0000b273a19be7aca4a1fcd6e8a42c62.jpg')">
+          <img src="https://i.postimg.cc/J7JVPg6R/ab67616d0000b273a19be7aca4a1fcd6e8a42c62.jpg" alt="Apologize">
+          <div class="song-info">
+            <div class="song-name">Apologize</div>
+            <div class="song-artist">OneRepublic</div>
+          </div>
+        </div>
+
+        <!-- 8. MGMT - Kids -->
+        <div class="song-item" onclick="playSong('MGMT - Kids.mp3', 'Kids', 'MGMT', 'https://i.postimg.cc/15rxZhZh/images-(1).jpg')">
+          <img src="https://i.postimg.cc/15rxZhZh/images-(1).jpg" alt="Kids">
+          <div class="song-info">
+            <div class="song-name">Kids</div>
+            <div class="song-artist">MGMT</div>
+          </div>
+        </div>
+
       </div>
     </div>
 
