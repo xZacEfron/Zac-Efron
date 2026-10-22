@@ -32,7 +32,7 @@
       flex-wrap: wrap;
     }
 
-    /* Tarjetas principales con negro oscuro puro y minimalista */
+    /* Tarjetas principales */
     .card {
       background: rgba(10, 10, 12, 0.9);
       backdrop-filter: blur(16px);
@@ -41,6 +41,7 @@
       border-radius: 28px;
       padding: 24px;
       width: 340px;
+      height: 480px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
@@ -50,15 +51,15 @@
       font-size: 24px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       color: #f8fafc;
       text-align: center;
     }
 
-    /* Contenedor para la foto completa vertical a la izquierda */
+    /* Contenedor para la foto completa vertical */
     .full-img-container {
       width: 100%;
-      height: 420px;
+      flex: 1;
       border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -79,7 +80,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 330px;
+      height: 100%;
       overflow-y: auto;
       padding-right: 6px;
     }
@@ -197,20 +198,28 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: Foto Completa Vertical -->
-    <div class="card" style="justify-content: center; align-items: center;">
+    <!-- Tarjeta 1: Tu Nombre + Foto Completa -->
+    <div class="card">
+      <div class="header-title">Rug</div>
       <div class="full-img-container">
         <img src="https://xatimg.com/image/Pkjoaoso0fgK.jpg" alt="Rug Photo">
       </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist (Sin foto redonda) -->
+    <!-- Tarjeta 2: Playlist con nuevo orden -->
     <div class="card">
-      <div class="header-title">Rug</div>
-      
       <div class="song-list">
-        <!-- 1. MGMT - Kids -->
+        <!-- 1. A Flock of Seagulls - I Ran (So Far Away) -->
         <div class="song-item" onclick="playSongByIndex(0)">
+          <img src="https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg" alt="I Ran (So Far Away)">
+          <div class="song-info">
+            <div class="song-name">I Ran (So Far Away)</div>
+            <div class="song-artist">A Flock of Seagulls</div>
+          </div>
+        </div>
+
+        <!-- 2. MGMT - Kids -->
+        <div class="song-item" onclick="playSongByIndex(1)">
           <img src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="Kids">
           <div class="song-info">
             <div class="song-name">Kids</div>
@@ -218,26 +227,8 @@
           </div>
         </div>
 
-        <!-- 2. Avicii - Fade Into Darkness -->
-        <div class="song-item" onclick="playSongByIndex(1)">
-          <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="Fade Into Darkness">
-          <div class="song-info">
-            <div class="song-name">Fade Into Darkness</div>
-            <div class="song-artist">Avicii</div>
-          </div>
-        </div>
-
-        <!-- 3. Green Day - Whatsername -->
+        <!-- 3. NF - HAPPY -->
         <div class="song-item" onclick="playSongByIndex(2)">
-          <img src="https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg" alt="Whatsername">
-          <div class="song-info">
-            <div class="song-name">Whatsername</div>
-            <div class="song-artist">Green Day</div>
-          </div>
-        </div>
-
-        <!-- 4. NF - HAPPY -->
-        <div class="song-item" onclick="playSongByIndex(3)">
           <img src="https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg" alt="HAPPY">
           <div class="song-info">
             <div class="song-name">HAPPY</div>
@@ -245,8 +236,26 @@
           </div>
         </div>
 
-        <!-- 5. TV on the Radio - Wolf Like Me -->
+        <!-- 4. Avicii - Fade Into Darkness -->
+        <div class="song-item" onclick="playSongByIndex(3)">
+          <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="Fade Into Darkness">
+          <div class="song-info">
+            <div class="song-name">Fade Into Darkness</div>
+            <div class="song-artist">Avicii</div>
+          </div>
+        </div>
+
+        <!-- 5. Green Day - Whatsername -->
         <div class="song-item" onclick="playSongByIndex(4)">
+          <img src="https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg" alt="Whatsername">
+          <div class="song-info">
+            <div class="song-name">Whatsername</div>
+            <div class="song-artist">Green Day</div>
+          </div>
+        </div>
+
+        <!-- 6. TV on the Radio - Wolf Like Me -->
+        <div class="song-item" onclick="playSongByIndex(5)">
           <img src="https://i.postimg.cc/wjH32D9Y/images.jpg" alt="Wolf Like Me">
           <div class="song-info">
             <div class="song-name">Wolf Like Me</div>
@@ -254,8 +263,8 @@
           </div>
         </div>
 
-        <!-- 6. Avicii - I Could Be The One -->
-        <div class="song-item" onclick="playSongByIndex(5)">
+        <!-- 7. Avicii - I Could Be The One -->
+        <div class="song-item" onclick="playSongByIndex(6)">
           <img src="https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg" alt="I Could Be The One">
           <div class="song-info">
             <div class="song-name">I Could Be The One</div>
@@ -263,8 +272,8 @@
           </div>
         </div>
 
-        <!-- 7. NF - SORRY -->
-        <div class="song-item" onclick="playSongByIndex(6)">
+        <!-- 8. NF - SORRY -->
+        <div class="song-item" onclick="playSongByIndex(7)">
           <img src="https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg" alt="SORRY">
           <div class="song-info">
             <div class="song-name">SORRY</div>
@@ -272,8 +281,8 @@
           </div>
         </div>
 
-        <!-- 8. Kygo - Freeze -->
-        <div class="song-item" onclick="playSongByIndex(7)">
+        <!-- 9. Kygo - Freeze -->
+        <div class="song-item" onclick="playSongByIndex(8)">
           <img src="https://i.postimg.cc/htHm0kzP/Kygo.jpg" alt="Freeze">
           <div class="song-info">
             <div class="song-name">Freeze</div>
@@ -281,8 +290,8 @@
           </div>
         </div>
 
-        <!-- 9. Tiësto - Red Lights -->
-        <div class="song-item" onclick="playSongByIndex(8)">
+        <!-- 10. Tiësto - Red Lights -->
+        <div class="song-item" onclick="playSongByIndex(9)">
           <img src="https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg" alt="Red Lights">
           <div class="song-info">
             <div class="song-name">Red Lights</div>
@@ -290,8 +299,8 @@
           </div>
         </div>
 
-        <!-- 10. Avicii - The Nights -->
-        <div class="song-item" onclick="playSongByIndex(9)">
+        <!-- 11. Avicii - The Nights -->
+        <div class="song-item" onclick="playSongByIndex(10)">
           <img src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="The Nights">
           <div class="song-info">
             <div class="song-name">The Nights</div>
@@ -299,8 +308,8 @@
           </div>
         </div>
 
-        <!-- 11. Kygo - Save My Love -->
-        <div class="song-item" onclick="playSongByIndex(10)">
+        <!-- 12. Kygo - Save My Love -->
+        <div class="song-item" onclick="playSongByIndex(11)">
           <img src="https://i.postimg.cc/kMt9LD5c/images.jpg" alt="Save My Love">
           <div class="song-info">
             <div class="song-name">Save My Love</div>
@@ -308,8 +317,8 @@
           </div>
         </div>
 
-        <!-- 12. Kygo - Stargazing -->
-        <div class="song-item" onclick="playSongByIndex(11)">
+        <!-- 13. Kygo - Stargazing -->
+        <div class="song-item" onclick="playSongByIndex(12)">
           <img src="https://i.postimg.cc/xC7SZVHk/images-(2).jpg" alt="Stargazing">
           <div class="song-info">
             <div class="song-name">Stargazing</div>
@@ -317,8 +326,8 @@
           </div>
         </div>
 
-        <!-- 13. Martin Garrix - The Only Way Is Up -->
-        <div class="song-item" onclick="playSongByIndex(12)">
+        <!-- 14. Martin Garrix - The Only Way Is Up -->
+        <div class="song-item" onclick="playSongByIndex(13)">
           <img src="https://i.postimg.cc/CxDHBGmM/images-(1).jpg" alt="The Only Way Is Up">
           <div class="song-info">
             <div class="song-name">The Only Way Is Up</div>
@@ -326,8 +335,8 @@
           </div>
         </div>
 
-        <!-- 14. Eminem - Somebody Save Me -->
-        <div class="song-item" onclick="playSongByIndex(13)">
+        <!-- 15. Eminem - Somebody Save Me -->
+        <div class="song-item" onclick="playSongByIndex(14)">
           <img src="https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg" alt="Somebody Save Me">
           <div class="song-info">
             <div class="song-name">Somebody Save Me</div>
@@ -335,8 +344,8 @@
           </div>
         </div>
 
-        <!-- 15. Marshmello - Be Kind -->
-        <div class="song-item" onclick="playSongByIndex(14)">
+        <!-- 16. Marshmello - Be Kind -->
+        <div class="song-item" onclick="playSongByIndex(15)">
           <img src="https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg" alt="Be Kind">
           <div class="song-info">
             <div class="song-name">Be Kind</div>
@@ -344,21 +353,12 @@
           </div>
         </div>
 
-        <!-- 16. Justin Bieber - Ghost -->
-        <div class="song-item" onclick="playSongByIndex(15)">
+        <!-- 17. Justin Bieber - Ghost -->
+        <div class="song-item" onclick="playSongByIndex(16)">
           <img src="https://i.postimg.cc/MpdVgzZ5/images.jpg" alt="Ghost">
           <div class="song-info">
             <div class="song-name">Ghost</div>
             <div class="song-artist">Justin Bieber</div>
-          </div>
-        </div>
-
-        <!-- 17. A Flock of Seagulls - I Ran (So Far Away) -->
-        <div class="song-item" onclick="playSongByIndex(16)">
-          <img src="https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg" alt="I Ran (So Far Away)">
-          <div class="song-info">
-            <div class="song-name">I Ran (So Far Away)</div>
-            <div class="song-artist">A Flock of Seagulls</div>
           </div>
         </div>
 
@@ -392,27 +392,28 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral -->
+    <!-- Tarjeta 3: Reproductor Lateral (Inicia por defecto con I Ran) -->
     <div class="card player-card">
       <div class="disc-container">
-        <img id="player-cover" src="https://i.postimg.cc/RCPfpsNc/images-(2).jpg" alt="Kids">
+        <img id="player-cover" src="https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg" alt="I Ran (So Far Away)">
       </div>
 
-      <div class="current-title" id="player-title">Kids</div>
-      <div class="current-artist" id="player-artist">MGMT</div>
+      <div class="current-title" id="player-title">I Ran (So Far Away)</div>
+      <div class="current-artist" id="player-artist">A Flock of Seagulls</div>
 
       <!-- Reproductor de Audio -->
-      <audio id="main-audio" controls controlsList="nodownload" src="MGMT - Kids.mp3"></audio>
+      <audio id="main-audio" controls controlsList="nodownload" src="A Flock of Seagulls - I Ran (So Far Away).mp3"></audio>
     </div>
 
   </div>
 
   <script>
     const playlist = [
+      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg' },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/RCPfpsNc/images-(2).jpg' },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
       { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
@@ -425,7 +426,6 @@
       { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg' },
       { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg' },
       { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg' },
-      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg' },
       { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg' },
       { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg' },
       { file: 'Brandon Heath - Whole Heart.mp3', title: 'Whole Heart', artist: 'Brandon Heath', cover: 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg' }
