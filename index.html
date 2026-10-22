@@ -306,16 +306,17 @@
       margin-bottom: 20px;
     }
 
-    /* Reproductor de audio integrado con el tono oscuro/estético deseado */
+    /* Reproductor original con toque azul exclusivo en el icono de volumen */
     audio {
       width: 100%;
       margin-top: 15px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      filter: invert(0.9) hue-rotate(180deg) brightness(0.95);
+      border-radius: 10px;
+      filter: invert(0.9) hue-rotate(180deg);
+    }
+
+    /* Filtro de color estilo cyan/azul sutil aplicado al icono de audio del reproductor nativo */
+    audio::-webkit-media-controls-mute-button {
+      filter: hue-rotate(140deg) saturate(2);
     }
   </style>
 </head>
@@ -357,7 +358,7 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Reproductor de Audio Original con Estética Ajustada -->
+      <!-- Reproductor de Audio Original -->
       <audio id="main-audio" controls controlsList="nodownload" src="MGMT - Kids.mp3"></audio>
     </div>
 
