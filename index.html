@@ -76,9 +76,9 @@
       text-align: center;
     }
 
-    /* --- CONTADOR INVISIBLE (FUNCIONA EN SEGUNDO PLANO) --- */
+    /* --- CONTADOR INVISIBLE (SEGUNDO PLANO) --- */
     .visit-counter {
-      display: none; /* Oculto completamente para los visitantes */
+      display: none;
     }
 
     /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
@@ -328,7 +328,7 @@
   <!-- Canvas para Partículas y Esferas -->
   <canvas id="particles-canvas"></canvas>
 
-  <!-- Elemento invisible que suma visitas en secreto -->
+  <!-- Elemento invisible para el contador -->
   <div class="visit-counter" id="visits-number">0</div>
 
   <div class="app-container">
@@ -371,27 +371,26 @@
   </div>
 
   <script>
-    /* --- CONTADOR SECRETO / PRIVADO DE VISITAS --- */
+    /* --- CONTADOR EXCLUSIVO "RugerP" PRIVADO --- */
     async function initVisitorCounter() {
+      // Contador local que siempre incrementa en tu navegador
+      let currentVisits = parseInt(localStorage.getItem('rugerp_space_visits') || '0') + 1;
+      localStorage.setItem('rugerp_space_visits', currentVisits);
+
       try {
-        const namespace = 'ru-space-counter';
-        const key = 'visits';
-        const response = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-        const data = await response.json();
-        
-        // Guarda el valor de forma interna en la consola para que solo tú puedas verlo
-        console.log("📊 Total de visitas en tu Space:", data.value);
-        document.getElementById('visits-number').textContent = data.value;
-      } catch (error) {
-        let localVisits = localStorage.getItem('ru_visits');
-        if (!localVisits) {
-          localVisits = 272;
-        } else {
-          localVisits = parseInt(localVisits) + 1;
+        // Intenta sincronizar con el servidor exclusivo RugerP
+        const response = await fetch('https://api.countapi.xyz/hit/rugerp-space-key-2026/visits');
+        if (response.ok) {
+          const data = await response.json();
+          currentVisits = data.value;
         }
-        localStorage.setItem('ru_visits', localVisits);
-        console.log("📊 Total de visitas (local):", localVisits);
+      } catch (e) {
+        // Si no hay red, mantiene el conteo local sin fallo
       }
+
+      console.log("---------------------------------------");
+      console.log("📊 TOTAL DE VISITAS EN TU SPACE (RugerP): " + currentVisits);
+      console.log("---------------------------------------");
     }
     initVisitorCounter();
 
