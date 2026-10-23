@@ -358,14 +358,14 @@
     <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
-        <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
+        <img id="player-cover" src="https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg" alt="Whatsername">
       </div>
 
-      <div class="current-title" id="player-title">Kids</div>
-      <div class="current-artist" id="player-artist">MGMT</div>
+      <div class="current-title" id="player-title">Whatsername</div>
+      <div class="current-artist" id="player-artist">Green Day</div>
 
       <!-- Reproductor de Audio Original -->
-      <audio id="main-audio" controls controlsList="nodownload" src="MGMT - Kids.mp3"></audio>
+      <audio id="main-audio" controls controlsList="nodownload" src="Green Day - Whatsername.mp3"></audio>
     </div>
 
   </div>
@@ -395,19 +395,20 @@
       card.classList.toggle('flipped');
     }
 
+    /* --- PLAYLIST ACTUALIZADA CON EL NUEVO TOP 5 AL INICIO --- */
     const playlist = [
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
       { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
       { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg' },
       { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg' },
       { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
       { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg' },
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
       { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg' },
       { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg' },
       { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg' },
