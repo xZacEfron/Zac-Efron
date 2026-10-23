@@ -219,7 +219,7 @@
       color: #94a3b8;
     }
 
-    /* Ecualizador Animado (Solo cuando reproduce) */
+    /* Ecualizador Animado */
     .equalizer {
       display: none;
       align-items: flex-end;
@@ -285,8 +285,8 @@
       object-fit: cover;
     }
 
-    /* La animación de rotación solo se aplica con la clase .rotating al dar play */
-    .rotating {
+    /* Animación de giro activada estrictamente con .rotating */
+    .disc-container.rotating {
       animation: spinDisc 12s linear infinite, discGlowDark 2.5s ease-in-out infinite alternate;
     }
 
@@ -483,7 +483,9 @@
       });
     }
 
-    // EVENTOS DE CONTROL: La rotación del disco solo se activa al reproducir
+    // Aseguramos que al cargar la página esté detenido por completo
+    discWrapper.classList.remove('rotating');
+
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
       updateActiveSongClass();
