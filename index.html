@@ -76,6 +76,11 @@
       text-align: center;
     }
 
+    /* --- CONTADOR INVISIBLE (SEGUNDO PLANO) --- */
+    .visit-counter {
+      display: none;
+    }
+
     /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
     .flip-card-container {
       width: 100%;
@@ -306,7 +311,6 @@
       margin-bottom: 20px;
     }
 
-    /* Reproductor original con toque azul exclusivo en el icono de volumen */
     audio {
       width: 100%;
       margin-top: 15px;
@@ -314,7 +318,6 @@
       filter: invert(0.9) hue-rotate(180deg);
     }
 
-    /* Filtro de color estilo cyan/azul sutil aplicado al icono de audio del reproductor nativo */
     audio::-webkit-media-controls-mute-button {
       filter: hue-rotate(140deg) saturate(2);
     }
@@ -324,6 +327,9 @@
 
   <!-- Canvas para Partículas y Esferas -->
   <canvas id="particles-canvas"></canvas>
+
+  <!-- Elemento invisible para el contador -->
+  <div class="visit-counter" id="visits-number">0</div>
 
   <div class="app-container">
     
@@ -365,6 +371,25 @@
   </div>
 
   <script>
+    /* --- CONTADOR EXCLUSIVO "RugerP" PRIVADO --- */
+    async function initVisitorCounter() {
+      let currentVisits = parseInt(localStorage.getItem('rugerp_space_visits') || '0') + 1;
+      localStorage.setItem('rugerp_space_visits', currentVisits);
+
+      try {
+        const response = await fetch('https://api.countapi.xyz/hit/rugerp-space-key-2026/visits');
+        if (response.ok) {
+          const data = await response.json();
+          currentVisits = data.value;
+        }
+      } catch (e) {}
+
+      console.log("---------------------------------------");
+      console.log("📊 TOTAL DE VISITAS EN TU SPACE (RugerP): " + currentVisits);
+      console.log("---------------------------------------");
+    }
+    initVisitorCounter();
+
     function toggleCardFlip() {
       const card = document.getElementById('flip-card');
       card.classList.toggle('flipped');
