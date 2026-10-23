@@ -219,7 +219,7 @@
       color: #94a3b8;
     }
 
-    /* Ecualizador Animado */
+    /* Ecualizador Animado (Solo cuando reproduce) */
     .equalizer {
       display: none;
       align-items: flex-end;
@@ -285,6 +285,7 @@
       object-fit: cover;
     }
 
+    /* La animación de rotación solo se aplica con la clase .rotating al dar play */
     .rotating {
       animation: spinDisc 12s linear infinite, discGlowDark 2.5s ease-in-out infinite alternate;
     }
@@ -373,20 +374,16 @@
   <script>
     /* --- CONTADOR EXCLUSIVO "RugerP" PRIVADO --- */
     async function initVisitorCounter() {
-      // Contador local que siempre incrementa en tu navegador
       let currentVisits = parseInt(localStorage.getItem('rugerp_space_visits') || '0') + 1;
       localStorage.setItem('rugerp_space_visits', currentVisits);
 
       try {
-        // Intenta sincronizar con el servidor exclusivo RugerP
         const response = await fetch('https://api.countapi.xyz/hit/rugerp-space-key-2026/visits');
         if (response.ok) {
           const data = await response.json();
           currentVisits = data.value;
         }
-      } catch (e) {
-        // Si no hay red, mantiene el conteo local sin fallo
-      }
+      } catch (e) {}
 
       console.log("---------------------------------------");
       console.log("📊 TOTAL DE VISITAS EN TU SPACE (RugerP): " + currentVisits);
@@ -486,6 +483,7 @@
       });
     }
 
+    // EVENTOS DE CONTROL: La rotación del disco solo se activa al reproducir
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
       updateActiveSongClass();
