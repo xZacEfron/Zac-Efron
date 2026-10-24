@@ -330,7 +330,7 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas, Esferas y Estrellas Rojo Neón -->
+  <!-- Canvas para Partículas y Estrellas Rojo Neón -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container">
@@ -544,7 +544,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS, PARTÍCULAS Y ESTRELLAS ROJO NEÓN (SOLO AL REPRODUCIR MÚSICA) --- */
+    /* --- SISTEMA DE ESTRELLAS BRILLANTES ROJO NEÓN (ACTIVADAS POR MÚSICA) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -556,7 +556,7 @@
     resizeCanvas();
 
     const particles = [];
-    for (let i = 0; i < 45; i++) {
+    for (let i = 0; i < 40; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -567,16 +567,16 @@
       });
     }
 
-    // Estrellas Rojo Neón alrededor del Space que titilan con la música
+    // Estrellas brillantes distribuidas alrededor del espacio
     const neonStars = [];
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 40; i++) {
       neonStars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 3 + 2,
-        alpha: 0, // Inician invisibles
+        alpha: 0,
         targetAlpha: Math.random() * 0.8 + 0.2,
-        pulseSpeed: Math.random() * 0.05 + 0.02
+        pulseSpeed: Math.random() * 0.04 + 0.02
       });
     }
 
@@ -584,23 +584,21 @@
       ctx.save();
       ctx.translate(x, y);
 
-      // Resplandor Neón Rojo (#ff0033)
-      ctx.shadowBlur = size * 4;
+      // Resplandor neón rojo intenso
+      ctx.shadowBlur = size * 5;
       ctx.shadowColor = '#ff0033';
 
       ctx.fillStyle = `rgba(255, 0, 51, ${opacity})`;
       ctx.beginPath();
-      
-      // Dibujo de estrella de 4 puntas centelleante
-      ctx.moveTo(0, -size * 1.8);
-      ctx.quadraticCurveTo(0, 0, size * 1.8, 0);
-      ctx.quadraticCurveTo(0, 0, 0, size * 1.8);
-      ctx.quadraticCurveTo(0, 0, -size * 1.8, 0);
-      ctx.quadraticCurveTo(0, 0, 0, -size * 1.8);
+      ctx.moveTo(0, -size * 2);
+      ctx.quadraticCurveTo(0, 0, size * 2, 0);
+      ctx.quadraticCurveTo(0, 0, 0, size * 2);
+      ctx.quadraticCurveTo(0, 0, -size * 2, 0);
+      ctx.quadraticCurveTo(0, 0, 0, -size * 2);
       ctx.fill();
 
-      // Centro blanco brillante
-      ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.9})`;
+      // Núcleo blanco brillante
+      ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.4, 0, Math.PI * 2);
       ctx.fill();
@@ -724,7 +722,6 @@
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Dibujar partículas normales
       particles.forEach(p => {
         p.x += p.speedX;
         p.y += p.speedY;
@@ -740,19 +737,17 @@
         ctx.fill();
       });
 
-      // Dibujar Estrellas Rojo Neón (SOLO si la música está en reproducción)
+      // Estrellas Rojo Neón parpadeantes (activas solo al reproducir música)
       const isPlaying = !audio.paused;
       neonStars.forEach(star => {
         if (isPlaying) {
-          // Titilar suavemente al sonar la música
           star.alpha += star.pulseSpeed;
           if (star.alpha > star.targetAlpha || star.alpha < 0.1) {
             star.pulseSpeed = -star.pulseSpeed;
           }
         } else {
-          // Desvanecer gradualmente al pausar
           if (star.alpha > 0) {
-            star.alpha -= 0.03;
+            star.alpha -= 0.04;
           }
         }
 
