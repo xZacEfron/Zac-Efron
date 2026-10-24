@@ -45,7 +45,7 @@
       z-index: 1;
     }
 
-    /* Tarjetas principales con hover limpio original */
+    /* Tarjetas principales */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
@@ -76,12 +76,12 @@
       text-align: center;
     }
 
-    /* --- CONTADOR INVISIBLE (SEGUNDO PLANO) --- */
+    /* --- CONTADOR INVISIBLE --- */
     .visit-counter {
       display: none;
     }
 
-    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
+    /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
     .flip-card-container {
       width: 100%;
       flex: 1;
@@ -253,7 +253,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral Original */
+    /* Reproductor Lateral */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -271,12 +271,11 @@
       margin-bottom: 24px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
-      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+      transition: border-color 0.1s ease, box-shadow 0.1s ease, transform 0.1s ease;
     }
 
     .player-card:hover .disc-container {
       border-color: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
     .disc-container img {
@@ -285,25 +284,14 @@
       object-fit: cover;
     }
 
-    /* Giro continuo con resplandor sutil de sombra negra que simula profundidad */
+    /* Rotación continua del vinilo */
     .rotating {
-      animation: spinDisc 12s linear infinite, subtleDarkGlow 3s ease-in-out infinite alternate;
+      animation: spinDisc 12s linear infinite;
     }
 
     @keyframes spinDisc {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
-    }
-
-    @keyframes subtleDarkGlow {
-      0% {
-        border-color: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(0, 0, 0, 0.8);
-      }
-      100% {
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 0 30px rgba(0, 0, 0, 1), 0 0 10px rgba(255, 255, 255, 0.03), inset 0 0 20px rgba(0, 0, 0, 0.9);
-      }
     }
 
     .current-title {
@@ -371,8 +359,8 @@
       <div class="current-title" id="player-title">Before You Know It</div>
       <div class="current-artist" id="player-artist">Kygo</div>
 
-      <!-- Reproductor de Audio Original -->
-      <audio id="main-audio" controls controlsList="nodownload" src="Kygo - Before You Know It.mp3"></audio>
+      <!-- Reproductor de Audio -->
+      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Kygo - Before You Know It.mp3"></audio>
     </div>
 
   </div>
@@ -489,13 +477,55 @@
       });
     }
 
+    /* --- SISTEMA REAL DE ANÁLISIS DE BAJOS (WEB AUDIO API) --- */
+    let audioCtx, analyser, source;
+
+    function initAudioVisualizer() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 64;
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      updateBassVisuals();
+    }
+
+    function updateBassVisuals() {
+      if (!audio.paused && analyser) {
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(dataArray);
+
+        // Promedio de las frecuencias más bajas (graves/bajos)
+        const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
+        
+        // Intensidad del resplandor negro/oscuro proporcional a los bajos reales
+        const shadowDepth = Math.floor((bassValue / 255) * 45) + 10;
+        const opacity = (bassValue / 255) * 0.9;
+
+        discWrapper.style.boxShadow = `0 0 ${shadowDepth}px rgba(0, 0, 0, ${opacity}), inset 0 0 ${shadowDepth / 2}px rgba(0, 0, 0, ${opacity})`;
+
+        requestAnimationFrame(updateBassVisuals);
+      } else {
+        discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
+      }
+    }
+
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
       updateActiveSongClass();
+      try {
+        initAudioVisualizer();
+      } catch (e) {}
     });
 
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
+      discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       updateActiveSongClass();
     });
 
@@ -506,7 +536,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS (1-4 ESTRELLAS, SUPERIOR, CADA 18s, BRILLO INTERMITENTE) --- */
+    /* --- SISTEMA DE ESFERAS Y PARTÍCULAS --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
