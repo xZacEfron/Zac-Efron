@@ -67,9 +67,9 @@
       transform: translateY(-2px);
     }
 
-    /* Título "𝑹𝒖" sobrio y elegante */
+    /* Título "𝑹𝒖" más fino y estilizado */
     .header-title {
-      font-size: 26px;
+      font-size: 21px;
       font-weight: 700;
       letter-spacing: 0.5px;
       margin-bottom: 12px;
@@ -184,6 +184,7 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid transparent;
       cursor: pointer;
+      position: relative;
       transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
@@ -199,9 +200,13 @@
       border-color: rgba(255, 255, 255, 0.2);
     }
 
+    /* Borde en degradado Rojo/Azul en la canción sonando */
     .song-item.playing {
-      border-color: rgba(0, 229, 255, 0.5);
-      background: rgba(0, 229, 255, 0.04);
+      background: linear-gradient(90deg, rgba(255, 0, 51, 0.06), rgba(0, 229, 255, 0.06));
+      border: 1px solid transparent;
+      border-image: linear-gradient(90deg, rgba(255, 0, 51, 0.8), rgba(0, 229, 255, 0.8)) 1;
+      border-radius: 12px;
+      box-shadow: -4px 0 12px rgba(255, 0, 51, 0.25), 4px 0 12px rgba(0, 229, 255, 0.25);
     }
 
     .song-item img {
@@ -252,9 +257,9 @@
       animation: eqBounce 0.8s ease-in-out infinite alternate;
     }
 
-    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; background-color: #00e5ff; }
+    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; background-color: #ff0033; }
     .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; background-color: #ffffff; }
-    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; background-color: #ff0033; }
+    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; background-color: #00e5ff; }
 
     @keyframes eqBounce {
       0% { height: 20%; }
@@ -480,8 +485,8 @@
           if (!audio.paused) {
             item.classList.add('playing');
             if (songNameEl) {
-              songNameEl.style.color = '#00e5ff';
-              songNameEl.style.textShadow = '0 0 8px rgba(0, 229, 255, 0.6)';
+              songNameEl.style.color = '#ffffff';
+              songNameEl.style.textShadow = '0 0 8px rgba(0, 229, 255, 0.5)';
             }
           } else {
             item.classList.remove('playing');
@@ -500,7 +505,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS (DISCO Y BARRA DE AUDIO) --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
