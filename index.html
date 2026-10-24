@@ -67,13 +67,23 @@
       transform: translateY(-2px);
     }
 
+    /* Título "Ru" con degradado dividido (R azul, u rojo) */
     .header-title {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: 0.5px;
       margin-bottom: 12px;
-      color: #f8fafc;
       text-align: center;
+    }
+
+    .title-r {
+      color: #00e5ff;
+      text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    }
+
+    .title-u {
+      color: #ff0033;
+      text-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
     }
 
     /* --- CONTADOR INVISIBLE --- */
@@ -81,13 +91,15 @@
       display: none;
     }
 
-    /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
+    /* --- TARJETA VOLTEABLE (FLIP CARD) CON EFECTO REACTIVO --- */
     .flip-card-container {
       width: 100%;
       flex: 1;
       perspective: 1000px;
       cursor: pointer;
       position: relative;
+      border-radius: 22px;
+      transition: box-shadow 0.2s ease;
     }
 
     .flip-card-inner {
@@ -192,9 +204,16 @@
       transform: translateX(4px);
     }
 
+    /* Canción activa por defecto */
     .song-item.active {
       background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Canción activa REPRODUCIENDO (Sincronizada con el ritmo) */
+    .song-item.playing {
+      border-color: rgba(0, 229, 255, 0.6);
+      background: rgba(0, 229, 255, 0.05);
     }
 
     .song-item img {
@@ -212,6 +231,7 @@
       font-size: 15px;
       font-weight: 600;
       color: #f1f5f9;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
     }
 
     .song-artist {
@@ -244,9 +264,9 @@
       animation: eqBounce 0.8s ease-in-out infinite alternate;
     }
 
-    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; }
-    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; }
-    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; }
+    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; background-color: #00e5ff; }
+    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; background-color: #ffffff; }
+    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; background-color: #ff0033; }
 
     @keyframes eqBounce {
       0% { height: 20%; }
@@ -306,11 +326,14 @@
       margin-bottom: 20px;
     }
 
+    /* Control de audio nativo */
     audio {
       width: 100%;
       margin-top: 15px;
-      border-radius: 10px;
+      border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+      border: 1px solid transparent;
     }
 
     audio::-webkit-media-controls-mute-button {
@@ -328,9 +351,11 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable (Flip Card) -->
+    <!-- Tarjeta 1: 𝑹𝒖 (con colores divididos) + Foto Volteable con aura reactiva -->
     <div class="card">
-      <div class="header-title">𝑹𝒖</div>
+      <div class="header-title">
+        <span class="title-r">𝓡</span><span class="title-u">𝒖</span>
+      </div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
           <div class="flip-front full-img-container">
@@ -417,6 +442,7 @@
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
+    const flipCardContainer = document.getElementById('flip-card');
     const songListContainer = document.getElementById('song-list-container');
 
     function renderPlaylist() {
@@ -429,7 +455,7 @@
         item.innerHTML = `
           <img src="${song.cover}" alt="${song.title}">
           <div class="song-info">
-            <div class="song-name">${song.title}</div>
+            <div class="song-name" id="song-name-${index}">${song.title}</div>
             <div class="song-artist">${song.artist}</div>
           </div>
           <div class="equalizer">
@@ -464,20 +490,33 @@
     function updateActiveSongClass() {
       const items = document.querySelectorAll('.song-item');
       items.forEach((item, index) => {
+        const songNameEl = document.getElementById(`song-name-${index}`);
         if (index === currentIndex) {
           item.classList.add('active');
           if (!audio.paused) {
             item.classList.add('playing');
+            if (songNameEl) {
+              songNameEl.style.color = '#00e5ff';
+              songNameEl.style.textShadow = '0 0 8px rgba(0, 229, 255, 0.6)';
+            }
           } else {
             item.classList.remove('playing');
+            if (songNameEl) {
+              songNameEl.style.color = '#f1f5f9';
+              songNameEl.style.textShadow = 'none';
+            }
           }
         } else {
           item.classList.remove('active', 'playing');
+          if (songNameEl) {
+            songNameEl.style.color = '#f1f5f9';
+            songNameEl.style.textShadow = 'none';
+          }
         }
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS (DUAL: MITAD ROJO NEÓN / MITAD AZUL CIELO) --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS UNIFICADO --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -500,13 +539,12 @@
         const dataArray = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(dataArray);
 
-        // Promedio de frecuencias bajas
         const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
         
-        // Cálculo del aura dual (Rojo a un lado, Azul Cielo al otro)
         const glowSize = Math.floor((bassValue / 255) * 35) + 6;
         const opacity = (bassValue / 255) * 0.8 + 0.2;
 
+        /* 1. Aura dual en el disco */
         discWrapper.style.boxShadow = `
           -${glowSize}px 0 ${glowSize}px rgba(255, 0, 51, ${opacity}), 
           ${glowSize}px 0 ${glowSize}px rgba(0, 229, 255, ${opacity}),
@@ -514,15 +552,31 @@
         `;
         discWrapper.style.borderColor = `rgba(255, 255, 255, ${opacity * 0.8})`;
 
+        /* 2. Aura dual en el marco de la tarjeta de la foto */
+        flipCardContainer.style.boxShadow = `
+          -${glowSize / 1.5}px 0 ${glowSize}px rgba(0, 229, 255, ${opacity * 0.7}), 
+          ${glowSize / 1.5}px 0 ${glowSize}px rgba(255, 0, 51, ${opacity * 0.7})
+        `;
+
+        /* 3. Aura en el reproductor de audio inferior */
+        const controlGlow = Math.floor((bassValue / 255) * 20) + 5;
+        audio.style.boxShadow = `
+          -${controlGlow}px 0 ${controlGlow}px rgba(255, 0, 51, ${opacity * 0.7}), 
+          ${controlGlow}px 0 ${controlGlow}px rgba(0, 229, 255, ${opacity * 0.7})
+        `;
+
         requestAnimationFrame(updateBassVisuals);
       } else {
         discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
         discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        flipCardContainer.style.boxShadow = 'none';
+        audio.style.boxShadow = 'none';
       }
     }
 
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
+      audio.classList.add('audio-active');
       updateActiveSongClass();
       try {
         initAudioVisualizer();
@@ -531,8 +585,11 @@
 
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
+      audio.classList.remove('audio-active');
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+      flipCardContainer.style.boxShadow = 'none';
+      audio.style.boxShadow = 'none';
       updateActiveSongClass();
     });
 
