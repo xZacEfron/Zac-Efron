@@ -67,7 +67,7 @@
       transform: translateY(-2px);
     }
 
-    /* Título "𝑹𝒖" con la tipografía original */
+    /* Título "𝑹𝒖" blanco brillante con destello neón al sonar */
     .header-title {
       font-size: 26px;
       font-weight: 700;
@@ -75,13 +75,12 @@
       margin-bottom: 12px;
       text-align: center;
       color: #ffffff;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
+      transition: text-shadow 0.3s ease;
     }
 
-    /* Al reproducir pasa a Celeste Neón */
+    /* Resplandor neón rojo suave únicamente durante la reproducción */
     body.is-playing .header-title {
-      color: #00e5ff;
-      text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+      text-shadow: 0 0 10px rgba(255, 0, 51, 0.7), 0 0 20px rgba(255, 0, 51, 0.4);
     }
 
     /* --- CONTADOR INVISIBLE --- */
@@ -346,7 +345,7 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 (tipografía clásica) + Foto Volteable con aura discreta -->
+    <!-- Tarjeta 1: 𝑹𝒖 (Blanco continuo + resplandor neón rojo al sonar) -->
     <div class="card">
       <div class="header-title">𝑹𝒖</div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
@@ -509,7 +508,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS CON ROJO DISCRETO EN LA FOTO --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
