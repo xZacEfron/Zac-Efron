@@ -78,27 +78,30 @@
       color: #ffffff;
     }
 
-    /* --- GOKU BAILARÍN --- */
+    /* --- GOKU PEQUEÑO Y DISCRETO CON FONDO NEGRO --- */
     .dancing-goku-container {
       display: none;
       align-items: center;
       justify-content: center;
-      width: 60px;
-      height: 60px;
-      margin: 6px auto 0 auto;
-      filter: drop-shadow(0 0 8px rgba(255, 200, 0, 0.6));
+      width: 42px;
+      height: 42px;
+      margin: 4px auto 0 auto;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
       animation: gokuBounce 0.5s ease-in-out infinite alternate;
     }
 
     .dancing-goku-container img {
-      width: 100%;
-      height: 100%;
+      width: 30px;
+      height: 30px;
       object-fit: contain;
     }
 
     @keyframes gokuBounce {
       0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-5px) scale(1.05); }
+      100% { transform: translateY(-3px) scale(1.05); }
     }
 
     /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
@@ -293,7 +296,7 @@
       border-radius: 50%;
       overflow: hidden;
       margin-top: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -321,18 +324,18 @@
     .current-title {
       font-size: 19px;
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .current-artist {
       font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     audio {
       width: 100%;
-      margin-top: 6px;
+      margin-top: 4px;
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
       transition: box-shadow 0.2s ease;
@@ -373,7 +376,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral con Goku -->
+    <!-- Tarjeta 3: Reproductor Lateral con Goku Local Discreto -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg" alt="Before You Know It">
@@ -384,9 +387,9 @@
 
       <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Kygo - Before You Know It.mp3"></audio>
 
-      <!-- Goku bailando usando el sticker directo de Tenor/Pinterest -->
+      <!-- Goku pequeño y elegante con fondo oscuro -->
       <div class="dancing-goku-container" id="dancing-goku">
-        <img src="https://c.tenor.com/2qK2y4R63-kAAAAC/tenor.gif" alt="Goku Dance">
+        <img src="Goku.gif" alt="Goku Bailando">
       </div>
     </div>
 
@@ -398,13 +401,12 @@
       card.classList.toggle('flipped');
     }
 
-    // Playlist ajustada: 1. Before You Know It, 2. Wolf Like Me, 3. Kids, 4. Down Under, 5. Whatsername
     const playlist = [
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#ff3300'] },
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] }, // Puesto 3
-      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff00ff', '#00e5ff'] }, // Puesto 4
-      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#ff2200'] }, // Puesto 5
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#2a0845'] },
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] },
+      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff00ff', '#00e5ff'] },
+      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#ff2200'] },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00ffff', '#0066ff'] },
       { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff2255', '#ff9900'] },
       { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#ff00aa'] },
