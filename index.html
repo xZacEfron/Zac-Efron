@@ -78,7 +78,6 @@
       transition: text-shadow 0.3s ease;
     }
 
-    /* Resplandor neón rojo suave únicamente durante la reproducción */
     body.is-playing .header-title {
       text-shadow: 0 0 10px rgba(255, 0, 51, 0.7), 0 0 20px rgba(255, 0, 51, 0.4);
     }
@@ -345,7 +344,7 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 (Blanco continuo + resplandor neón rojo al sonar) -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable con aura sutil en azul neón -->
     <div class="card">
       <div class="header-title">𝑹𝒖</div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
@@ -508,7 +507,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS CON AZUL NEÓN EN LA FOTO --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -544,10 +543,10 @@
         `;
         discWrapper.style.borderColor = `rgba(255, 255, 255, ${opacity * 0.8})`;
 
-        /* Aura discreta en rojo neón únicamente arriba de la foto */
+        /* Aura discreta en azul neón únicamente arriba de la foto */
         const subtleGlow = Math.floor((bassValue / 255) * 12) + 2;
         flipCardContainer.style.boxShadow = `
-          0 -${subtleGlow}px ${subtleGlow * 1.5}px rgba(255, 0, 51, ${opacity * 0.45})
+          0 -${subtleGlow}px ${subtleGlow * 1.5}px rgba(0, 229, 255, ${opacity * 0.45})
         `;
 
         /* Aura ligera para la barra de control de audio */
