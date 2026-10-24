@@ -67,7 +67,7 @@
       transform: translateY(-2px);
     }
 
-    /* Título "𝑹𝒖" blanco brillante con destello neón al sonar */
+    /* Título "𝑹𝒖" sobrio y elegante */
     .header-title {
       font-size: 26px;
       font-weight: 700;
@@ -75,11 +75,6 @@
       margin-bottom: 12px;
       text-align: center;
       color: #ffffff;
-      transition: text-shadow 0.3s ease;
-    }
-
-    body.is-playing .header-title {
-      text-shadow: 0 0 10px rgba(255, 0, 51, 0.7), 0 0 20px rgba(255, 0, 51, 0.4);
     }
 
     /* --- CONTADOR INVISIBLE --- */
@@ -95,7 +90,6 @@
       cursor: pointer;
       position: relative;
       border-radius: 20px;
-      transition: box-shadow 0.2s ease;
     }
 
     .flip-card-inner {
@@ -344,7 +338,7 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable con aura sutil en azul neón -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable (Limpia y sobria) -->
     <div class="card">
       <div class="header-title">𝑹𝒖</div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
@@ -412,7 +406,7 @@
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZSZk/images-(2).jpg' },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
       { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
@@ -433,7 +427,6 @@
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
-    const flipCardContainer = document.getElementById('flip-card');
     const songListContainer = document.getElementById('song-list-container');
 
     function renderPlaylist() {
@@ -507,7 +500,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS CON AZUL NEÓN EN LA FOTO --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -543,30 +536,14 @@
         `;
         discWrapper.style.borderColor = `rgba(255, 255, 255, ${opacity * 0.8})`;
 
-        /* Aura discreta en azul neón únicamente arriba de la foto */
-        const subtleGlow = Math.floor((bassValue / 255) * 12) + 2;
-        flipCardContainer.style.boxShadow = `
-          0 -${subtleGlow}px ${subtleGlow * 1.5}px rgba(0, 229, 255, ${opacity * 0.45})
-        `;
-
-        /* Aura ligera para la barra de control de audio */
-        const controlGlow = Math.floor((bassValue / 255) * 10) + 3;
-        audio.style.boxShadow = `
-          -${controlGlow}px 0 ${controlGlow * 1.5}px rgba(255, 0, 51, ${opacity * 0.3}), 
-          ${controlGlow}px 0 ${controlGlow * 1.5}px rgba(0, 229, 255, ${opacity * 0.3})
-        `;
-
         requestAnimationFrame(updateBassVisuals);
       } else {
         discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
         discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-        flipCardContainer.style.boxShadow = 'none';
-        audio.style.boxShadow = 'none';
       }
     }
 
     audio.addEventListener('play', () => {
-      document.body.classList.add('is-playing');
       discWrapper.classList.add('rotating');
       updateActiveSongClass();
       try {
@@ -575,12 +552,9 @@
     });
 
     audio.addEventListener('pause', () => {
-      document.body.classList.remove('is-playing');
       discWrapper.classList.remove('rotating');
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-      flipCardContainer.style.boxShadow = 'none';
-      audio.style.boxShadow = 'none';
       updateActiveSongClass();
     });
 
