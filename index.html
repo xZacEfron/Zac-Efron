@@ -253,7 +253,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral */
+    /* Reproductor Lateral Original */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -276,12 +276,17 @@
 
     .player-card:hover .disc-container {
       border-color: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
-    /* Giro + Pulso rítmico en tonos negros */
+    .disc-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .rotating {
-      animation: spinDisc 12s linear infinite, bassPulseDark 0.6s ease-in-out infinite alternate;
+      animation: spinDisc 12s linear infinite, discGlowDark 2.5s ease-in-out infinite alternate;
     }
 
     @keyframes spinDisc {
@@ -289,17 +294,9 @@
       to { transform: rotate(360deg); }
     }
 
-    @keyframes bassPulseDark {
-      0% {
-        border-color: rgba(30, 30, 35, 0.8);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.7);
-        transform: scale(1);
-      }
-      100% {
-        border-color: rgba(70, 70, 80, 1);
-        box-shadow: 0 0 35px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.95);
-        transform: scale(1.03);
-      }
+    @keyframes discGlowDark {
+      from { box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5); }
+      to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 25px rgba(0, 0, 0, 0.9); }
     }
 
     .current-title {
