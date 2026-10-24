@@ -68,40 +68,37 @@
       transform: translateY(-2px);
     }
 
-    /* Título "𝑹𝒖" estilizado */
+    /* Encabezado con tu nombre y Spiderman al lado */
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
     .header-title {
       font-size: 21px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      margin-bottom: 12px;
-      text-align: center;
       color: #ffffff;
     }
 
-    /* --- SPIDERMAN DISCRETO ABAJO --- */
+    /* Spiderman junto al nombre (Sin fondo blanco gracias a mix-blend-mode) */
     .dancing-spiderman-container {
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 45px;
-      height: 45px;
-      margin: 8px auto 0 auto;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-      animation: spidermanBounce 0.5s ease-in-out infinite alternate;
+      width: 34px;
+      height: 34px;
     }
 
     .dancing-spiderman-container img {
-      width: 32px;
-      height: 32px;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
-    }
-
-    @keyframes spidermanBounce {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-4px) scale(1.05); }
+      mix-blend-mode: screen; /* Magia para borrar el fondo blanco/oscuro */
+      filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
     }
 
     /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
@@ -281,22 +278,21 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral */
+    /* Reproductor Lateral (Barra restaurada a su posición original inferior) */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: center;
+      justify-content: space-between;
     }
 
     .disc-container {
-      width: 200px;
-      height: 200px;
+      width: 190px;
+      height: 190px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 15px;
-      margin-bottom: 20px;
+      margin-top: 10px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -322,23 +318,24 @@
     }
 
     .current-title {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-top: 8px;
+      margin-bottom: 2px;
     }
 
     .current-artist {
-      font-size: 14px;
+      font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
+    /* Posición de la barra de audio original idéntica a tu foto de referencia */
     audio {
       width: 100%;
-      margin-top: 10px;
+      margin-bottom: 8px;
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
-      transition: box-shadow 0.2s ease;
       border: 1px solid transparent;
     }
 
@@ -354,9 +351,14 @@
 
   <div class="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Spiderman al lado del nombre + Foto Volteable -->
     <div class="card">
-      <div class="header-title">𝑹𝒖</div>
+      <div class="header-container">
+        <div class="header-title">𝑹𝒖</div>
+        <div class="dancing-spiderman-container">
+          <img src="https://i.postimg.cc/KzSKmjRX/Spiderman.gif" alt="Spiderman Bailando">
+        </div>
+      </div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
           <div class="flip-front full-img-container">
@@ -376,21 +378,18 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral con Spiderman abajo -->
+    <!-- Tarjeta 3: Reproductor Lateral con barra abajo en su sitio -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg" alt="Before You Know It">
       </div>
 
-      <div class="current-title" id="player-title">Before You Know It</div>
-      <div class="current-artist" id="player-artist">Kygo</div>
+      <div>
+        <div class="current-title" id="player-title">Before You Know It</div>
+        <div class="current-artist" id="player-artist">Kygo</div>
+      </div>
 
       <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Kygo - Before You Know It.mp3"></audio>
-
-      <!-- Spiderman bailando discretamente abajo al reproducir música -->
-      <div class="dancing-spiderman-container" id="dancing-spiderman">
-        <img src="https://i.postimg.cc/KzSKmjRX/Spiderman.gif" alt="Spiderman Bailando">
-      </div>
     </div>
 
   </div>
@@ -431,7 +430,6 @@
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
-    const spidermanElement = document.getElementById('dancing-spiderman');
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
@@ -559,7 +557,6 @@
 
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
-      spidermanElement.style.display = 'flex';
       updateActiveSongClass();
       try {
         initAudioVisualizer();
@@ -568,7 +565,6 @@
 
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
-      spidermanElement.style.display = 'none';
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
       updateActiveSongClass();
