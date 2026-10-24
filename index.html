@@ -285,8 +285,9 @@
       object-fit: cover;
     }
 
+    /* Giro continuo con resplandor sutil de sombra negra que simula profundidad */
     .rotating {
-      animation: spinDisc 12s linear infinite, discGlowDark 2.5s ease-in-out infinite alternate;
+      animation: spinDisc 12s linear infinite, subtleDarkGlow 3s ease-in-out infinite alternate;
     }
 
     @keyframes spinDisc {
@@ -294,9 +295,15 @@
       to { transform: rotate(360deg); }
     }
 
-    @keyframes discGlowDark {
-      from { box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5); }
-      to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 25px rgba(0, 0, 0, 0.9); }
+    @keyframes subtleDarkGlow {
+      0% {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(0, 0, 0, 0.8);
+      }
+      100% {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 1), 0 0 10px rgba(255, 255, 255, 0.03), inset 0 0 20px rgba(0, 0, 0, 0.9);
+      }
     }
 
     .current-title {
