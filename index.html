@@ -318,18 +318,14 @@
       margin-bottom: 20px;
     }
 
-    /* Control de audio nativo limpio (con sus bordes oscuros/estructura fija sin luces de colores) */
+    /* Reproductor con extremos oscuros y limpios sin luces de colores */
     audio {
       width: 100%;
       margin-top: 15px;
       border-radius: 12px;
-      filter: invert(0.9) hue-rotate(180deg);
+      background-color: #121216;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-    }
-
-    audio::-webkit-media-controls-mute-button {
-      filter: hue-rotate(140deg) saturate(2);
+      box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.9);
     }
   </style>
 </head>
