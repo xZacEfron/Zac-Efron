@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Fondo de Canvas */
+    /* Fondo de Canvas (Partículas, Esferas y Estrellas Fugaces) */
     #particles-canvas {
       position: fixed;
       top: 0;
@@ -77,9 +77,29 @@
       color: #ffffff;
     }
 
-    /* --- CONTADOR INVISIBLE --- */
-    .visit-counter {
-      display: none;
+    /* --- CONTADOR DE VISITAS DISCRETO (ESQUINA INFERIOR DERECHA) --- */
+    .visitor-badge {
+      position: fixed;
+      bottom: 15px;
+      right: 20px;
+      background: rgba(10, 10, 12, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .visitor-badge span {
+      color: #00e5ff;
+      font-weight: 600;
     }
 
     /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
@@ -335,11 +355,11 @@
 </head>
 <body>
 
-  <!-- Canvas para Partículas y Esferas -->
+  <!-- Canvas para Partículas, Esferas y Estrellas Fugaces -->
   <canvas id="particles-canvas"></canvas>
 
-  <!-- Elemento invisible para el contador -->
-  <div class="visit-counter" id="visits-number">0</div>
+  <!-- Contador visual discreto abajo a la derecha -->
+  <div class="visitor-badge">VISITAS: <span id="visitor-count-val">1</span></div>
 
   <div class="app-container">
     
@@ -381,24 +401,42 @@
   </div>
 
   <script>
-    /* --- CONTADOR EXCLUSIVO "RugerP" PRIVADO --- */
-    async function initVisitorCounter() {
-      let currentVisits = parseInt(localStorage.getItem('rugerp_space_visits') || '0') + 1;
-      localStorage.setItem('rugerp_space_visits', currentVisits);
+    /* --- SISTEMA INTELIGENTE DE ANALYTICS PRIVADO (VISITAS, PAÍSES Y REPRODUCCIONES) --- */
+    async function initAdvancedAnalytics() {
+      let visits = parseInt(localStorage.getItem('rugerp_space_visits') || '0') + 1;
+      localStorage.setItem('rugerp_space_visits', visits);
+      document.getElementById('visitor-count-val').textContent = visits;
 
       try {
-        const response = await fetch('https://api.countapi.xyz/hit/rugerp-space-key-2026/visits');
-        if (response.ok) {
-          const data = await response.json();
-          currentVisits = data.value;
+        const res = await fetch('https://ipapi.co/json/');
+        if (res.ok) {
+          const data = await res.json();
+          const country = data.country_name || 'Desconocido';
+          const city = data.city || '';
+          
+          let visitorLog = JSON.parse(localStorage.getItem('rugerp_visitor_countries') || '[]');
+          visitorLog.unshift({ country, city, date: new Date().toLocaleString() });
+          if (visitorLog.length > 20) visitorLog.pop();
+          localStorage.setItem('rugerp_visitor_countries', JSON.stringify(visitorLog));
         }
       } catch (e) {}
 
-      console.log("---------------------------------------");
-      console.log("📊 TOTAL DE VISITAS EN TU SPACE (RugerP): " + currentVisits);
-      console.log("---------------------------------------");
+      console.log("=========================================");
+      console.log("📊 [RugerP Space] ESTADÍSTICAS PRIVADAS");
+      console.log("Visitas totales: " + visits);
+      console.log("🌍 Últimas visitas por país (Ver variable: rugerp_visitor_countries)");
+      console.log(JSON.parse(localStorage.getItem('rugerp_visitor_countries') || '[]'));
+      console.log("🎵 Reproducciones por canción (Ver variable: rugerp_song_plays)");
+      console.log(JSON.parse(localStorage.getItem('rugerp_song_plays') || '{}'));
+      console.log("=========================================");
     }
-    initVisitorCounter();
+    initAdvancedAnalytics();
+
+    function trackSongPlay(songTitle) {
+      let songStats = JSON.parse(localStorage.getItem('rugerp_song_plays') || '{}');
+      songStats[songTitle] = (songStats[songTitle] || 0) + 1;
+      localStorage.setItem('rugerp_song_plays', JSON.stringify(songStats));
+    }
 
     function toggleCardFlip() {
       const card = document.getElementById('flip-card');
@@ -407,8 +445,8 @@
 
     const playlist = [
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg' },
-      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
+      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
       { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg' },
@@ -474,6 +512,7 @@
       document.getElementById('player-artist').textContent = song.artist;
       playerCover.src = song.cover;
 
+      trackSongPlay(song.title);
       updateActiveSongClass();
     }
 
@@ -534,7 +573,6 @@
         const glowSize = Math.floor((bassValue / 255) * 35) + 6;
         const opacity = (bassValue / 255) * 0.8 + 0.2;
 
-        /* Aura dual reactiva únicamente en el disco principal */
         discWrapper.style.boxShadow = `
           -${glowSize}px 0 ${glowSize}px rgba(255, 0, 51, ${opacity}), 
           ${glowSize}px 0 ${glowSize}px rgba(0, 229, 255, ${opacity}),
@@ -571,7 +609,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS Y PARTÍCULAS --- */
+    /* --- SISTEMA DE ESFERAS, PARTÍCULAS Y ESTRELLAS FUGACES --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -583,7 +621,7 @@
     resizeCanvas();
 
     const particles = [];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 45; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -593,6 +631,20 @@
         speedY: (Math.random() - 0.5) * 0.2
       });
     }
+
+    const shootingStars = [];
+    function spawnShootingStar() {
+      shootingStars.push({
+        x: Math.random() * canvas.width,
+        y: 0,
+        length: Math.random() * 80 + 40,
+        speed: Math.random() * 4 + 3,
+        angle: Math.PI / 4,
+        opacity: Math.random() * 0.7 + 0.3
+      });
+      setTimeout(spawnShootingStar, Math.random() * 7000 + 8000);
+    }
+    setTimeout(spawnShootingStar, 4000);
 
     let activeBall = null;
 
@@ -724,6 +776,27 @@
         ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
       });
+
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        let s = shootingStars[i];
+        s.x += s.speed * Math.cos(s.angle);
+        s.y += s.speed * Math.sin(s.angle);
+
+        const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.length * Math.cos(s.angle), s.y - s.length * Math.sin(s.angle));
+        grad.addColorStop(0, `rgba(255, 255, 255, ${s.opacity})`);
+        grad.addColorStop(1, 'rgba(0, 229, 255, 0)');
+
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.length * Math.cos(s.angle), s.y - s.length * Math.sin(s.angle));
+        ctx.stroke();
+
+        if (s.x > canvas.width || s.y > canvas.height) {
+          shootingStars.splice(i, 1);
+        }
+      }
 
       if (activeBall) {
         activeBall.x += activeBall.speedX;
