@@ -477,7 +477,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS (AZUL CIELO NEÓN) --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS (ROJO NEÓN DEFINITIVO) --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -503,12 +503,12 @@
         // Promedio de frecuencias bajas
         const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
         
-        // Resplandor en Azul Cielo Neón (#00e5ff) reactivo al bajo
+        // Resplandor en Rojo Neón (#ff0033) reactivo al bajo
         const glowSize = Math.floor((bassValue / 255) * 35) + 6;
         const opacity = (bassValue / 255) * 0.8 + 0.2;
 
-        discWrapper.style.boxShadow = `0 0 ${glowSize}px rgba(0, 229, 255, ${opacity}), inset 0 0 ${glowSize / 2}px rgba(0, 229, 255, ${opacity * 0.5})`;
-        discWrapper.style.borderColor = `rgba(0, 229, 255, ${opacity * 0.9})`;
+        discWrapper.style.boxShadow = `0 0 ${glowSize}px rgba(255, 0, 51, ${opacity}), inset 0 0 ${glowSize / 2}px rgba(255, 0, 51, ${opacity * 0.5})`;
+        discWrapper.style.borderColor = `rgba(255, 0, 51, ${opacity * 0.9})`;
 
         requestAnimationFrame(updateBassVisuals);
       } else {
