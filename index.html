@@ -78,30 +78,30 @@
       color: #ffffff;
     }
 
-    /* --- GOKU PEQUEÑO Y DISCRETO CON FONDO NEGRO --- */
+    /* --- GOKU DISCRETO Y FUERA DEL REPRODUCTOR --- */
     .dancing-goku-container {
       display: none;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
-      margin: 4px auto 0 auto;
-      background: rgba(0, 0, 0, 0.6);
+      width: 45px;
+      height: 45px;
+      margin: 12px auto 0 auto;
+      background: rgba(0, 0, 0, 0.7);
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
       animation: gokuBounce 0.5s ease-in-out infinite alternate;
     }
 
     .dancing-goku-container img {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
     }
 
     @keyframes gokuBounce {
       0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-3px) scale(1.05); }
+      100% { transform: translateY(-4px) scale(1.05); }
     }
 
     /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
@@ -376,7 +376,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral con Goku Local Discreto -->
+    <!-- Tarjeta 3: Reproductor Lateral con Goku limpio abajo -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg" alt="Before You Know It">
@@ -387,7 +387,7 @@
 
       <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Kygo - Before You Know It.mp3"></audio>
 
-      <!-- Goku pequeño y elegante con fondo oscuro -->
+      <!-- Goku pequeño, con fondo oscuro y perfectamente ubicado abajo -->
       <div class="dancing-goku-container" id="dancing-goku">
         <img src="Goku.gif" alt="Goku Bailando">
       </div>
