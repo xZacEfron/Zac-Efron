@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Fondo GIF de Goku y la Nube a pantalla completa */
+    /* Fondo GIF de Goku en la Nube (Aparece en el fondo al reproducir música) */
     #bg-gif-container {
       position: fixed;
       top: 0;
@@ -42,12 +42,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.4) contrast(1.1);
+      filter: brightness(0.45) contrast(1.1);
       transition: filter 1s ease-in-out;
-    }
-
-    body.intro-mode #bg-gif-container img {
-      filter: brightness(0.95) contrast(1.15); /* ¡Protagonismo total al GIF durante los primeros 15s! */
     }
 
     /* Fondo de Canvas (Estrellas y esferas) */
@@ -69,14 +65,6 @@
       justify-content: center;
       flex-wrap: wrap;
       z-index: 2;
-      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    }
-
-    /* Clase para ocultar las tarjetas durante la intro de 15s */
-    .app-container.hidden-intro {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.98);
     }
 
     /* Tarjetas principales */
@@ -102,7 +90,6 @@
       transform: translateY(-2px);
     }
 
-    /* Título "𝑹𝒖" centrado */
     .header-title {
       font-size: 21px;
       font-weight: 700;
@@ -289,23 +276,22 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral con barra alineada a la altura de tu dedo */
+    /* Reproductor Lateral con el disco y la barra en su posición original perfecta */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: flex-end;
-      padding-bottom: 34px;
+      justify-content: center;
     }
 
     .disc-container {
-      width: 175px;
-      height: 175px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 5px;
-      margin-bottom: 12px;
+      margin-top: 10px;
+      margin-bottom: 15px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -331,20 +317,20 @@
     }
 
     .current-title {
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 700;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .current-artist {
-      font-size: 12px;
+      font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     audio {
       width: 100%;
-      margin-top: 4px;
+      margin-top: 6px;
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
       transition: box-shadow 0.2s ease;
@@ -366,7 +352,7 @@
   <!-- Canvas para Partículas y Estrellas Neón -->
   <canvas id="particles-canvas"></canvas>
 
-  <div class="app-container" id="app-container">
+  <div class="app-container">
     
     <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
     <div class="card">
@@ -441,9 +427,6 @@
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
-    const appContainer = document.getElementById('app-container');
-
-    let introTimeout = null;
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
@@ -571,18 +554,7 @@
 
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
-      bgGifContainer.style.opacity = '1'; 
-      document.body.classList.add('intro-mode');
-      
-      appContainer.classList.add('hidden-intro');
-
-      if (introTimeout) clearTimeout(introTimeout);
-
-      introTimeout = setTimeout(() => {
-        appContainer.classList.remove('hidden-intro');
-        document.body.classList.remove('intro-mode');
-      }, 15000);
-
+      bgGifContainer.style.opacity = '1'; /* Enciende el fondo GIF atrás al reproducir */
       updateActiveSongClass();
       try {
         initAudioVisualizer();
@@ -591,12 +563,7 @@
 
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
-      bgGifContainer.style.opacity = '0'; 
-      document.body.classList.remove('intro-mode');
-      
-      if (introTimeout) clearTimeout(introTimeout);
-      appContainer.classList.remove('hidden-intro');
-
+      bgGifContainer.style.opacity = '0'; /* Apaga el fondo GIF y deja negro al pausar */
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
       updateActiveSongClass();
