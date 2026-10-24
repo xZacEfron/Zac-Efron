@@ -275,13 +275,13 @@
     }
 
     .player-card:hover .disc-container {
-      border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.8);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
     }
 
-    /* Giro + Halo / Sombra Negra Profunda tipo Eclipse (Elegante y Natural) */
+    /* Giro + Pulso rítmico en tonos negros */
     .rotating {
-      animation: spinDisc 12s linear infinite, eclipseGlow 3s ease-in-out infinite alternate;
+      animation: spinDisc 12s linear infinite, bassPulseDark 0.6s ease-in-out infinite alternate;
     }
 
     @keyframes spinDisc {
@@ -289,14 +289,16 @@
       to { transform: rotate(360deg); }
     }
 
-    @keyframes eclipseGlow {
+    @keyframes bassPulseDark {
       0% {
-        border-color: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.8);
+        border-color: rgba(30, 30, 35, 0.8);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.7);
+        transform: scale(1);
       }
       100% {
-        border-color: rgba(255, 255, 255, 0.35);
-        box-shadow: 0 0 35px rgba(0, 0, 0, 1), 0 0 15px rgba(255, 255, 255, 0.05), inset 0 0 30px rgba(0, 0, 0, 0.95);
+        border-color: rgba(70, 70, 80, 1);
+        box-shadow: 0 0 35px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.95);
+        transform: scale(1.03);
       }
     }
 
@@ -340,7 +342,7 @@
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
           <div class="flip-front full-img-container">
-            <img src="https://xatimg.com/image/Pkjoaoso0fgK.jpg" alt="Ru Photo 1">
+            <img src="https://xatimg.com/image/6psP1KrS59m9.jpg" alt="Ru Photo 1">
           </div>
           <div class="flip-back full-img-container">
             <img src="https://xatimg.com/image/Jg23jlU0z2hq.png" alt="Ru Photo 2">
