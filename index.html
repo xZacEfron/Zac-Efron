@@ -313,7 +313,7 @@
       margin-bottom: 20px;
     }
 
-    /* Control de audio nativo */
+    /* Control de audio nativo con aura reactiva */
     audio {
       width: 100%;
       margin-top: 15px;
@@ -406,7 +406,7 @@
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZSZk/images-(2).jpg' },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg' },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
       { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
@@ -500,7 +500,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS (DISCO Y BARRA DE AUDIO) --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -536,10 +536,18 @@
         `;
         discWrapper.style.borderColor = `rgba(255, 255, 255, ${opacity * 0.8})`;
 
+        /* Aura en la barra de control de audio inferior */
+        const controlGlow = Math.floor((bassValue / 255) * 12) + 3;
+        audio.style.boxShadow = `
+          -${controlGlow}px 0 ${controlGlow * 1.5}px rgba(255, 0, 51, ${opacity * 0.4}), 
+          ${controlGlow}px 0 ${controlGlow * 1.5}px rgba(0, 229, 255, ${opacity * 0.4})
+        `;
+
         requestAnimationFrame(updateBassVisuals);
       } else {
         discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
         discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        audio.style.boxShadow = 'none';
       }
     }
 
@@ -555,6 +563,7 @@
       discWrapper.classList.remove('rotating');
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+      audio.style.boxShadow = 'none';
       updateActiveSongClass();
     });
 
