@@ -318,14 +318,14 @@
       margin-bottom: 20px;
     }
 
-    /* Control de audio nativo con aura reactiva */
+    /* Control de audio nativo limpio (con sus bordes oscuros/estructura fija sin luces de colores) */
     audio {
       width: 100%;
       margin-top: 15px;
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
-      transition: box-shadow 0.2s ease;
-      border: 1px solid transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
     }
 
     audio::-webkit-media-controls-mute-button {
@@ -506,7 +506,7 @@
       });
     }
 
-    /* --- SISTEMA DE ANÁLISIS DE BAJOS --- */
+    /* --- SISTEMA DE ANÁLISIS DE BAJOS (SOLO PARA EL DISCO) --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -534,7 +534,7 @@
         const glowSize = Math.floor((bassValue / 255) * 35) + 6;
         const opacity = (bassValue / 255) * 0.8 + 0.2;
 
-        /* Aura dual en el disco principal */
+        /* Aura dual reactiva únicamente en el disco principal */
         discWrapper.style.boxShadow = `
           -${glowSize}px 0 ${glowSize}px rgba(255, 0, 51, ${opacity}), 
           ${glowSize}px 0 ${glowSize}px rgba(0, 229, 255, ${opacity}),
@@ -542,18 +542,10 @@
         `;
         discWrapper.style.borderColor = `rgba(255, 255, 255, ${opacity * 0.8})`;
 
-        /* Aura en la barra de control de audio inferior */
-        const controlGlow = Math.floor((bassValue / 255) * 12) + 3;
-        audio.style.boxShadow = `
-          -${controlGlow}px 0 ${controlGlow * 1.5}px rgba(255, 0, 51, ${opacity * 0.4}), 
-          ${controlGlow}px 0 ${controlGlow * 1.5}px rgba(0, 229, 255, ${opacity * 0.4})
-        `;
-
         requestAnimationFrame(updateBassVisuals);
       } else {
         discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
         discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-        audio.style.boxShadow = 'none';
       }
     }
 
@@ -569,7 +561,6 @@
       discWrapper.classList.remove('rotating');
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-      audio.style.boxShadow = 'none';
       updateActiveSongClass();
     });
 
