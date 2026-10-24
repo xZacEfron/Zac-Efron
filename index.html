@@ -358,14 +358,14 @@
     <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
-        <img id="player-cover" src="https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg" alt="Whatsername">
+        <img id="player-cover" src="https://i.postimg.cc/0jbZSJWB/KYGO-0.jpg" alt="Before You Know It">
       </div>
 
-      <div class="current-title" id="player-title">Whatsername</div>
-      <div class="current-artist" id="player-artist">Green Day</div>
+      <div class="current-title" id="player-title">Before You Know It</div>
+      <div class="current-artist" id="player-artist">Kygo</div>
 
       <!-- Reproductor de Audio Original -->
-      <audio id="main-audio" controls controlsList="nodownload" src="Green Day - Whatsername.mp3"></audio>
+      <audio id="main-audio" controls controlsList="nodownload" src="Kygo - Before You Know It.mp3"></audio>
     </div>
 
   </div>
@@ -395,13 +395,14 @@
       card.classList.toggle('flipped');
     }
 
-    /* --- PLAYLIST ACTUALIZADA CON EL NUEVO TOP 5 AL INICIO --- */
+    /* --- PLAYLIST ACTUALIZADA CON KYGO AL INICIO --- */
     const playlist = [
+      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/0jbZSJWB/KYGO-0.jpg' },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
       { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
       { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
@@ -415,8 +416,7 @@
       { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg' },
       { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg' },
       { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg' },
-      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg' },
-      { file: 'Brandon Heath - Whole Heart.mp3', title: 'Whole Heart', artist: 'Brandon Heath', cover: 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg' }
+      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg' }
     ];
 
     let currentIndex = 0;
