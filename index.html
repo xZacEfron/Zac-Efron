@@ -355,7 +355,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral Original */
+    /* Reproductor Lateral */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -407,18 +407,107 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de audio exacta */
-    audio {
+    /* --- NUEVA BARRA DE AUDIO ESTILIZADA DE 2 COLORES --- */
+    .custom-player-box {
       width: 100%;
-      margin-top: 42px; 
-      border-radius: 12px;
-      filter: invert(0.9) hue-rotate(180deg);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease, filter 0.3s ease;
-      border: 1px solid transparent;
+      margin-top: 20px;
+      background: rgba(20, 20, 25, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
-    audio::-webkit-media-controls-mute-button {
-      filter: hue-rotate(140deg) saturate(2);
+    .progress-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .progress-bar-custom {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .progress-bar-custom::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 8px rgba(255,255,255,0.9);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .progress-bar-custom::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+    }
+
+    .player-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .custom-play-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .custom-play-btn:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .time-display-custom {
+      font-size: 12px;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .options-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .speaker-icon {
+      font-size: 13px;
+    }
+
+    .dots-icon {
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
@@ -470,7 +559,22 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="MGMT - Kids.mp3"></audio>
+      <!-- Barra de audio personalizada con diseño de 2 colores -->
+      <div class="custom-player-box" id="custom-player-box">
+        <div class="progress-container">
+          <input type="range" class="progress-bar-custom" id="progress-bar" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)">
+        </div>
+        <div class="player-controls-row">
+          <div class="custom-play-btn" id="play-btn" onclick="togglePlayPause()">▶</div>
+          <div class="time-display-custom" id="time-text">0:00 / 0:00</div>
+          <div class="options-group">
+            <span class="speaker-icon" id="speaker-icon">🔊</span>
+            <span class="dots-icon" id="dots-icon">•••</span>
+          </div>
+        </div>
+      </div>
+
+      <audio id="main-audio" crossorigin="anonymous" src="MGMT - Kids.mp3"></audio>
     </div>
 
   </div>
@@ -496,9 +600,9 @@
     const playlist = [
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ffee00', '#ff0033'] },
-      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
+      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#ff0055'] }, /* Actualizado con el estilo de Fade Into Darkness */
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffee00', '#2a0845'] },
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#00f0ff'] },
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0055'] },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#0066ff'] },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#00f0ff'] },
@@ -527,6 +631,13 @@
     const bgGifContainer = document.getElementById('bg-gif-container');
     const bgGifImg = document.getElementById('bg-gif-img');
     const appContainer = document.getElementById('app-container');
+
+    const customPlayerBox = document.getElementById('custom-player-box');
+    const playBtn = document.getElementById('play-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const timeText = document.getElementById('time-text');
+    const speakerIcon = document.getElementById('speaker-icon');
+    const dotsIcon = document.getElementById('dots-icon');
 
     let gifSwitchTimeout = null;
 
@@ -573,17 +684,64 @@
       updateAudioBarColor();
     }
 
+    function togglePlayPause() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    function seekAudio(val) {
+      if (audio.duration) {
+        audio.currentTime = (val / 100) * audio.duration;
+      }
+    }
+
+    function formatTime(sec) {
+      if (isNaN(sec)) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    /* Aplica el estilo de 2 colores combinados a todo el reproductor inferior cuando suena */
     function updateAudioBarColor() {
       const currentSong = playlist[currentIndex];
-      const mainColor = currentSong.colors[0];
+      const color1 = currentSong.colors[0];
+      const color2 = currentSong.colors[1];
+
       if (!audio.paused) {
-        audio.style.borderColor = `${mainColor}80`;
-        audio.style.boxShadow = `0 0 15px ${mainColor}50`;
-        audio.style.filter = `invert(0.9) hue-rotate(180deg) drop-shadow(0 0 4px ${mainColor})`;
+        customPlayerBox.style.borderColor = `${color1}80`;
+        customPlayerBox.style.boxShadow = `0 0 18px ${color1}40`;
+
+        playBtn.style.color = color1;
+        playBtn.style.borderColor = color1;
+        playBtn.style.boxShadow = `0 0 8px ${color1}`;
+
+        timeText.style.color = '#ffffff';
+        timeText.style.textShadow = `0 0 8px ${color2}`;
+
+        speakerIcon.style.color = color2;
+        speakerIcon.style.textShadow = `0 0 8px ${color2}`;
+
+        dotsIcon.style.color = color1;
+        dotsIcon.style.textShadow = `0 0 8px ${color1}`;
+
+        progressBar.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
       } else {
-        audio.style.borderColor = 'transparent';
-        audio.style.boxShadow = 'none';
-        audio.style.filter = 'invert(0.9) hue-rotate(180deg)';
+        customPlayerBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        customPlayerBox.style.boxShadow = '0 8px 20px rgba(0,0,0,0.6)';
+        playBtn.style.color = '#ffffff';
+        playBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        playBtn.style.boxShadow = 'none';
+        timeText.style.color = '#ffffff';
+        timeText.style.textShadow = 'none';
+        speakerIcon.style.color = '#ffffff';
+        speakerIcon.style.textShadow = 'none';
+        dotsIcon.style.color = '#ffffff';
+        dotsIcon.style.textShadow = 'none';
+        progressBar.style.background = 'rgba(255, 255, 255, 0.15)';
       }
     }
 
@@ -600,12 +758,9 @@
 
           if (!audio.paused) {
             item.classList.add('playing');
-            
-            // Borde con degradado de 2 COLORES (Ejemplo: Azul celeste + Rojo)
             item.style.border = '1px solid transparent';
             item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
             
-            // Las 3 barritas del ecualizador toman la combinación de ambos colores
             if (eqBars.length >= 3) {
               eqBars[0].style.backgroundColor = currentSong.colors[0];
               eqBars[0].style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
@@ -700,7 +855,16 @@
       }
     }
 
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        progressBar.value = pct;
+        timeText.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+      }
+    });
+
     audio.addEventListener('play', () => {
+      playBtn.textContent = '❚❚';
       discWrapper.classList.add('rotating');
       bgGifContainer.style.opacity = '1';
       document.body.classList.add('is-playing');
@@ -736,6 +900,7 @@
     });
 
     audio.addEventListener('pause', () => {
+      playBtn.textContent = '▶';
       discWrapper.classList.remove('rotating');
       bgGifContainer.style.opacity = '0';
       document.body.classList.remove('intro-mode');
