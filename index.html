@@ -22,9 +22,10 @@
       padding: 20px;
       overflow-x: hidden;
       position: relative;
+      cursor: pointer; /* Permite saber que se puede hacer clic para alternar visibilidad */
     }
 
-    /* Fondo GIF de Goku en la Nube (Aparece en el fondo al reproducir música) */
+    /* Fondo GIF de Goku en la Nube (Aparece al reproducir música) */
     #bg-gif-container {
       position: fixed;
       top: 0;
@@ -43,10 +44,9 @@
       height: 100%;
       object-fit: cover;
       filter: brightness(0.45) contrast(1.1);
-      transition: filter 1s ease-in-out;
     }
 
-    /* Fondo de Canvas (Estrellas y esferas) */
+    /* Fondo de Canvas */
     #particles-canvas {
       position: fixed;
       top: 0;
@@ -65,9 +65,17 @@
       justify-content: center;
       flex-wrap: wrap;
       z-index: 2;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     }
 
-    /* Tarjetas principales */
+    /* Clase para ocultar las tarjetas al hacer clic */
+    .app-container.hidden-space {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.98);
+    }
+
+    /* Tarjetas principales con hover limpio original */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
@@ -81,7 +89,7 @@
       display: flex;
       flex-direction: column;
       transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
-      position: relative;
+      cursor: default; /* Para que dentro de la tarjeta los clics funcionen normal */
     }
 
     .card:hover {
@@ -91,22 +99,21 @@
     }
 
     .header-title {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 700;
       letter-spacing: 0.5px;
       margin-bottom: 12px;
+      color: #f8fafc;
       text-align: center;
-      color: #ffffff;
     }
 
-    /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
+    /* --- EFECTO DE TARJETA VOLTEABLE (FLIP CARD 3D) --- */
     .flip-card-container {
       width: 100%;
       flex: 1;
       perspective: 1000px;
       cursor: pointer;
       position: relative;
-      border-radius: 20px;
     }
 
     .flip-card-inner {
@@ -201,7 +208,6 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid transparent;
       cursor: pointer;
-      position: relative;
       transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
@@ -215,12 +221,6 @@
     .song-item.active {
       background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .song-item.playing {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
     }
 
     .song-item img {
@@ -238,7 +238,6 @@
       font-size: 15px;
       font-weight: 600;
       color: #f1f5f9;
-      transition: color 0.2s ease, text-shadow 0.2s ease;
     }
 
     .song-artist {
@@ -271,12 +270,16 @@
       animation: eqBounce 0.8s ease-in-out infinite alternate;
     }
 
+    .song-item.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; }
+    .song-item.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; }
+    .song-item.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; }
+
     @keyframes eqBounce {
       0% { height: 20%; }
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral con el disco y la barra en su posición original perfecta */
+    /* Reproductor Lateral Original */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -290,15 +293,16 @@
       height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 10px;
-      margin-bottom: 15px;
+      margin-top: 15px;
+      margin-bottom: 24px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
-      transition: border-color 0.1s ease, box-shadow 0.1s ease;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
     .player-card:hover .disc-container {
       border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
     .disc-container img {
@@ -308,7 +312,7 @@
     }
 
     .rotating {
-      animation: spinDisc 12s linear infinite;
+      animation: spinDisc 12s linear infinite, discGlowDark 2.5s ease-in-out infinite alternate;
     }
 
     @keyframes spinDisc {
@@ -316,25 +320,28 @@
       to { transform: rotate(360deg); }
     }
 
+    @keyframes discGlowDark {
+      from { box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5); }
+      to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.05), 0 0 25px rgba(0, 0, 0, 0.9); }
+    }
+
     .current-title {
-      font-size: 19px;
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 6px;
     }
 
     .current-artist {
-      font-size: 13px;
+      font-size: 15px;
       color: #94a3b8;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     audio {
       width: 100%;
-      margin-top: 6px;
-      border-radius: 12px;
+      margin-top: 15px;
+      border-radius: 10px;
       filter: invert(0.9) hue-rotate(180deg);
-      transition: box-shadow 0.2s ease;
-      border: 1px solid transparent;
     }
 
     audio::-webkit-media-controls-mute-button {
@@ -349,18 +356,18 @@
     <img src="https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif" alt="Fondo Goku Nube">
   </div>
 
-  <!-- Canvas para Partículas y Estrellas Neón -->
+  <!-- Canvas para Partículas y Esferas -->
   <canvas id="particles-canvas"></canvas>
 
-  <div class="app-container">
+  <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable (Flip Card) -->
     <div class="card">
       <div class="header-title">𝑹𝒖</div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
           <div class="flip-front full-img-container">
-            <img src="https://xatimg.com/image/6psP1KrS59m9.jpg" alt="Ru Photo 1">
+            <img src="https://xatimg.com/image/Pkjoaoso0fgK.jpg" alt="Ru Photo 1">
           </div>
           <div class="flip-back full-img-container">
             <img src="https://xatimg.com/image/Jg23jlU0z2hq.png" alt="Ru Photo 2">
@@ -379,13 +386,14 @@
     <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
-        <img id="player-cover" src="https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg" alt="Before You Know It">
+        <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
       </div>
 
-      <div class="current-title" id="player-title">Before You Know It</div>
-      <div class="current-artist" id="player-artist">Kygo</div>
+      <div class="current-title" id="player-title">Kids</div>
+      <div class="current-artist" id="player-artist">MGMT</div>
 
-      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Kygo - Before You Know It.mp3"></audio>
+      <!-- Reproductor de Audio Original -->
+      <audio id="main-audio" controls controlsList="nodownload" src="MGMT - Kids.mp3"></audio>
     </div>
 
   </div>
@@ -396,29 +404,36 @@
       card.classList.toggle('flipped');
     }
 
+    /* --- SCRIPT PARA OCULTAR/MOSTRAR LAS TARJETAS AL DAR CLIC EN EL FONDO --- */
+    const appContainer = document.getElementById('app-container');
+    document.body.addEventListener('click', (e) => {
+      // Si se hace clic directamente en el body o canvas (fuera de las tarjetas), alternamos la visibilidad
+      if (e.target === document.body || e.target === document.getElementById('particles-canvas') || e.target === document.getElementById('bg-gif-container')) {
+        appContainer.classList.toggle('hidden-space');
+      }
+    });
+
     const playlist = [
-      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#2a0845'] },
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] },
-      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff00ff', '#00e5ff'] },
-      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#ff2200'] },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00ffff', '#0066ff'] },
-      { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff2255', '#ff9900'] },
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#ff00aa'] },
-      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg', colors: ['#ff1100', '#9900ff'] },
-      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffd700', '#ff0033'] },
-      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg', colors: ['#00ffff', '#ffffff'] },
-      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg', colors: ['#ff0000', '#ff6600'] },
-      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#00ffaa', '#00ffff'] },
-      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg', colors: ['#ff1493', '#00ffff'] },
-      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg', colors: ['#00ff00', '#0000ff'] },
-      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg', colors: ['#ffffff', '#ff0000'] },
-      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg', colors: ['#ff69b4', '#ffff00'] },
-      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg', colors: ['#b0c4de', '#8a2be2'] },
-      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg', colors: ['#00ffcc', '#ff1493'] },
-      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg', colors: ['#ff4500', '#800080'] },
-      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg', colors: ['#ffd700', '#00ff7f'] },
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#bf00ff', '#ff00aa'] }
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
+      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
+      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
+      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
+      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg' },
+      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg' },
+      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
+      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg' },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
+      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg' },
+      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg' },
+      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg' },
+      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg' },
+      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg' },
+      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg' },
+      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg' },
+      { file: 'Brandon Heath - Whole Heart.mp3', title: 'Whole Heart', artist: 'Brandon Heath', cover: 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg' }
     ];
 
     let currentIndex = 0;
@@ -438,7 +453,7 @@
         item.innerHTML = `
           <img src="${song.cover}" alt="${song.title}">
           <div class="song-info">
-            <div class="song-name" id="song-name-${index}">${song.title}</div>
+            <div class="song-name">${song.title}</div>
             <div class="song-artist">${song.artist}</div>
           </div>
           <div class="equalizer">
@@ -472,100 +487,29 @@
 
     function updateActiveSongClass() {
       const items = document.querySelectorAll('.song-item');
-      const currentSong = playlist[currentIndex];
-
       items.forEach((item, index) => {
-        const songNameEl = document.getElementById(`song-name-${index}`);
         if (index === currentIndex) {
           item.classList.add('active');
           if (!audio.paused) {
             item.classList.add('playing');
-            item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
-            if (songNameEl) {
-              songNameEl.style.color = '#ffffff';
-              songNameEl.style.textShadow = `0 0 8px ${currentSong.colors[0]}`;
-            }
           } else {
             item.classList.remove('playing');
-            item.style.borderImage = 'none';
-            item.style.borderColor = 'rgba(255,255,255,0.2)';
-            if (songNameEl) {
-              songNameEl.style.color = '#f1f5f9';
-              songNameEl.style.textShadow = 'none';
-            }
           }
         } else {
           item.classList.remove('active', 'playing');
-          item.style.borderImage = 'none';
-          item.style.borderColor = 'transparent';
-          if (songNameEl) {
-            songNameEl.style.color = '#f1f5f9';
-            songNameEl.style.textShadow = 'none';
-          }
         }
       });
     }
 
-    /* --- SISTEMA DE BAJOS --- */
-    let audioCtx, analyser, source;
-
-    function initAudioVisualizer() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 64;
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      updateBassVisuals();
-    }
-
-    function updateBassVisuals() {
-      if (!audio.paused && analyser) {
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(dataArray);
-
-        const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
-        
-        const glowSize = Math.floor((bassValue / 255) * 35) + 6;
-        const opacity = (bassValue / 255) * 0.8 + 0.2;
-
-        const currentSong = playlist[currentIndex];
-        const color1 = currentSong.colors[0];
-        const color2 = currentSong.colors[1];
-
-        discWrapper.style.boxShadow = `
-          -${glowSize}px 0 ${glowSize}px ${color1}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}, 
-          ${glowSize}px 0 ${glowSize}px ${color2}${Math.floor(opacity * 255).toString(16).padStart(2, '0')},
-          inset 0 0 ${glowSize / 2}px rgba(255, 255, 255, ${opacity * 0.3})
-        `;
-        discWrapper.style.borderColor = color1;
-
-        requestAnimationFrame(updateBassVisuals);
-      } else {
-        discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
-        discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-      }
-    }
-
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
-      bgGifContainer.style.opacity = '1'; /* Enciende el fondo GIF atrás al reproducir */
+      bgGifContainer.style.opacity = '1'; // Muestra el GIF de Goku en la nube atrás al dar Play
       updateActiveSongClass();
-      try {
-        initAudioVisualizer();
-      } catch (e) {}
     });
 
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
-      bgGifContainer.style.opacity = '0'; /* Apaga el fondo GIF y deja negro al pausar */
-      discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
-      discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+      bgGifContainer.style.opacity = '0'; // Oculta el GIF al pausar
       updateActiveSongClass();
     });
 
@@ -576,7 +520,7 @@
 
     renderPlaylist();
 
-    /* --- ESTRELLAS NEÓN DINÁMICAS --- */
+    /* --- SISTEMA DE ESFERAS (1-4 ESTRELLAS, SUPERIOR, CADA 18s, BRILLO INTERMITENTE) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -597,43 +541,6 @@
         speedX: (Math.random() - 0.5) * 0.2,
         speedY: (Math.random() - 0.5) * 0.2
       });
-    }
-
-    const neonStars = [];
-    for (let i = 0; i < 40; i++) {
-      neonStars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 2,
-        alpha: 0,
-        targetAlpha: Math.random() * 0.8 + 0.2,
-        pulseSpeed: Math.random() * 0.04 + 0.02
-      });
-    }
-
-    function drawNeonStar(ctx, x, y, size, opacity, color) {
-      ctx.save();
-      ctx.translate(x, y);
-
-      ctx.shadowBlur = size * 5;
-      ctx.shadowColor = color;
-
-      ctx.fillStyle = color;
-      ctx.globalAlpha = opacity;
-      ctx.beginPath();
-      ctx.moveTo(0, -size * 2);
-      ctx.quadraticCurveTo(0, 0, size * 2, 0);
-      ctx.quadraticCurveTo(0, 0, 0, size * 2);
-      ctx.quadraticCurveTo(0, 0, -size * 2, 0);
-      ctx.quadraticCurveTo(0, 0, 0, -size * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(0, 0, size * 0.4, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.restore();
     }
 
     let activeBall = null;
@@ -765,26 +672,6 @@
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
-      });
-
-      const isPlaying = !audio.paused;
-      const currentNeonColor = playlist[currentIndex].colors[0];
-
-      neonStars.forEach(star => {
-        if (isPlaying) {
-          star.alpha += star.pulseSpeed;
-          if (star.alpha > star.targetAlpha || star.alpha < 0.1) {
-            star.pulseSpeed = -star.pulseSpeed;
-          }
-        } else {
-          if (star.alpha > 0) {
-            star.alpha -= 0.04;
-          }
-        }
-
-        if (star.alpha > 0.01) {
-          drawNeonStar(ctx, star.x, star.y, star.size, star.alpha, currentNeonColor);
-        }
       });
 
       if (activeBall) {
