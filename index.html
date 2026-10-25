@@ -22,10 +22,9 @@
       padding: 20px;
       overflow-x: hidden;
       position: relative;
-      cursor: pointer; /* Permite saber que se puede hacer clic para alternar visibilidad */
     }
 
-    /* Fondo GIF de Goku en la Nube (Aparece al reproducir música) */
+    /* Fondo GIF Dinámico */
     #bg-gif-container {
       position: fixed;
       top: 0;
@@ -44,6 +43,11 @@
       height: 100%;
       object-fit: cover;
       filter: brightness(0.45) contrast(1.1);
+      transition: filter 1s ease-in-out;
+    }
+
+    body.intro-mode #bg-gif-container img {
+      filter: brightness(0.95) contrast(1.15);
     }
 
     /* Fondo de Canvas */
@@ -65,11 +69,11 @@
       justify-content: center;
       flex-wrap: wrap;
       z-index: 2;
-      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
 
-    /* Clase para ocultar las tarjetas al hacer clic */
-    .app-container.hidden-space {
+    /* Clase para ocultar los 3 cuadros durante la intro inicial */
+    .app-container.hidden-intro {
       opacity: 0;
       pointer-events: none;
       transform: scale(0.98);
@@ -89,7 +93,6 @@
       display: flex;
       flex-direction: column;
       transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
-      cursor: default; /* Para que dentro de la tarjeta los clics funcionen normal */
     }
 
     .card:hover {
@@ -208,6 +211,7 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid transparent;
       cursor: pointer;
+      position: relative;
       transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
@@ -221,6 +225,12 @@
     .song-item.active {
       background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .song-item.playing {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
     }
 
     .song-item img {
@@ -238,6 +248,7 @@
       font-size: 15px;
       font-weight: 600;
       color: #f1f5f9;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
     }
 
     .song-artist {
@@ -279,7 +290,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral Original */
+    /* Reproductor Lateral Original con auras y colores intactos */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -351,9 +362,9 @@
 </head>
 <body>
 
-  <!-- Fondo GIF de Goku en la Nube -->
+  <!-- Fondo GIF Dinámico -->
   <div id="bg-gif-container">
-    <img src="https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif" alt="Fondo Goku Nube">
+    <img id="bg-gif-img" src="https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif" alt="Fondo Animado">
   </div>
 
   <!-- Canvas para Partículas y Esferas -->
@@ -404,44 +415,41 @@
       card.classList.toggle('flipped');
     }
 
-    /* --- SCRIPT PARA OCULTAR/MOSTRAR LAS TARJETAS AL DAR CLIC EN EL FONDO --- */
-    const appContainer = document.getElementById('app-container');
-    document.body.addEventListener('click', (e) => {
-      // Si se hace clic directamente en el body o canvas (fuera de las tarjetas), alternamos la visibilidad
-      if (e.target === document.body || e.target === document.getElementById('particles-canvas') || e.target === document.getElementById('bg-gif-container')) {
-        appContainer.classList.toggle('hidden-space');
-      }
-    });
-
     const playlist = [
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg' },
-      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg' },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg' },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg' },
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
-      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg' },
-      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg' },
-      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg' },
-      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg' },
-      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg' },
-      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg' },
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg' },
-      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg' },
-      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg' },
-      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg' },
-      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg' },
-      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg' },
-      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg' },
-      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg' },
-      { file: 'Brandon Heath - Whole Heart.mp3', title: 'Whole Heart', artist: 'Brandon Heath', cover: 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg' }
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] },
+      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#ff2200'] },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00ffff', '#0066ff'] },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#2a0845'] },
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#bf00ff', '#ff00aa'] },
+      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg', colors: ['#ff1100', '#9900ff'] },
+      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffd700', '#ff0033'] },
+      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg', colors: ['#00ffff', '#ffffff'] },
+      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg', colors: ['#ff0000', '#ff6600'] },
+      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#00ffaa', '#00ffff'] },
+      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg', colors: ['#ff1493', '#00ffff'] },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#ff00aa'] },
+      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg', colors: ['#00ff00', '#0000ff'] },
+      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg', colors: ['#ffffff', '#ff0000'] },
+      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg', colors: ['#ff69b4', '#ffff00'] },
+      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg', colors: ['#b0c4de', '#8a2be2'] },
+      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg', colors: ['#00ffcc', '#ff1493'] },
+      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg', colors: ['#ff4500', '#800080'] },
+      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg', colors: ['#ffd700', '#00ff7f'] },
+      { file: 'Brandon Heath - Whole Heart.mp3', title: 'Whole Heart', artist: 'Brandon Heath', cover: 'https://i.postimg.cc/C5TcdwqS/ab67616d0000b273fcc3216f7eff222b4c4433d7.jpg', colors: ['#ff0055', '#00e5ff'] }
     ];
 
     let currentIndex = 0;
+    let hasPlayedFirstTime = false; // Control para que el primer GIF solo sea la primera vez
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
+    const bgGifImg = document.getElementById('bg-gif-img');
+    const appContainer = document.getElementById('app-container');
+
+    let introTimeout = null;
+    let gifSwitchTimeout = null;
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
@@ -453,7 +461,7 @@
         item.innerHTML = `
           <img src="${song.cover}" alt="${song.title}">
           <div class="song-info">
-            <div class="song-name">${song.title}</div>
+            <div class="song-name" id="song-name-${index}">${song.title}</div>
             <div class="song-artist">${song.artist}</div>
           </div>
           <div class="equalizer">
@@ -487,29 +495,85 @@
 
     function updateActiveSongClass() {
       const items = document.querySelectorAll('.song-item');
+      const currentSong = playlist[currentIndex];
+
       items.forEach((item, index) => {
+        const songNameEl = document.getElementById(`song-name-${index}`);
         if (index === currentIndex) {
           item.classList.add('active');
           if (!audio.paused) {
             item.classList.add('playing');
+            if (currentSong && currentSong.colors) {
+              item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
+              if (songNameEl) {
+                songNameEl.style.color = '#ffffff';
+                songNameEl.style.textShadow = `0 0 8px ${currentSong.colors[0]}`;
+              }
+            }
           } else {
             item.classList.remove('playing');
+            item.style.borderImage = 'none';
+            item.style.borderColor = 'rgba(255,255,255,0.2)';
+            if (songNameEl) {
+              songNameEl.style.color = '#f1f5f9';
+              songNameEl.style.textShadow = 'none';
+            }
           }
         } else {
           item.classList.remove('active', 'playing');
+          item.style.borderImage = 'none';
+          item.style.borderColor = 'transparent';
+          if (songNameEl) {
+            songNameEl.style.color = '#f1f5f9';
+            songNameEl.style.textShadow = 'none';
+          }
         }
       });
     }
 
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
-      bgGifContainer.style.opacity = '1'; // Muestra el GIF de Goku en la nube atrás al dar Play
+      bgGifContainer.style.opacity = '1'; 
+
+      if (!hasPlayedFirstTime) {
+        // PRIMERA VEZ QUE DA PLAY: Muestra el primer GIF y oculta los 3 cuadros
+        bgGifImg.src = "https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif";
+        document.body.classList.add('intro-mode');
+        appContainer.classList.add('hidden-intro');
+
+        if (introTimeout) clearTimeout(introTimeout);
+        if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
+
+        // A los 5 segundos, cambia al segundo GIF (la nube)
+        gifSwitchTimeout = setTimeout(() => {
+          bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
+        }, 5000);
+
+        // A los 10 segundos exactos, reaparecen los 3 cuadros con auras y colores
+        introTimeout = setTimeout(() => {
+          appContainer.classList.remove('hidden-intro');
+          document.body.classList.remove('intro-mode');
+          hasPlayedFirstTime = true; // Ya queda marcado que pasó la primera vez
+        }, 10000);
+      } else {
+        // SIGUIENTES REPRODUCCIONES: Se queda directo con el GIF de la nube y los cuadros visibles
+        bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
+        appContainer.classList.remove('hidden-intro');
+        document.body.classList.remove('intro-mode');
+      }
+
       updateActiveSongClass();
     });
 
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
-      bgGifContainer.style.opacity = '0'; // Oculta el GIF al pausar
+      bgGifContainer.style.opacity = '0'; 
+      document.body.classList.remove('intro-mode');
+      
+      if (introTimeout) clearTimeout(introTimeout);
+      if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
+      appContainer.classList.remove('hidden-intro');
+
       updateActiveSongClass();
     });
 
@@ -520,7 +584,7 @@
 
     renderPlaylist();
 
-    /* --- SISTEMA DE ESFERAS (1-4 ESTRELLAS, SUPERIOR, CADA 18s, BRILLO INTERMITENTE) --- */
+    /* --- SISTEMA DE ESFERAS (1-4 ESTRELLAS) --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
