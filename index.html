@@ -355,22 +355,21 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral */
+    /* Reproductor Lateral con posición original exacta */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: flex-start;
-      padding-top: 28px;
+      justify-content: center;
     }
 
     .disc-container {
-      width: 190px;
-      height: 190px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 4px;
+      margin-top: 10px;
       margin-bottom: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
@@ -397,7 +396,7 @@
     }
 
     .current-title {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 700;
       margin-bottom: 2px;
     }
@@ -408,10 +407,10 @@
       margin-bottom: 0px;
     }
 
-    /* BARRA DE REPRODUCCIÓN BAJADA UN POCO MÁS */
+    /* Barra de reproducción en su posición original exacta */
     .custom-player-box {
       width: 100%;
-      margin-top: 38px;
+      margin-top: 20px;
       background: rgba(20, 20, 25, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
@@ -560,7 +559,7 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Barra de audio en posición optimizada -->
+      <!-- Barra de audio en su posición original -->
       <div class="custom-player-box" id="custom-player-box">
         <div class="progress-container">
           <input type="range" class="progress-bar-custom" id="progress-bar" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)">
@@ -598,7 +597,7 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PALETA DE COLORES NEÓN AJUSTADA (AZUL CIELO, ROJO, MORADO OSCURO, VERDE Y COMBINACIONES CON AMARILLO) */
+    /* PALETA DE COLORES NEÓN AJUSTADA (AZUL CIELO, ROJO, MORADO OSCURO, VERDE) */
     const playlist = [
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
