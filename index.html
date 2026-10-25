@@ -73,6 +73,7 @@
       position: relative;
     }
 
+    /* Clase para ocultar las tarjetas */
     .app-container.hidden-intro,
     .app-container.hidden-manual {
       opacity: 0;
@@ -95,7 +96,6 @@
       flex-direction: column;
       transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
       position: relative;
-      overflow: hidden;
     }
 
     .card:hover {
@@ -104,7 +104,7 @@
       transform: translateY(-2px);
     }
 
-    /* Botón X discreto */
+    /* Botón X discreto integrado en la esquina superior izquierda del primer cuadro */
     .close-card-btn {
       position: absolute;
       top: 14px;
@@ -127,6 +127,7 @@
       z-index: 10;
     }
 
+    /* Muestra la X solo cuando la música está sonando */
     body.is-playing .close-card-btn {
       opacity: 1;
       pointer-events: auto;
@@ -138,7 +139,7 @@
       transform: scale(1.1);
     }
 
-    /* Botón para REVELAR la interfaz */
+    /* Botón para REVELAR la interfaz cuando está oculta */
     .show-ui-trigger {
       position: fixed;
       top: 25px;
@@ -169,6 +170,7 @@
       transform: scale(1.05);
     }
 
+    /* Título "𝑹𝒖" estilizado */
     .header-title {
       font-size: 21px;
       font-weight: 700;
@@ -178,7 +180,7 @@
       color: #ffffff;
     }
 
-    /* Tarjeta 1: Foto Volteable */
+    /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
     .flip-card-container {
       width: 100%;
       flex: 1;
@@ -249,26 +251,12 @@
       }
     }
 
-    /* Tarjeta 2: Playlist Limpia */
-    .playlist-header {
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      text-align: center;
-    }
-
-    .playlist-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.5px;
-    }
-
+    /* Lista de canciones */
     .song-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      flex: 1;
+      height: 100%;
       overflow-y: auto;
       padding-right: 6px;
     }
@@ -369,55 +357,29 @@
       100% { height: 100%; }
     }
 
-    /* Tarjeta 3: Reproductor con Disco Futurista y Aura Cibernética */
+    /* Reproductor Lateral */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: space-between;
-      position: relative;
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-
-    .disc-main-wrapper {
-      position: relative;
-      width: 175px;
-      height: 175px;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      margin-top: 8px;
-      margin-bottom: 8px;
-    }
-
-    /* Anillo de aura futurista exterior cibernético */
-    .disc-cyber-ring {
-      position: absolute;
-      width: 195px;
-      height: 195px;
-      border-radius: 50%;
-      border: 2px dashed rgba(255, 255, 255, 0.15);
-      animation: spinCyberRing 20s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes spinCyberRing {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
     }
 
     .disc-container {
-      width: 170px;
-      height: 170px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-      border: 3px solid rgba(255, 255, 255, 0.15);
-      position: relative;
-      z-index: 2;
-      transition: border-color 0.3s ease;
+      margin-top: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      border: 4px solid rgba(255, 255, 255, 0.08);
+      transition: border-color 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .player-card:hover .disc-container {
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .disc-container img {
@@ -427,7 +389,7 @@
     }
 
     .rotating {
-      animation: spinDisc 10s linear infinite;
+      animation: spinDisc 12s linear infinite;
     }
 
     @keyframes spinDisc {
@@ -436,66 +398,24 @@
     }
 
     .current-title {
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 700;
       margin-bottom: 2px;
     }
 
     .current-artist {
-      font-size: 12px;
+      font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 4px;
+      margin-bottom: 0px;
     }
 
-    .player-controls-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      width: 100%;
-      margin-top: 4px;
-      margin-bottom: 4px;
-    }
-
-    .control-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 12px;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .control-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
-    }
-
-    .volume-container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    .volume-slider {
-      width: 70px;
-      accent-color: #ffffff;
-      cursor: pointer;
-    }
-
+    /* Barra de audio bajada un poco más a la medida justa */
     audio {
       width: 100%;
-      margin-top: 0px; 
+      margin-top: 42px; 
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
+      transition: box-shadow 0.2s ease;
       border: 1px solid transparent;
     }
 
@@ -506,17 +426,20 @@
 </head>
 <body>
 
+  <!-- Botón limpio para mostrar las tarjetas -->
   <button class="show-ui-trigger" onclick="showUI()">Mostrar Tarjetas</button>
 
+  <!-- Fondo GIF Dinámico -->
   <div id="bg-gif-container">
     <img id="bg-gif-img" src="https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif" alt="Fondo Animado">
   </div>
 
+  <!-- Canvas para Partículas y Estrellas Neón -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1 -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
     <div class="card">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -533,34 +456,21 @@
       </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist Limpia -->
+    <!-- Tarjeta 2: Playlist -->
     <div class="card">
-      <div class="playlist-header">
-        <span class="playlist-title">Playlist</span>
+      <div class="song-list" id="song-list-container">
+        <!-- Canciones cargadas por script -->
       </div>
-      <div class="song-list" id="song-list-container"></div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor con Disco Rotatorio y Aura Cibernética -->
+    <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
+      <div class="disc-container" id="disc-wrapper">
+        <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
+      </div>
+
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
-
-      <div class="disc-main-wrapper">
-        <div class="disc-cyber-ring" id="cyber-ring"></div>
-        <div class="disc-container" id="disc-wrapper">
-          <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
-        </div>
-      </div>
-
-      <div class="player-controls-row">
-        <button class="control-btn" onclick="prevSong()" title="Anterior">⏮</button>
-        <div class="volume-container">
-          <span>🔊</span>
-          <input type="range" min="0" max="1" step="0.05" value="1" class="volume-slider" oninput="changeVolume(this.value)" title="Volumen">
-        </div>
-        <button class="control-btn" onclick="nextSong()" title="Siguiente">⏭</button>
-      </div>
 
       <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="MGMT - Kids.mp3"></audio>
     </div>
@@ -615,7 +525,6 @@
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
-    const cyberRing = document.getElementById('cyber-ring');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
     const bgGifImg = document.getElementById('bg-gif-img');
@@ -661,23 +570,8 @@
       document.getElementById('player-title').textContent = song.title;
       document.getElementById('player-artist').textContent = song.artist;
       playerCover.src = song.cover;
-      cyberRing.style.borderColor = song.colors[0];
 
       updateActiveSongClass();
-    }
-
-    function nextSong() {
-      currentIndex = (currentIndex + 1) % playlist.length;
-      playSongByIndex(currentIndex);
-    }
-
-    function prevSong() {
-      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-      playSongByIndex(currentIndex);
-    }
-
-    function changeVolume(val) {
-      audio.volume = val;
     }
 
     function updateActiveSongClass() {
@@ -695,6 +589,7 @@
             item.classList.add('playing');
             item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
             
+            // Solo toma el color del aura al REPRODUCIR
             eqBars.forEach(bar => {
               bar.style.backgroundColor = currentSong.colors[0];
               bar.style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
@@ -709,6 +604,7 @@
             item.style.borderImage = 'none';
             item.style.borderColor = 'rgba(255,255,255,0.2)';
             
+            // Tono neutro/blanco suave al estar en PAUSA
             eqBars.forEach(bar => {
               bar.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
               bar.style.boxShadow = 'none';
@@ -737,7 +633,7 @@
       });
     }
 
-    /* --- SISTEMA DE BAJOS / AURA FUTURISTA --- */
+    /* --- SISTEMA DE BAJOS --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -762,26 +658,24 @@
 
         const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
         
-        const glowSize = Math.floor((bassValue / 255) * 40) + 8;
-        const opacity = (bassValue / 255) * 0.9 + 0.3;
+        const glowSize = Math.floor((bassValue / 255) * 35) + 6;
+        const opacity = (bassValue / 255) * 0.8 + 0.2;
 
         const currentSong = playlist[currentIndex];
         const color1 = currentSong.colors[0];
         const color2 = currentSong.colors[1];
 
         discWrapper.style.boxShadow = `
-          0 0 ${glowSize}px ${color1}, 
-          0 0 ${glowSize * 1.5}px ${color2},
-          inset 0 0 ${glowSize / 2}px rgba(255, 255, 255, 0.5)
+          -${glowSize}px 0 ${glowSize}px ${color1}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}, 
+          ${glowSize}px 0 ${glowSize}px ${color2}${Math.floor(opacity * 255).toString(16).padStart(2, '0')},
+          inset 0 0 ${glowSize / 2}px rgba(255, 255, 255, ${opacity * 0.3})
         `;
         discWrapper.style.borderColor = color1;
-        cyberRing.style.boxShadow = `0 0 15px ${color1}`;
 
         requestAnimationFrame(updateBassVisuals);
       } else {
-        discWrapper.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.9)';
-        discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-        cyberRing.style.boxShadow = 'none';
+        discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
+        discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
       }
     }
 
@@ -830,20 +724,19 @@
         appContainer.classList.remove('hidden-intro');
       }
 
-      discWrapper.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.9)';
-      discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-      cyberRing.style.boxShadow = 'none';
+      discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
+      discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
       updateActiveSongClass();
     });
 
     audio.addEventListener('ended', () => {
-      nextSong();
+      currentIndex = (currentIndex + 1) % playlist.length;
+      playSongByIndex(currentIndex);
     });
 
     renderPlaylist();
-    cyberRing.style.borderColor = playlist[0].colors[0];
 
-    /* --- ESTRELLAS NEÓN DINÁMICAS Y ESFERAS --- */
+    /* --- ESTRELLAS NEÓN DINÁMICAS --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -881,8 +774,10 @@
     function drawNeonStar(ctx, x, y, size, opacity, color) {
       ctx.save();
       ctx.translate(x, y);
+
       ctx.shadowBlur = size * 5;
       ctx.shadowColor = color;
+
       ctx.fillStyle = color;
       ctx.globalAlpha = opacity;
       ctx.beginPath();
@@ -892,10 +787,12 @@
       ctx.quadraticCurveTo(0, 0, -size * 2, 0);
       ctx.quadraticCurveTo(0, 0, 0, -size * 2);
       ctx.fill();
+
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.4, 0, Math.PI * 2);
       ctx.fill();
+
       ctx.restore();
     }
 
@@ -943,6 +840,7 @@
         let yCoord = Math.sin(rot) * radius;
         ctx.lineTo(xCoord, yCoord);
         rot += step;
+
         xCoord = Math.cos(rot) * (radius * 0.4);
         yCoord = Math.sin(rot) * (radius * 0.4);
         ctx.lineTo(xCoord, yCoord);
@@ -988,6 +886,7 @@
       ctx.stroke();
 
       drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
+
       ctx.restore();
     }
 
