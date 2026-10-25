@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Fondo GIF de Goku en la Nube */
+    /* Fondo GIF Dinámico */
     #bg-gif-container {
       position: fixed;
       top: 0;
@@ -43,6 +43,11 @@
       height: 100%;
       object-fit: cover;
       filter: brightness(0.45) contrast(1.1);
+      transition: filter 1s ease-in-out;
+    }
+
+    body.intro-mode #bg-gif-container img {
+      filter: brightness(0.95) contrast(1.15);
     }
 
     /* Fondo de Canvas */
@@ -64,6 +69,14 @@
       justify-content: center;
       flex-wrap: wrap;
       z-index: 2;
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+
+    /* Clase para ocultar las tarjetas durante la intro inicial */
+    .app-container.hidden-intro {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.98);
     }
 
     /* Tarjetas principales */
@@ -291,7 +304,7 @@
       border-radius: 50%;
       overflow: hidden;
       margin-top: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -319,18 +332,19 @@
     .current-title {
       font-size: 19px;
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .current-artist {
       font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 10px;
+      margin-bottom: 0px; /* Reducido para dar espacio a la barra */
     }
 
+    /* Barra de audio separada un poco más hacia abajo */
     audio {
       width: 100%;
-      margin-top: 6px;
+      margin-top: 16px; /* Ajustado un poco más abajo como pediste */
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
       transition: box-shadow 0.2s ease;
@@ -344,15 +358,15 @@
 </head>
 <body>
 
-  <!-- Fondo GIF de Goku en la Nube -->
+  <!-- Fondo GIF Dinámico -->
   <div id="bg-gif-container">
-    <img src="https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif" alt="Fondo Goku Nube">
+    <img id="bg-gif-img" src="https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif" alt="Fondo Animado">
   </div>
 
   <!-- Canvas para Partículas y Estrellas Neón -->
   <canvas id="particles-canvas"></canvas>
 
-  <div class="app-container">
+  <div class="app-container" id="app-container">
     
     <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
     <div class="card">
@@ -379,13 +393,13 @@
     <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
-        <img id="player-cover" src="https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg" alt="Before You Know It">
+        <img id="player-cover" src="https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg" alt="Down Under">
       </div>
 
-      <div class="current-title" id="player-title">Before You Know It</div>
-      <div class="current-artist" id="player-artist">Kygo</div>
+      <div class="current-title" id="player-title">Down Under</div>
+      <div class="current-artist" id="player-artist">Men at Work</div>
 
-      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Kygo - Before You Know It.mp3"></audio>
+      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Men at Work - Down Under.mp3"></audio>
     </div>
 
   </div>
@@ -397,10 +411,10 @@
     }
 
     const playlist = [
-      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#ff3300'] },
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff00ff', '#00e5ff'] },
+      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#ff3300'] },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#ff2200'] },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00ffff', '#0066ff'] },
       { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff2255', '#ff9900'] },
@@ -422,11 +436,17 @@
     ];
 
     let currentIndex = 0;
+    let hasPlayedFirstTime = false;
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
+    const bgGifImg = document.getElementById('bg-gif-img');
+    const appContainer = document.getElementById('app-container');
+
+    let introTimeout = null;
+    let gifSwitchTimeout = null;
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
@@ -555,6 +575,32 @@
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
       bgGifContainer.style.opacity = '1';
+
+      if (!hasPlayedFirstTime) {
+        // PRIMERA VEZ: Primer gif (4s) -> segundo gif nube (hasta los 8s) -> reaparecen las tarjetas
+        bgGifImg.src = "https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif";
+        document.body.classList.add('intro-mode');
+        appContainer.classList.add('hidden-intro');
+
+        if (introTimeout) clearTimeout(introTimeout);
+        if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
+
+        gifSwitchTimeout = setTimeout(() => {
+          bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
+        }, 4000); // 4 segundos exactos del primer gif
+
+        introTimeout = setTimeout(() => {
+          appContainer.classList.remove('hidden-intro');
+          document.body.classList.remove('intro-mode');
+          hasPlayedFirstTime = true;
+        }, 8000); // 8 segundos totales para volver a mostrar las 3 tarjetas
+      } else {
+        // SIGUIENTES REPRODUCCIONES: Directo con el GIF de la nube y las tarjetas visibles
+        bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
+        appContainer.classList.remove('hidden-intro');
+        document.body.classList.remove('intro-mode');
+      }
+
       updateActiveSongClass();
       try {
         initAudioVisualizer();
@@ -564,6 +610,12 @@
     audio.addEventListener('pause', () => {
       discWrapper.classList.remove('rotating');
       bgGifContainer.style.opacity = '0';
+      document.body.classList.remove('intro-mode');
+      
+      if (introTimeout) clearTimeout(introTimeout);
+      if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
+      appContainer.classList.remove('hidden-intro');
+
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
       updateActiveSongClass();
