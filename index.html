@@ -342,10 +342,10 @@
 
     .eq-bar {
       width: 3px;
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.4);
       border-radius: 2px;
       height: 4px;
-      transition: height 0.2s ease;
+      transition: height 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .song-item.playing .eq-bar {
@@ -546,9 +546,9 @@
             <div class="song-artist">${song.artist}</div>
           </div>
           <div class="equalizer" id="eq-${index}">
-            <div class="eq-bar" style="background-color: ${song.colors[0]}"></div>
-            <div class="eq-bar" style="background-color: ${song.colors[0]}"></div>
-            <div class="eq-bar" style="background-color: ${song.colors[0]}"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
           </div>
         `;
         songListContainer.appendChild(item);
@@ -584,12 +584,17 @@
 
         if (index === currentIndex) {
           item.classList.add('active');
-          // Actualiza las barras de ecualización con el color del aura actual
-          eqBars.forEach(bar => bar.style.backgroundColor = currentSong.colors[0]);
 
           if (!audio.paused) {
             item.classList.add('playing');
             item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
+            
+            // Solo toma el color del aura al REPRODUCIR
+            eqBars.forEach(bar => {
+              bar.style.backgroundColor = currentSong.colors[0];
+              bar.style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
+            });
+
             if (songNameEl) {
               songNameEl.style.color = '#ffffff';
               songNameEl.style.textShadow = `0 0 8px ${currentSong.colors[0]}`;
@@ -598,6 +603,13 @@
             item.classList.remove('playing');
             item.style.borderImage = 'none';
             item.style.borderColor = 'rgba(255,255,255,0.2)';
+            
+            // Tono neutro/blanco suave al estar en PAUSA
+            eqBars.forEach(bar => {
+              bar.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+              bar.style.boxShadow = 'none';
+            });
+
             if (songNameEl) {
               songNameEl.style.color = '#f1f5f9';
               songNameEl.style.textShadow = 'none';
@@ -607,6 +619,12 @@
           item.classList.remove('active', 'playing');
           item.style.borderImage = 'none';
           item.style.borderColor = 'transparent';
+
+          eqBars.forEach(bar => {
+            bar.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+            bar.style.boxShadow = 'none';
+          });
+
           if (songNameEl) {
             songNameEl.style.color = '#f1f5f9';
             songNameEl.style.textShadow = 'none';
