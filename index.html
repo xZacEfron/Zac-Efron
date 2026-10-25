@@ -355,7 +355,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral Original Estilizado */
+    /* Reproductor Lateral Original */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -407,7 +407,7 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de audio original integrada en su posición natural */
+    /* Barra de audio exacta original (sin alterar posición ni altura) */
     audio {
       width: 100%;
       margin-top: 42px; 
@@ -573,12 +573,13 @@
       updateAudioBarColor();
     }
 
+    /* Cambia únicamente los tonos de la barra audio al sonar */
     function updateAudioBarColor() {
       const currentSong = playlist[currentIndex];
       const mainColor = currentSong.colors[0];
       if (!audio.paused) {
-        audio.style.borderColor = `${mainColor}60`;
-        audio.style.boxShadow = `0 0 12px ${mainColor}40`;
+        audio.style.borderColor = `${mainColor}80`;
+        audio.style.boxShadow = `0 0 14px ${mainColor}50`;
       } else {
         audio.style.borderColor = 'transparent';
         audio.style.boxShadow = 'none';
@@ -642,7 +643,7 @@
       });
     }
 
-    /* --- AURA 2 COLORES ORIGINAL Y REACTIVA AL BAJO --- */
+    /* --- SISTEMA DE BAJOS / AURA 2 COLORES --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -674,7 +675,6 @@
         const color1 = currentSong.colors[0];
         const color2 = currentSong.colors[1];
 
-        // Mantiene la mezcla original de 2 colores (izquierda/derecha) + resplandor
         discWrapper.style.boxShadow = `
           -${glowSize}px 0 ${glowSize}px ${color1}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}, 
           ${glowSize}px 0 ${glowSize}px ${color2}${Math.floor(opacity * 255).toString(16).padStart(2, '0')},
