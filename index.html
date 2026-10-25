@@ -341,10 +341,10 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de audio bajada un poco más sin alterar la estructura */
+    /* Barra de audio bajada un poco más para que no quede pegada */
     audio {
       width: 100%;
-      margin-top: 32px; 
+      margin-top: 28px; 
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
       transition: box-shadow 0.2s ease;
@@ -410,30 +410,29 @@
       card.classList.toggle('flipped');
     }
 
-    /* Playlist con colores neón vivos: Amarillo neón, Azul cielo neón, Rojo neón y Morado oscuro */
     const playlist = [
-      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ffee00', '#00f0ff'] }, // Amarillo neón & Azul cielo
-      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] }, // Rojo neón & Azul neón original
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#ffee00'] }, // Verde neón & Amarillo neón
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffee00', '#30005a'] }, // Amarillo neón & Morado oscuro
-      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#00f0ff'] }, // Verde ácido & Azul cielo
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#0066ff'] }, // Azul cielo & Azul eléctrico
-      { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] }, // Amarillo neón & Azul cielo
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#30005a'] }, // Azul eléctrico & Morado oscuro
-      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg', colors: ['#ff1100', '#30005a'] }, // Rojo fuego & Morado oscuro
-      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffee00', '#ff0033'] }, // Amarillo neón & Rojo
-      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg', colors: ['#00f0ff', '#ffffff'] }, // Azul cielo & Blanco
-      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg', colors: ['#ff0000', '#ffee00'] }, // Rojo & Amarillo neón
-      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#00ffaa', '#00f0ff'] }, // Turquesa neón & Azul cielo
-      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg', colors: ['#00f0ff', '#ffee00'] }, // Azul cielo & Amarillo neón
-      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg', colors: ['#00ff00', '#0000ff'] }, // Verde neón & Azul
+      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ffee00', '#00f0ff'] },
+      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00ff66', '#00ffff'] },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffea00', '#ff3300'] },
+      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#ff2200'] },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00ffff', '#0066ff'] },
+      { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff2255', '#ff9900'] },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#ff00aa'] },
+      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg', colors: ['#ff1100', '#9900ff'] },
+      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffd700', '#ff0033'] },
+      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg', colors: ['#00ffff', '#ffffff'] },
+      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg', colors: ['#ff0000', '#ff6600'] },
+      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#00ffaa', '#00ffff'] },
+      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg', colors: ['#ff1493', '#00ffff'] },
+      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg', colors: ['#00ff00', '#0000ff'] },
       { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg', colors: ['#ffffff', '#ff0000'] },
-      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'] }, // Amarillo neón & Azul cielo
-      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg', colors: ['#00f0ff', '#30005a'] }, // Azul cielo & Morado oscuro
-      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg', colors: ['#00ffcc', '#00f0ff'] },
-      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg', colors: ['#ffee00', '#30005a'] }, // Amarillo neón & Morado oscuro
-      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg', colors: ['#ffee00', '#00ff7f'] }, // Amarillo neón & Verde neón
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#00f0ff'] }
+      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg', colors: ['#ff69b4', '#ffff00'] },
+      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg', colors: ['#b0c4de', '#8a2be2'] },
+      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg', colors: ['#00ffcc', '#ff1493'] },
+      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg', colors: ['#ff4500', '#800080'] },
+      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg', colors: ['#ffd700', '#00ff7f'] },
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#bf00ff', '#ff00aa'] }
     ];
 
     let currentIndex = 0;
@@ -588,13 +587,13 @@
 
         gifSwitchTimeout = setTimeout(() => {
           bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
-        }, 4000);
+        }, 4000); // 4 segundos del primer gif
 
         introTimeout = setTimeout(() => {
           appContainer.classList.remove('hidden-intro');
           document.body.classList.remove('intro-mode');
           hasPlayedFirstTime = true;
-        }, 8000);
+        }, 8000); // 8 segundos totales antes de mostrar las tarjetas
       } else {
         // SIGUIENTES REPRODUCCIONES: Directo con el GIF de la nube y las tarjetas visibles
         bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
@@ -739,4 +738,128 @@
         ctx.lineTo(xCoord, yCoord);
         rot += step;
       }
-      ctx.lineTo(0, -
+      ctx.lineTo(0, -radius);
+      ctx.closePath();
+      ctx.fillStyle = '#e60000';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawDragonBall(ball) {
+      ctx.save();
+      ctx.translate(ball.x, ball.y);
+      ctx.rotate(ball.angle);
+
+      ball.flashTimer += 0.03;
+      const pulse = Math.sin(ball.flashTimer);
+      const glowAlpha = pulse > 0.7 ? (pulse - 0.7) * 1.5 : 0.05;
+
+      if (glowAlpha > 0.05) {
+        const glowGradient = ctx.createRadialGradient(0, 0, 2, 0, 0, ball.radius * 2.2);
+        glowGradient.addColorStop(0, `rgba(255, 200, 50, ${glowAlpha})`);
+        glowGradient.addColorStop(1, 'rgba(255, 120, 0, 0)');
+        ctx.fillStyle = glowGradient;
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.radius * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const ballGradient = ctx.createRadialGradient(-2, -2, 1, 0, 0, ball.radius);
+      ballGradient.addColorStop(0, 'rgba(255, 230, 120, 0.98)');
+      ballGradient.addColorStop(0.5, 'rgba(255, 150, 20, 0.92)');
+      ballGradient.addColorStop(1, 'rgba(200, 70, 0, 0.95)');
+
+      ctx.beginPath();
+      ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = ballGradient;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 240, 200, 0.5)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
+
+      ctx.restore();
+    }
+
+    function drawRedStarsVector(ctx, count, R) {
+      const starSize = R * 0.42;
+      if (count === 1) {
+        drawStarVector(ctx, 0, 0, starSize);
+      } else if (count === 2) {
+        drawStarVector(ctx, -R * 0.35, 0, starSize);
+        drawStarVector(ctx, R * 0.35, 0, starSize);
+      } else if (count === 3) {
+        drawStarVector(ctx, 0, -R * 0.3, starSize);
+        drawStarVector(ctx, -R * 0.4, R * 0.35, starSize);
+        drawStarVector(ctx, R * 0.4, R * 0.35, starSize);
+      } else if (count === 4) {
+        drawStarVector(ctx, -R * 0.35, -R * 0.35, starSize);
+        drawStarVector(ctx, R * 0.35, -R * 0.35, starSize);
+        drawStarVector(ctx, -R * 0.35, R * 0.35, starSize);
+        drawStarVector(ctx, R * 0.35, R * 0.35, starSize);
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        ctx.fill();
+      });
+
+      const isPlaying = !audio.paused;
+      const currentNeonColor = playlist[currentIndex].colors[0];
+
+      neonStars.forEach(star => {
+        if (isPlaying) {
+          star.alpha += star.pulseSpeed;
+          if (star.alpha > star.targetAlpha || star.alpha < 0.1) {
+            star.pulseSpeed = -star.pulseSpeed;
+          }
+        } else {
+          if (star.alpha > 0) {
+            star.alpha -= 0.04;
+          }
+        }
+
+        if (star.alpha > 0.01) {
+          drawNeonStar(ctx, star.x, star.y, star.size, star.alpha, currentNeonColor);
+        }
+      });
+
+      if (activeBall) {
+        activeBall.x += activeBall.speedX;
+        activeBall.y += activeBall.speedY;
+        activeBall.angle += activeBall.spinSpeed;
+
+        drawDragonBall(activeBall);
+
+        const isOut = activeBall.fromLeft 
+          ? (activeBall.x > canvas.width + 60)
+          : (activeBall.x < -60);
+
+        if (isOut) {
+          activeBall = null;
+          scheduleNextDragonBall();
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+
+</body>
+</html>
