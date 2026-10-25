@@ -61,44 +61,6 @@
       pointer-events: none;
     }
 
-    /* Botón de Visibilidad (Ocultar / Mostrar interfaz) */
-    .toggle-ui-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
-      background: rgba(10, 10, 12, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-      transition: background 0.3s, transform 0.2s, border-color 0.3s;
-    }
-
-    .toggle-ui-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
-      transform: scale(1.08);
-    }
-
-    .toggle-ui-btn svg {
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke: #ffffff;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
     .app-container {
       display: flex;
       gap: 20px;
@@ -108,6 +70,7 @@
       flex-wrap: wrap;
       z-index: 2;
       transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      position: relative;
     }
 
     /* Clase para ocultar las tarjetas */
@@ -139,6 +102,72 @@
       border-color: rgba(255, 255, 255, 0.25);
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.08), 0 20px 40px rgba(0, 0, 0, 0.9);
       transform: translateY(-2px);
+    }
+
+    /* Botón X discreto integrado en la esquina superior izquierda del primer cuadro */
+    .close-card-btn {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      z-index: 10;
+    }
+
+    /* Muestra la X solo cuando la música está sonando */
+    body.is-playing .close-card-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .close-card-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    /* Botón para REVELAR la interfaz cuando está oculta */
+    .show-ui-trigger {
+      position: fixed;
+      top: 25px;
+      left: 25px;
+      z-index: 99;
+      background: rgba(10, 10, 12, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    body.ui-hidden .show-ui-trigger {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .show-ui-trigger:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
     }
 
     /* Título "𝑹𝒖" estilizado */
@@ -380,7 +409,7 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de audio bajada un poco más a la medida justa */
+    /* Barra de audio con espacio perfecto */
     audio {
       width: 100%;
       margin-top: 34px; 
@@ -397,13 +426,8 @@
 </head>
 <body>
 
-  <!-- Botón de Ocultar/Mostrar Interfaz -->
-  <button class="toggle-ui-btn" id="toggle-ui-btn" onclick="toggleUI()" title="Ocultar/Mostrar interfaz">
-    <svg id="eye-icon" viewBox="0 0 24 24">
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-      <circle cx="12" cy="12" r="3"></circle>
-    </svg>
-  </button>
+  <!-- Botón discreto que aparece al ocultar para volver a mostrar las tarjetas -->
+  <button class="show-ui-trigger" onclick="showUI()">✦ Mostrar Tarjetas</button>
 
   <!-- Fondo GIF Dinámico -->
   <div id="bg-gif-container">
@@ -417,6 +441,9 @@
     
     <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
     <div class="card">
+      <!-- Botón X discreto que solo aparece al reproducir música -->
+      <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
+
       <div class="header-title">𝑹𝒖</div>
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
@@ -457,17 +484,16 @@
       card.classList.toggle('flipped');
     }
 
-    function toggleUI() {
+    function hideUI() {
       const appContainer = document.getElementById('app-container');
-      const eyeIcon = document.getElementById('eye-icon');
-      
-      appContainer.classList.toggle('hidden-manual');
-      
-      if (appContainer.classList.contains('hidden-manual')) {
-        eyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
-      } else {
-        eyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
-      }
+      appContainer.classList.add('hidden-manual');
+      document.body.classList.add('ui-hidden');
+    }
+
+    function showUI() {
+      const appContainer = document.getElementById('app-container');
+      appContainer.classList.remove('hidden-manual');
+      document.body.classList.remove('ui-hidden');
     }
 
     const playlist = [
@@ -634,6 +660,7 @@
     audio.addEventListener('play', () => {
       discWrapper.classList.add('rotating');
       bgGifContainer.style.opacity = '1';
+      document.body.classList.add('is-playing');
 
       if (!hasPlayedFirstTime) {
         // PRIMERA VEZ: Inicia con el primer gif, y a los 5 segundos exactos cambia al gif de la nube y aparecen las tarjetas
@@ -645,14 +672,16 @@
 
         gifSwitchTimeout = setTimeout(() => {
           bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
-          appContainer.classList.remove('hidden-intro');
+          if (!document.body.classList.contains('ui-hidden')) {
+            appContainer.classList.remove('hidden-intro');
+          }
           document.body.classList.remove('intro-mode');
           hasPlayedFirstTime = true;
-        }, 5000); // Exactamente a los 5 segundos
+        }, 5000);
       } else {
-        // SIGUIENTES REPRODUCCIONES: Directo con el GIF de la nube y las tarjetas visibles
+        // SIGUIENTES REPRODUCCIONES
         bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
-        if (!appContainer.classList.contains('hidden-manual')) {
+        if (!document.body.classList.contains('ui-hidden')) {
           appContainer.classList.remove('hidden-intro');
         }
         document.body.classList.remove('intro-mode');
@@ -668,9 +697,10 @@
       discWrapper.classList.remove('rotating');
       bgGifContainer.style.opacity = '0';
       document.body.classList.remove('intro-mode');
+      document.body.classList.remove('is-playing');
       
       if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
-      if (!appContainer.classList.contains('hidden-manual')) {
+      if (!document.body.classList.contains('ui-hidden')) {
         appContainer.classList.remove('hidden-intro');
       }
 
