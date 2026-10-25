@@ -73,7 +73,6 @@
       position: relative;
     }
 
-    /* Clase para ocultar las tarjetas */
     .app-container.hidden-intro,
     .app-container.hidden-manual {
       opacity: 0;
@@ -105,7 +104,7 @@
       transform: translateY(-2px);
     }
 
-    /* Botón X discreto integrado en la esquina superior izquierda del primer cuadro */
+    /* Botón X discreto */
     .close-card-btn {
       position: absolute;
       top: 14px;
@@ -139,7 +138,7 @@
       transform: scale(1.1);
     }
 
-    /* Botón para REVELAR la interfaz cuando está oculta */
+    /* Botón para REVELAR la interfaz */
     .show-ui-trigger {
       position: fixed;
       top: 25px;
@@ -170,7 +169,6 @@
       transform: scale(1.05);
     }
 
-    /* Título "𝑹𝒖" estilizado */
     .header-title {
       font-size: 21px;
       font-weight: 700;
@@ -180,7 +178,7 @@
       color: #ffffff;
     }
 
-    /* --- TARJETA VOLTEABLE (FLIP CARD) --- */
+    /* Tarjeta 1: Foto Volteable */
     .flip-card-container {
       width: 100%;
       flex: 1;
@@ -251,14 +249,12 @@
       }
     }
 
-    /* --- TARJETA 2: Playlist con diseño renovado --- */
+    /* Tarjeta 2: Playlist Limpia */
     .playlist-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-bottom: 12px;
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
     }
 
     .playlist-title {
@@ -266,15 +262,6 @@
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.5px;
-    }
-
-    .playlist-count {
-      font-size: 11px;
-      color: #94a3b8;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 3px 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .song-list {
@@ -382,107 +369,55 @@
       100% { height: 100%; }
     }
 
-    /* --- TARJETA 3: Reproductor Lateral Centrado y Equilibrado --- */
+    /* Tarjeta 3: Reproductor con Disco Futurista y Aura Cibernética */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: space-between; /* Distribuye uniformemente el espacio */
+      justify-content: space-between;
       position: relative;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
 
-    .player-flip-container {
-      width: 100%;
-      flex: 1;
-      perspective: 1000px;
-      cursor: pointer;
+    .disc-main-wrapper {
       position: relative;
+      width: 175px;
+      height: 175px;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .player-flip-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-      transform-style: preserve-3d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .player-flip-container.flipped .player-flip-inner {
-      transform: rotateY(180deg);
-    }
-
-    .player-front-side, .player-back-side {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .player-back-side {
-      transform: rotateY(180deg);
-      background: rgba(15, 15, 18, 0.95);
-      border-radius: 16px;
-      padding: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      justify-content: flex-start;
-    }
-
-    .lyrics-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #94a3b8;
+      margin-top: 8px;
       margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
-    .lyrics-box {
-      width: 100%;
-      height: 290px; /* Letra larga ocupando todo el alto disponible */
-      overflow-y: auto;
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: #e2e8f0;
-      padding-right: 6px;
-      text-align: center;
-      white-space: pre-line;
+    /* Anillo de aura futurista exterior cibernético */
+    .disc-cyber-ring {
+      position: absolute;
+      width: 195px;
+      height: 195px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      animation: spinCyberRing 20s linear infinite;
+      pointer-events: none;
     }
 
-    .lyrics-box::-webkit-scrollbar {
-      width: 4px;
-    }
-    .lyrics-box::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
+    @keyframes spinCyberRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .disc-container {
-      width: 160px;
-      height: 160px;
+      width: 170px;
+      height: 170px;
       border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 10px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-      border: 4px solid rgba(255, 255, 255, 0.08);
-      transition: border-color 0.1s ease, box-shadow 0.1s ease;
-    }
-
-    .player-card:hover .disc-container {
-      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      position: relative;
+      z-index: 2;
+      transition: border-color 0.3s ease;
     }
 
     .disc-container img {
@@ -492,7 +427,7 @@
     }
 
     .rotating {
-      animation: spinDisc 12s linear infinite;
+      animation: spinDisc 10s linear infinite;
     }
 
     @keyframes spinDisc {
@@ -509,7 +444,7 @@
     .current-artist {
       font-size: 12px;
       color: #94a3b8;
-      margin-bottom: 0px;
+      margin-bottom: 4px;
     }
 
     .player-controls-row {
@@ -518,8 +453,8 @@
       justify-content: center;
       gap: 16px;
       width: 100%;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin-top: 4px;
+      margin-bottom: 4px;
     }
 
     .control-btn {
@@ -556,13 +491,11 @@
       cursor: pointer;
     }
 
-    /* Barra de audio */
     audio {
       width: 100%;
       margin-top: 0px; 
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
-      transition: box-shadow 0.2s ease;
       border: 1px solid transparent;
     }
 
@@ -573,20 +506,17 @@
 </head>
 <body>
 
-  <!-- Botón limpio para mostrar las tarjetas -->
   <button class="show-ui-trigger" onclick="showUI()">Mostrar Tarjetas</button>
 
-  <!-- Fondo GIF Dinámico -->
   <div id="bg-gif-container">
     <img id="bg-gif-img" src="https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif" alt="Fondo Animado">
   </div>
 
-  <!-- Canvas para Partículas y Estrellas Neón -->
   <canvas id="particles-canvas"></canvas>
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
+    <!-- Tarjeta 1 -->
     <div class="card">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -603,42 +533,26 @@
       </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist con diseño mejorado -->
+    <!-- Tarjeta 2: Playlist Limpia -->
     <div class="card">
       <div class="playlist-header">
-        <span class="playlist-title">🎵 Playlist</span>
-        <span class="playlist-count">22 canciones</span>
+        <span class="playlist-title">Playlist</span>
       </div>
-      <div class="song-list" id="song-list-container">
-        <!-- Canciones cargadas por script -->
-      </div>
+      <div class="song-list" id="song-list-container"></div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor con distribución equilibrada y letras completas -->
+    <!-- Tarjeta 3: Reproductor con Disco Rotatorio y Aura Cibernética -->
     <div class="card player-card">
-      
-      <div class="player-flip-container" id="player-flip" onclick="togglePlayerFlip(event)">
-        <div class="player-flip-inner">
-          
-          <!-- Lado Frontal: Disco y textos centrados -->
-          <div class="player-front-side">
-            <div class="disc-container" id="disc-wrapper">
-              <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
-            </div>
-            <div class="current-title" id="player-title">Kids</div>
-            <div class="current-artist" id="player-artist">MGMT</div>
-          </div>
+      <div class="current-title" id="player-title">Kids</div>
+      <div class="current-artist" id="player-artist">MGMT</div>
 
-          <!-- Lado Trasero: Letra Completa y Extendida -->
-          <div class="player-back-side">
-            <div class="lyrics-title" id="lyrics-song-title">Letra</div>
-            <div class="lyrics-box" id="lyrics-content">Cargando letra...</div>
-          </div>
-
+      <div class="disc-main-wrapper">
+        <div class="disc-cyber-ring" id="cyber-ring"></div>
+        <div class="disc-container" id="disc-wrapper">
+          <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
         </div>
       </div>
 
-      <!-- Controles adicionales -->
       <div class="player-controls-row">
         <button class="control-btn" onclick="prevSong()" title="Anterior">⏮</button>
         <div class="volume-container">
@@ -659,12 +573,6 @@
       card.classList.toggle('flipped');
     }
 
-    function togglePlayerFlip(e) {
-      if(e.target.closest('.lyrics-box')) return;
-      const playerFlip = document.getElementById('player-flip');
-      playerFlip.classList.toggle('flipped');
-    }
-
     function hideUI() {
       const appContainer = document.getElementById('app-container');
       appContainer.classList.add('hidden-manual');
@@ -678,28 +586,28 @@
     }
 
     const playlist = [
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "Control yourself\nTake only what you need from it\nA family of trees wanting to be haunted\nThe water is warm, but it's sending me shivers\nA baby is born, crying out for attention\n\nMemories assemble in days\nWith 3M tapes and scissor cuts\nThere is an explanation for this\nWith a sentiment insiders you lock in\nThe halls are all taking shape\nWhere are you going? You can't escape\n\nIf you take a look inside my brain\nIt's going insane\n\nMGMT - Kids" },
-      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ffee00', '#ff0033'], lyrics: "Travelling in a fried-out combi\nOn a hippie trail, head full of zombie\nI met a strange lady, she made me nervous\nShe took me in and gave me breakfast\nAnd she said\n\n'Do you come from a land down under?\nWhere women glow and men plunder?\nCan't you hear, can't you hear the thunder?\nYou better run, you better take cover'\n\nLying in a den in Bombay\nWith a slack jaw, and not much to say\nI said to the man, 'Are you trying to tempt me?\nBecause I come from the land of plenty?'\nAnd he just smiled\n\nMen at Work - Down Under" },
-      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'], lyrics: "Looking back at all the times we had\nWe never thought it would end so fast\nStaring at the ceiling in the dark\nTrying to remember your spark\n\nAnd before you know it, we're miles apart\nCarrying the weight inside our hearts\nEvery single memory starts to fade\nLike shadows falling in the shade\n\nKygo - Before You Know It" },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffee00', '#2a0845'], lyrics: "My mind has been split from a boring bit\nAnd even when I'm close to it\nIt's like I'm miles away\n\nAnd down on the street\nThere's a-runnin' of the feet\nAnd a flash of teeth\nAnd then it's dark again\n\nSolitary, sighing, bleeding, dying\nLow, low, low, low\n\nTV on the Radio - Wolf Like Me" },
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "Standing in the shadows of life\nWaiting for a spark to ignite\nNo one can tell you what to do\nWhen the fire inside burns bright\n\nWe could live forever\nWe could fade into darkness\nRunning through the fields of gold\nNever letting go\n\nAvicii - Fade Into Darkness" },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#0066ff'], lyrics: "You look at me and see someone who's put together\nI look in the mirror, see a storm and cloudy weather\nI've been dealing with emotions that I can't explain\nTrying to find a way to navigate the pain\n\nAnd honestly, I'm okay with not being happy all the time\nThat's just part of life, yeah, that's just part of my design\n\nNF - HAPPY" },
-      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffee00', '#ff0033'], lyrics: "I'm waking up from a dream\nNothing's ever what it seems\nIf you call out my name\nI'll walk through the flame\n\nIf you could be the one\nWe'd stay out 'til the sun\nDancing in the electric air\nWithout a single care\n\nAvicii Vs. Nicky Romero - I Could Be The One" },
-      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#00f0ff'], lyrics: "I remember the face but I can't recall the name\nNow she's going off the train\nAnd she's heading out of town\nAnd I'm staring at the ground\n\nForgot her name and whatsername\nWhere did she go? Where did she go?\nIt's all a part of yesterday now\n\nGreen Day - Whatsername" },
-      { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "Every time I close my eyes\nI see you standing right beside me\nWe were running out of time\nNow there's nothing left to guide me\n\nDo you ever think about you and me?\nOr is it just a distant memory?\n\nKygo - Think About You" },
-      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#2a0845'], lyrics: "We were stargazing, yeah\nLost in the atmosphere\nThought we had nothing to fear\nNow everything is disappearing\n\nLook up at the silent sky\nWondering where the time went by\n\nKygo - Stargazing" },
-      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg', colors: ['#ff0033', '#2a0845'], lyrics: "I know I let you down a lot of times\nCrossing lines and blurring boundaries in my mind\nI never meant to cause you any grief\n\nSo I'm saying sorry, even if it's late\nTrying to clean up all the mess and separate\nThe truth from the lies\n\nNF - SORRY" },
-      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg', colors: ['#00f0ff', '#ffffff'], lyrics: "Time stands still when you look at me\nCatching every breath so softly\nLet the world around us freeze\n\nNothing else matters in this space\nJust the look upon your face\n\nKygo - Freeze" },
-      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg', colors: ['#ff0000', '#ffee00'], lyrics: "All I ever wanted was a little bit of danger\nDriving fast through the night as a stranger\nRunning through the red lights\n\nNever looking back at what we left behind\nJust letting go and feeling alive\n\nTiësto - Red Lights" },
-      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#00ffaa', '#00f0ff'], lyrics: "He said, 'One day you'll leave this world behind\nSo live a life you will remember'\nMy father told me when I was just a child\nThese are the nights that never die\n\nWhen the thunder clouds start rolling in\nThat's where the real adventures begin\n\nAvicii - The Nights" },
-      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg', colors: ['#00f0ff', '#ffee00'], lyrics: "Hold on to what we built before it fades\nWalking through the shadows and the shades\nCan you save my love?\n\nBefore it slips right through our hands\nLike castles built on shifting sands\n\nKygo - Save My Love" },
-      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg', colors: ['#00ff00', '#0000ff'], lyrics: "We've been climbing up this mountain high\nReaching for the open sky\nAnd there's no turning back now\n\nThe only way is up from here\nLeaving behind all our doubt and fear\n\nMartin Garrix - The Only Way Is Up" },
-      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg', colors: ['#ffffff', '#ff0000'], lyrics: "I'm sorry, mama, I know I let you down\nAnd all these ghosts are haunting me around\nSomebody save me from myself\n\nI built a prison out of all my pride\nNow there's nowhere left to hide\n\nEminem - Somebody Save Me" },
-      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "I know you're trying to protect your heart\nEven though you're tearing me apart\nIf you're gonna love me, just be kind\n\nDon't let your walls get in the way\nJust listen to the words I say\n\nMarshmello & Halsey - Be Kind" },
-      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg', colors: ['#00f0ff', '#2a0845'], lyrics: "Youngblood thinks there's always tomorrow\nI miss your touch on nights when I'm hollow\nI know you chose to go\n\nIf I can't be near you, I'll settle for the ghost of you\nIt's all I've got to hold onto\n\nJustin Bieber - Ghost" },
-      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg', colors: ['#00ffcc', '#00f0ff'], lyrics: "I walked along the avenue\nI never thought I'd meet a girl like you\nAnd then you looked at me and took my breath away\n\nAnd I ran, I ran so far away\nI just ran, I ran all night and day\n\nA Flock of Seagulls - I Ran" },
-      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg', colors: ['#ffee00', '#2a0845'], lyrics: "I'm holding on your rope\nGot me ten feet off the ground\nAnd I'm hearing what you say\nBut I just can't make a sound\n\nIt's too late to apologize, it's too late\nI said it's too late to apologize\n\nOneRepublic - Apologize" },
-      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg', colors: ['#ffee00', '#00ff7f'], lyrics: "I'm chasing after everything they said I couldn't get\nWorking day and night without a single moment's rest\nI got my eyes locked right on the tower\n\nGive me the money and the power\nThat's all I'm working for this hour\n\nKid Ink - Money and the Power" }
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'] },
+      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ffee00', '#ff0033'] },
+      { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'] },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffee00', '#2a0845'] },
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#00f0ff'] },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#0066ff'] },
+      { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffee00', '#ff0033'] },
+      { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#00f0ff'] },
+      { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] },
+      { file: 'Kygo - Stargazing.mp3', title: 'Stargazing', artist: 'Kygo', cover: 'https://i.postimg.cc/xC7SZVHk/images-(2).jpg', colors: ['#00bfff', '#2a0845'] },
+      { file: 'NF - SORRY.mp3', title: 'SORRY', artist: 'NF', cover: 'https://i.postimg.cc/bY5mZH1V/1900x1900-000000-80-0-0.jpg', colors: ['#ff0033', '#2a0845'] },
+      { file: 'Kygo - Freeze.mp3', title: 'Freeze', artist: 'Kygo', cover: 'https://i.postimg.cc/htHm0kzP/Kygo.jpg', colors: ['#00f0ff', '#ffffff'] },
+      { file: 'Tiësto - Red Lights.mp3', title: 'Red Lights', artist: 'Tiësto', cover: 'https://i.postimg.cc/KcJgWk3z/ab67616d0000b2734ca8d06b996fb365b62d3d9c.jpg', colors: ['#ff0000', '#ffee00'] },
+      { file: 'Avicii - The Nights.mp3', title: 'The Nights', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#00ffaa', '#00f0ff'] },
+      { file: 'Kygo - Save My Love.mp3', title: 'Save My Love', artist: 'Kygo', cover: 'https://i.postimg.cc/kMt9LD5c/images.jpg', colors: ['#00f0ff', '#ffee00'] },
+      { file: 'Martin Garrix - The Only Way Is Up.mp3', title: 'The Only Way Is Up', artist: 'Martin Garrix', cover: 'https://i.postimg.cc/CxDHBGmM/images-(1).jpg', colors: ['#00ff00', '#0000ff'] },
+      { file: 'Eminem - Somebody Save Me.mp3', title: 'Somebody Save Me', artist: 'Eminem', cover: 'https://i.postimg.cc/90ntT163/ab67616d0000b273a5f33cd0d7e1223a0fbd865e.jpg', colors: ['#ffffff', '#ff0000'] },
+      { file: 'Marshmello - Be Kind.mp3', title: 'Be Kind', artist: 'Marshmello', cover: 'https://i.postimg.cc/sDMJydWc/0x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'] },
+      { file: 'Justin Bieber - Ghost.mp3', title: 'Ghost', artist: 'Justin Bieber', cover: 'https://i.postimg.cc/MpdVgzZ5/images.jpg', colors: ['#00f0ff', '#2a0845'] },
+      { file: 'A Flock of Seagulls - I Ran (So Far Away).mp3', title: 'I Ran (So Far Away)', artist: 'A Flock of Seagulls', cover: 'https://i.postimg.cc/cCPhP0d2/0x1900-000000-80-0-0.jpg', colors: ['#00ffcc', '#00f0ff'] },
+      { file: 'OneRepublic - Apologize.mp3', title: 'Apologize', artist: 'OneRepublic', cover: 'https://i.postimg.cc/TwbdjPLQ/ab67616d0000b27334ef81d1ff3b4682a4e97f70.jpg', colors: ['#ffee00', '#2a0845'] },
+      { file: 'Kid Ink - Money and the Power.mp3', title: 'Money and the Power', artist: 'Kid Ink', cover: 'https://i.postimg.cc/BZHhkPrb/8c2004d2635aa15acb1b4e425bc061b9-1000x1000x1.jpg', colors: ['#ffee00', '#00ff7f'] }
     ];
 
     let currentIndex = 0;
@@ -707,6 +615,7 @@
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
+    const cyberRing = document.getElementById('cyber-ring');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
     const bgGifImg = document.getElementById('bg-gif-img');
@@ -751,9 +660,8 @@
 
       document.getElementById('player-title').textContent = song.title;
       document.getElementById('player-artist').textContent = song.artist;
-      document.getElementById('lyrics-song-title').textContent = song.title;
-      document.getElementById('lyrics-content').textContent = song.lyrics;
       playerCover.src = song.cover;
+      cyberRing.style.borderColor = song.colors[0];
 
       updateActiveSongClass();
     }
@@ -829,7 +737,7 @@
       });
     }
 
-    /* --- SISTEMA DE BAJOS --- */
+    /* --- SISTEMA DE BAJOS / AURA FUTURISTA --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -854,24 +762,26 @@
 
         const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
         
-        const glowSize = Math.floor((bassValue / 255) * 35) + 6;
-        const opacity = (bassValue / 255) * 0.8 + 0.2;
+        const glowSize = Math.floor((bassValue / 255) * 40) + 8;
+        const opacity = (bassValue / 255) * 0.9 + 0.3;
 
         const currentSong = playlist[currentIndex];
         const color1 = currentSong.colors[0];
         const color2 = currentSong.colors[1];
 
         discWrapper.style.boxShadow = `
-          -${glowSize}px 0 ${glowSize}px ${color1}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}, 
-          ${glowSize}px 0 ${glowSize}px ${color2}${Math.floor(opacity * 255).toString(16).padStart(2, '0')},
-          inset 0 0 ${glowSize / 2}px rgba(255, 255, 255, ${opacity * 0.3})
+          0 0 ${glowSize}px ${color1}, 
+          0 0 ${glowSize * 1.5}px ${color2},
+          inset 0 0 ${glowSize / 2}px rgba(255, 255, 255, 0.5)
         `;
         discWrapper.style.borderColor = color1;
+        cyberRing.style.boxShadow = `0 0 15px ${color1}`;
 
         requestAnimationFrame(updateBassVisuals);
       } else {
-        discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
-        discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        discWrapper.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.9)';
+        discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+        cyberRing.style.boxShadow = 'none';
       }
     }
 
@@ -920,8 +830,9 @@
         appContainer.classList.remove('hidden-intro');
       }
 
-      discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
-      discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+      discWrapper.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.9)';
+      discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+      cyberRing.style.boxShadow = 'none';
       updateActiveSongClass();
     });
 
@@ -929,12 +840,10 @@
       nextSong();
     });
 
-    document.getElementById('lyrics-song-title').textContent = playlist[0].title;
-    document.getElementById('lyrics-content').textContent = playlist[0].lyrics;
-
     renderPlaylist();
+    cyberRing.style.borderColor = playlist[0].colors[0];
 
-    /* --- ESTRELLAS NEÓN DINÁMICAS --- */
+    /* --- ESTRELLAS NEÓN DINÁMICAS Y ESFERAS --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -972,10 +881,8 @@
     function drawNeonStar(ctx, x, y, size, opacity, color) {
       ctx.save();
       ctx.translate(x, y);
-
       ctx.shadowBlur = size * 5;
       ctx.shadowColor = color;
-
       ctx.fillStyle = color;
       ctx.globalAlpha = opacity;
       ctx.beginPath();
@@ -985,12 +892,10 @@
       ctx.quadraticCurveTo(0, 0, -size * 2, 0);
       ctx.quadraticCurveTo(0, 0, 0, -size * 2);
       ctx.fill();
-
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.4, 0, Math.PI * 2);
       ctx.fill();
-
       ctx.restore();
     }
 
@@ -1038,7 +943,6 @@
         let yCoord = Math.sin(rot) * radius;
         ctx.lineTo(xCoord, yCoord);
         rot += step;
-
         xCoord = Math.cos(rot) * (radius * 0.4);
         yCoord = Math.sin(rot) * (radius * 0.4);
         ctx.lineTo(xCoord, yCoord);
@@ -1084,7 +988,6 @@
       ctx.stroke();
 
       drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
-
       ctx.restore();
     }
 
