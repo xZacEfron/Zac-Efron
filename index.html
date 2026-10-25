@@ -298,7 +298,7 @@
 
     .song-item.playing {
       background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid transparent;
       border-radius: 12px;
     }
 
@@ -355,7 +355,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral con la distribución exacta de la Imagen 2 */
+    /* Reproductor Lateral Original */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -407,7 +407,7 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de audio exacta de la Imagen 2 con efecto de color dinámico en la línea de reproducción */
+    /* Barra de audio exacta */
     audio {
       width: 100%;
       margin-top: 42px; 
@@ -461,7 +461,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral (Diseño de la Imagen 2) -->
+    <!-- Tarjeta 3: Reproductor Lateral -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
@@ -573,11 +573,9 @@
       updateAudioBarColor();
     }
 
-    /* Aplica el filtro de tinte dinámico de color al reproductor nativo (efecto Foto 1 en estructura Foto 2) */
     function updateAudioBarColor() {
       const currentSong = playlist[currentIndex];
       const mainColor = currentSong.colors[0];
-
       if (!audio.paused) {
         audio.style.borderColor = `${mainColor}80`;
         audio.style.boxShadow = `0 0 15px ${mainColor}50`;
@@ -602,12 +600,22 @@
 
           if (!audio.paused) {
             item.classList.add('playing');
+            
+            // Borde con degradado de 2 COLORES (Ejemplo: Azul celeste + Rojo)
+            item.style.border = '1px solid transparent';
             item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
             
-            eqBars.forEach(bar => {
-              bar.style.backgroundColor = currentSong.colors[0];
-              bar.style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
-            });
+            // Las 3 barritas del ecualizador toman la combinación de ambos colores
+            if (eqBars.length >= 3) {
+              eqBars[0].style.backgroundColor = currentSong.colors[0];
+              eqBars[0].style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
+
+              eqBars[1].style.backgroundColor = `color-mix(in srgb, ${currentSong.colors[0]} 50%, ${currentSong.colors[1]} 50%)`;
+              eqBars[1].style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
+
+              eqBars[2].style.backgroundColor = currentSong.colors[1];
+              eqBars[2].style.boxShadow = `0 0 6px ${currentSong.colors[1]}`;
+            }
 
             if (songNameEl) {
               songNameEl.style.color = '#ffffff';
