@@ -168,13 +168,14 @@
       transform: scale(1.05);
     }
 
-    /* Contenedor del título y el mini GIF al lado */
+    /* Contenedor del título y el GIF grande (solo visible al reproducir) */
     .header-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 12px;
+      height: 30px;
     }
 
     .header-title {
@@ -184,14 +185,16 @@
       color: #ffffff;
     }
 
-    .header-mini-gif {
-      width: 24px;
-      height: 24px;
-      object-fit: cover;
-      border-radius: 50%;
-      filter: brightness(0.85) contrast(1.1);
-      opacity: 0.9;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+    .header-active-gif {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      display: none; /* Oculto por defecto */
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+    }
+
+    body.is-playing .header-active-gif {
+      display: block; /* Visible únicamente cuando suena la música */
     }
 
     /* Tarjeta 1: Foto Volteable */
@@ -514,6 +517,7 @@
       position: relative;
     }
 
+    /* Bocina fija en blanco al pausar, color neón solo al reproducir */
     .speaker-icon {
       font-size: 13px;
       cursor: pointer;
@@ -594,13 +598,13 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Mini GIF + Foto Volteable -->
+    <!-- Tarjeta 1: 𝑹𝒖 + GIF Grande (visible solo al reproducir) + Foto Volteable -->
     <div class="card">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
       <div class="header-container">
         <div class="header-title">𝑹𝒖</div>
-        <img class="header-mini-gif" src="https://i.postimg.cc/Xq9vWyzw/d073c3f982bb6dac9967ac46a5c49038.gif" alt="Mini GIF">
+        <img class="header-active-gif" src="https://i.postimg.cc/Xq9vWyzw/d073c3f982bb6dac9967ac46a5c49038.gif" alt="GIF Activo">
       </div>
 
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
@@ -835,7 +839,7 @@
         timeText.style.color = '#ffffff';
         timeText.style.textShadow = 'none';
         
-        /* Bocina neutral e igual que los 3 puntos cuando está apagado */
+        /* Bocina y 3 puntos totalmente blancos y neutrales al pausar */
         speakerIcon.style.color = '#ffffff';
         speakerIcon.style.textShadow = 'none';
         dotsIcon.style.color = '#ffffff';
