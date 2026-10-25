@@ -355,7 +355,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral Original */
+    /* Reproductor Lateral con la distribución exacta de la Imagen 2 */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -407,13 +407,13 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de audio exacta original (sin alterar posición ni altura) */
+    /* Barra de audio exacta de la Imagen 2 con efecto de color dinámico en la línea de reproducción */
     audio {
       width: 100%;
       margin-top: 42px; 
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, filter 0.3s ease;
       border: 1px solid transparent;
     }
 
@@ -461,7 +461,7 @@
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral Original -->
+    <!-- Tarjeta 3: Reproductor Lateral (Diseño de la Imagen 2) -->
     <div class="card player-card">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
@@ -573,16 +573,19 @@
       updateAudioBarColor();
     }
 
-    /* Cambia únicamente los tonos de la barra audio al sonar */
+    /* Aplica el filtro de tinte dinámico de color al reproductor nativo (efecto Foto 1 en estructura Foto 2) */
     function updateAudioBarColor() {
       const currentSong = playlist[currentIndex];
       const mainColor = currentSong.colors[0];
+
       if (!audio.paused) {
         audio.style.borderColor = `${mainColor}80`;
-        audio.style.boxShadow = `0 0 14px ${mainColor}50`;
+        audio.style.boxShadow = `0 0 15px ${mainColor}50`;
+        audio.style.filter = `invert(0.9) hue-rotate(180deg) drop-shadow(0 0 4px ${mainColor})`;
       } else {
         audio.style.borderColor = 'transparent';
         audio.style.boxShadow = 'none';
+        audio.style.filter = 'invert(0.9) hue-rotate(180deg)';
       }
     }
 
