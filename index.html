@@ -289,25 +289,28 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral */
+    /* Reproductor Lateral corregido para mejor distribución vertical */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: center;
+      justify-content: space-between; /* Distribuye uniformemente el espacio interno */
+      padding-top: 18px;
+      padding-bottom: 18px;
     }
 
     .disc-container {
-      width: 200px;
-      height: 200px;
+      width: 190px;
+      height: 190px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 10px;
-      margin-bottom: 12px;
+      margin-top: 5px;
+      margin-bottom: 10px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
+      flex-shrink: 0;
     }
 
     .player-card:hover .disc-container {
@@ -329,22 +332,26 @@
       to { transform: rotate(360deg); }
     }
 
+    .song-meta-box {
+      width: 100%;
+      margin-top: 4px;
+    }
+
     .current-title {
       font-size: 19px;
       font-weight: 700;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .current-artist {
       font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 0px;
     }
 
-    /* Barra de audio bajada un poco más para que no quede pegada */
+    /* Barra de audio con separación elegante y perfecta */
     audio {
       width: 100%;
-      margin-top: 28px; 
+      margin-top: 14px; 
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
       transition: box-shadow 0.2s ease;
@@ -396,10 +403,11 @@
         <img id="player-cover" src="https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg" alt="Down Under">
       </div>
 
-      <div class="current-title" id="player-title">Down Under</div>
-      <div class="current-artist" id="player-artist">Men at Work</div>
-
-      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Men at Work - Down Under.mp3"></audio>
+      <div class="song-meta-box">
+        <div class="current-title" id="player-title">Down Under</div>
+        <div class="current-artist" id="player-artist">Men at Work</div>
+        <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Men at Work - Down Under.mp3"></audio>
+      </div>
     </div>
 
   </div>
