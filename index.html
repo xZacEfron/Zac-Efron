@@ -69,7 +69,7 @@
       justify-content: center;
       flex-wrap: wrap;
       z-index: 2;
-      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     }
 
     /* Clase para ocultar las tarjetas durante la intro inicial */
@@ -289,28 +289,25 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral corregido para mejor distribución vertical */
+    /* Reproductor Lateral */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      justify-content: space-between; /* Distribuye uniformemente el espacio interno */
-      padding-top: 18px;
-      padding-bottom: 18px;
+      justify-content: center;
     }
 
     .disc-container {
-      width: 190px;
-      height: 190px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 5px;
-      margin-bottom: 10px;
+      margin-top: 10px;
+      margin-bottom: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
-      flex-shrink: 0;
     }
 
     .player-card:hover .disc-container {
@@ -332,26 +329,22 @@
       to { transform: rotate(360deg); }
     }
 
-    .song-meta-box {
-      width: 100%;
-      margin-top: 4px;
-    }
-
     .current-title {
       font-size: 19px;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .current-artist {
       font-size: 13px;
       color: #94a3b8;
+      margin-bottom: 0px;
     }
 
-    /* Barra de audio con separación elegante y perfecta */
+    /* Barra de audio bajada un poquito, justo como te gustaba */
     audio {
       width: 100%;
-      margin-top: 14px; 
+      margin-top: 18px; 
       border-radius: 12px;
       filter: invert(0.9) hue-rotate(180deg);
       transition: box-shadow 0.2s ease;
@@ -403,11 +396,10 @@
         <img id="player-cover" src="https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg" alt="Down Under">
       </div>
 
-      <div class="song-meta-box">
-        <div class="current-title" id="player-title">Down Under</div>
-        <div class="current-artist" id="player-artist">Men at Work</div>
-        <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Men at Work - Down Under.mp3"></audio>
-      </div>
+      <div class="current-title" id="player-title">Down Under</div>
+      <div class="current-artist" id="player-artist">Men at Work</div>
+
+      <audio id="main-audio" controls controlsList="nodownload" crossorigin="anonymous" src="Men at Work - Down Under.mp3"></audio>
     </div>
 
   </div>
@@ -585,7 +577,7 @@
       bgGifContainer.style.opacity = '1';
 
       if (!hasPlayedFirstTime) {
-        // PRIMERA VEZ: Primer gif (4s) -> segundo gif nube (hasta los 8s) -> reaparecen las tarjetas
+        // PRIMERA VEZ: Inicia con el primer gif, y a los 5 segundos exactos cambia al gif de la nube y reaparecen las tarjetas
         bgGifImg.src = "https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif";
         document.body.classList.add('intro-mode');
         appContainer.classList.add('hidden-intro');
@@ -595,13 +587,10 @@
 
         gifSwitchTimeout = setTimeout(() => {
           bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
-        }, 4000); // 4 segundos del primer gif
-
-        introTimeout = setTimeout(() => {
           appContainer.classList.remove('hidden-intro');
           document.body.classList.remove('intro-mode');
           hasPlayedFirstTime = true;
-        }, 8000); // 8 segundos totales antes de mostrar las tarjetas
+        }, 5000); // Exactamente a los 5 segundos ocurre el cambio y la aparición
       } else {
         // SIGUIENTES REPRODUCCIONES: Directo con el GIF de la nube y las tarjetas visibles
         bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
