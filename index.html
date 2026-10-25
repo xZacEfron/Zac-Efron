@@ -168,13 +168,30 @@
       transform: scale(1.05);
     }
 
+    /* Contenedor del título y el mini GIF al lado */
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
     .header-title {
       font-size: 21px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      margin-bottom: 12px;
-      text-align: center;
       color: #ffffff;
+    }
+
+    .header-mini-gif {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+      border-radius: 50%;
+      filter: brightness(0.85) contrast(1.1);
+      opacity: 0.9;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     /* Tarjeta 1: Foto Volteable */
@@ -355,7 +372,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral con posición original exacta */
+    /* Reproductor Lateral */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -407,7 +424,7 @@
       margin-bottom: 0px;
     }
 
-    /* Barra de reproducción en su posición original exacta */
+    /* Barra de audio personalizada */
     .custom-player-box {
       width: 100%;
       margin-top: 20px;
@@ -420,6 +437,7 @@
       gap: 10px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
       transition: border-color 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
     }
 
     .progress-container {
@@ -493,10 +511,59 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      position: relative;
     }
 
     .speaker-icon {
       font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.2s, color 0.3s ease, text-shadow 0.3s ease;
+      color: #ffffff;
+    }
+
+    .speaker-icon:hover {
+      transform: scale(1.2);
+    }
+
+    /* Control deslizante de volumen flotante */
+    .volume-popup {
+      position: absolute;
+      bottom: 40px;
+      right: 20px;
+      background: rgba(15, 15, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px 14px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .volume-popup.active {
+      display: flex;
+    }
+
+    .vol-slider-custom {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 90px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .vol-slider-custom::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 6px rgba(255,255,255,0.8);
+      cursor: pointer;
     }
 
     .dots-icon {
@@ -504,6 +571,7 @@
       font-weight: bold;
       cursor: pointer;
       letter-spacing: 1px;
+      color: #ffffff;
     }
 
     audio {
@@ -526,11 +594,15 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
+    <!-- Tarjeta 1: 𝑹𝒖 + Mini GIF + Foto Volteable -->
     <div class="card">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
-      <div class="header-title">𝑹𝒖</div>
+      <div class="header-container">
+        <div class="header-title">𝑹𝒖</div>
+        <img class="header-mini-gif" src="https://i.postimg.cc/Xq9vWyzw/d073c3f982bb6dac9967ac46a5c49038.gif" alt="Mini GIF">
+      </div>
+
       <div class="flip-card-container" id="flip-card" onclick="toggleCardFlip()">
         <div class="flip-card-inner">
           <div class="flip-front full-img-container">
@@ -559,7 +631,7 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Barra de audio en su posición original -->
+      <!-- Barra de audio -->
       <div class="custom-player-box" id="custom-player-box">
         <div class="progress-container">
           <input type="range" class="progress-bar-custom" id="progress-bar" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)">
@@ -568,7 +640,13 @@
           <div class="custom-play-btn" id="play-btn" onclick="togglePlayPause()">▶</div>
           <div class="time-display-custom" id="time-text">0:00 / 0:00</div>
           <div class="options-group">
-            <span class="speaker-icon" id="speaker-icon">🔊</span>
+            <span class="speaker-icon" id="speaker-icon" onclick="toggleVolumePopup(event)">🔊</span>
+            
+            <!-- Control de volumen desplegable -->
+            <div class="volume-popup" id="volume-popup">
+              <input type="range" class="vol-slider-custom" id="vol-slider" min="0" max="1" step="0.05" value="1" oninput="changeVolume(this.value)">
+            </div>
+
             <span class="dots-icon" id="dots-icon">•••</span>
           </div>
         </div>
@@ -597,7 +675,6 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PALETA DE COLORES NEÓN AJUSTADA (AZUL CIELO, ROJO, MORADO OSCURO, VERDE) */
     const playlist = [
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
@@ -638,6 +715,8 @@
     const progressBar = document.getElementById('progress-bar');
     const timeText = document.getElementById('time-text');
     const speakerIcon = document.getElementById('speaker-icon');
+    const volumePopup = document.getElementById('volume-popup');
+    const volSlider = document.getElementById('vol-slider');
     const dotsIcon = document.getElementById('dots-icon');
 
     let gifSwitchTimeout = null;
@@ -699,6 +778,23 @@
       }
     }
 
+    function changeVolume(val) {
+      audio.volume = val;
+    }
+
+    function toggleVolumePopup(event) {
+      event.stopPropagation();
+      volumePopup.classList.toggle('active');
+    }
+
+    window.addEventListener('click', () => {
+      volumePopup.classList.remove('active');
+    });
+
+    volumePopup.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
     function formatTime(sec) {
       if (isNaN(sec)) return "0:00";
       const m = Math.floor(sec / 60);
@@ -729,6 +825,7 @@
         dotsIcon.style.textShadow = `0 0 8px ${color1}`;
 
         progressBar.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
+        volSlider.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
       } else {
         customPlayerBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
         customPlayerBox.style.boxShadow = '0 8px 20px rgba(0,0,0,0.6)';
@@ -737,11 +834,15 @@
         playBtn.style.boxShadow = 'none';
         timeText.style.color = '#ffffff';
         timeText.style.textShadow = 'none';
+        
+        /* Bocina neutral e igual que los 3 puntos cuando está apagado */
         speakerIcon.style.color = '#ffffff';
         speakerIcon.style.textShadow = 'none';
         dotsIcon.style.color = '#ffffff';
         dotsIcon.style.textShadow = 'none';
+
         progressBar.style.background = 'rgba(255, 255, 255, 0.15)';
+        volSlider.style.background = 'rgba(255, 255, 255, 0.2)';
       }
     }
 
