@@ -251,12 +251,37 @@
       }
     }
 
-    /* Lista de canciones */
+    /* --- TARJETA 2: Playlist con diseño renovado --- */
+    .playlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .playlist-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .playlist-count {
+      font-size: 11px;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
     .song-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      height: 100%;
+      flex: 1;
       overflow-y: auto;
       padding-right: 6px;
     }
@@ -357,7 +382,7 @@
       100% { height: 100%; }
     }
 
-    /* Reproductor Lateral Avanzado */
+    /* --- TARJETA 3: Reproductor Lateral Avanzado --- */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -367,7 +392,6 @@
       position: relative;
     }
 
-    /* Contenedor con efecto Flip para ver la Letra */
     .player-flip-container {
       width: 100%;
       flex: 1;
@@ -411,22 +435,22 @@
     }
 
     .lyrics-title {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       color: #94a3b8;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
     .lyrics-box {
       width: 100%;
-      height: 140px;
+      height: 210px;
       overflow-y: auto;
-      font-size: 13px;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.6;
       color: #e2e8f0;
-      padding-right: 4px;
+      padding-right: 6px;
       text-align: center;
       white-space: pre-line;
     }
@@ -440,11 +464,11 @@
     }
 
     .disc-container {
-      width: 150px;
-      height: 150px;
+      width: 170px;
+      height: 170px;
       border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -478,10 +502,9 @@
     .current-artist {
       font-size: 12px;
       color: #94a3b8;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    /* Controles de reproducción mejorados (Anterior / Siguiente + Volumen) */
     .player-controls-row {
       display: flex;
       align-items: center;
@@ -523,12 +546,6 @@
       width: 70px;
       accent-color: #ffffff;
       cursor: pointer;
-    }
-
-    .lyrics-hint {
-      font-size: 10px;
-      color: #64748b;
-      margin-top: 2px;
     }
 
     /* Barra de audio */
@@ -578,41 +595,42 @@
       </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist -->
+    <!-- Tarjeta 2: Playlist con diseño mejorado -->
     <div class="card">
+      <div class="playlist-header">
+        <span class="playlist-title">🎵 Playlist</span>
+        <span class="playlist-count">22 canciones</span>
+      </div>
       <div class="song-list" id="song-list-container">
         <!-- Canciones cargadas por script -->
       </div>
     </div>
 
-    <!-- Tarjeta 3: Reproductor Lateral Mejorado con Letras y Controles -->
+    <!-- Tarjeta 3: Reproductor con disco limpio y letras completas -->
     <div class="card player-card">
       
-      <!-- Contenedor Flip para ver el disco o la letra -->
       <div class="player-flip-container" id="player-flip" onclick="togglePlayerFlip(event)">
         <div class="player-flip-inner">
           
-          <!-- Lado Frontal: Disco Giratorio -->
+          <!-- Lado Frontal: Disco Limpio -->
           <div class="player-front-side">
             <div class="disc-container" id="disc-wrapper">
               <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
             </div>
             <div class="current-title" id="player-title">Kids</div>
             <div class="current-artist" id="player-artist">MGMT</div>
-            <div class="lyrics-hint">👆 Haz clic en el disco para ver la letra</div>
           </div>
 
-          <!-- Lado Trasero: Letra de la canción -->
+          <!-- Lado Trasero: Letra Completa -->
           <div class="player-back-side">
             <div class="lyrics-title" id="lyrics-song-title">Letra</div>
             <div class="lyrics-box" id="lyrics-content">Cargando letra...</div>
-            <div class="lyrics-hint" style="margin-top:auto;">👆 Haz clic para volver al disco</div>
           </div>
 
         </div>
       </div>
 
-      <!-- Controles adicionales: Anterior, Siguiente, Volumen -->
+      <!-- Controles adicionales -->
       <div class="player-controls-row">
         <button class="control-btn" onclick="prevSong()" title="Anterior">⏮</button>
         <div class="volume-container">
@@ -634,7 +652,6 @@
     }
 
     function togglePlayerFlip(e) {
-      // Evita que gire si hacen clic dentro de la barra de desplazamiento de la letra
       if(e.target.closest('.lyrics-box')) return;
       const playerFlip = document.getElementById('player-flip');
       playerFlip.classList.toggle('flipped');
@@ -653,10 +670,10 @@
     }
 
     const playlist = [
-      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "Control yourself\nTake only what you need from it\nA family of trees wanting\nTo be haunted\nThe water is warm\nBut it's sending me shivers\nA baby is born\nCrying out for attention\n\nMemories assemble in days\nWith 3M tapes and\nScissor cuts\nThere is a/an\nExplanation for this\nWith a sentiment\nInsiders you lock in\nThe halls are all\nTaking shape\nWhere are you going?\nYou can't escape\n\nMGMT - Kids" },
+      { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "Control yourself\nTake only what you need from it\nA family of trees wanting to be haunted\nThe water is warm, but it's sending me shivers\nA baby is born, crying out for attention\n\nMemories assemble in days\nWith 3M tapes and scissor cuts\nThere is an explanation for this\nWith a sentiment insiders you lock in\nThe halls are all taking shape\nWhere are you going? You can't escape\n\nMGMT - Kids" },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ffee00', '#ff0033'], lyrics: "Travelling in a fried-out combi\nOn a hippie trail, head full of zombie\nI met a strange lady, she made me nervous\nShe took me in and gave me breakfast\nAnd she said\n\n'Do you come from a land down under?\nWhere women glow and men plunder?\nCan't you hear, can't you hear the thunder?\nYou better run, you better take cover'\n\nMen at Work - Down Under" },
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ff0033', '#00e5ff'], lyrics: "Looking back at all the times we had\nWe never thought it would end so fast\nStaring at the ceiling in the dark\nTrying to remember your spark\n\nAnd before you know it, we're miles apart\nCarrying the weight inside our hearts\n\nKygo - Before You Know It" },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffee00', '#2a0845'], lyrics: "My mind has been split\nFrom a boring bit\nAnd even when I'm close to it\nIt's like I'm miles away\n\nAnd down on the street\nThere's a-runnin' of the feet\nAnd a flash of teeth\nAnd then it's dark again\n\nTV on the Radio - Wolf Like Me" },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#ffee00', '#2a0845'], lyrics: "My mind has been split from a boring bit\nAnd even when I'm close to it\nIt's like I'm miles away\n\nAnd down on the street\nThere's a-runnin' of the feet\nAnd a flash of teeth\nAnd then it's dark again\n\nTV on the Radio - Wolf Like Me" },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#00f0ff'], lyrics: "Standing in the shadows of life\nWaiting for a spark to ignite\nNo one can tell you what to do\nWhen the fire inside burns bright\n\nWe could live forever\nWe could fade into darkness\n\nAvicii - Fade Into Darkness" },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#0066ff'], lyrics: "You look at me and see someone who's put together\nI look in the mirror, see a storm and cloudy weather\nI've been dealing with emotions that I can't explain\nTrying to find a way to navigate the pain\n\nAnd honestly, I'm okay with not being happy all the time\n\nNF - HAPPY" },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ffee00', '#ff0033'], lyrics: "I'm waking up from a dream\nNothing's ever what it seems\nIf you call out my name\nI'll walk through the flame\n\nIf you could be the one\nWe'd stay out 'til the sun\n\nAvicii Vs. Nicky Romero - I Could Be The One" },
@@ -904,7 +921,6 @@
       nextSong();
     });
 
-    // Inicializar datos del reproductor en la primera canción al cargar
     document.getElementById('lyrics-song-title').textContent = playlist[0].title;
     document.getElementById('lyrics-content').textContent = playlist[0].lyrics;
 
