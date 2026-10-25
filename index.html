@@ -426,7 +426,7 @@
 </head>
 <body>
 
-  <!-- Botón limpio que aparece al ocultar para volver a mostrar las tarjetas -->
+  <!-- Botón limpio para mostrar las tarjetas -->
   <button class="show-ui-trigger" onclick="showUI()">Mostrar Tarjetas</button>
 
   <!-- Fondo GIF Dinámico -->
@@ -441,7 +441,6 @@
     
     <!-- Tarjeta 1: 𝑹𝒖 + Foto Volteable -->
     <div class="card">
-      <!-- Botón X discreto que solo aparece al reproducir música -->
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
       <div class="header-title">𝑹𝒖</div>
@@ -546,10 +545,10 @@
             <div class="song-name" id="song-name-${index}">${song.title}</div>
             <div class="song-artist">${song.artist}</div>
           </div>
-          <div class="equalizer">
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
+          <div class="equalizer" id="eq-${index}">
+            <div class="eq-bar" style="background-color: ${song.colors[0]}"></div>
+            <div class="eq-bar" style="background-color: ${song.colors[0]}"></div>
+            <div class="eq-bar" style="background-color: ${song.colors[0]}"></div>
           </div>
         `;
         songListContainer.appendChild(item);
@@ -581,8 +580,13 @@
 
       items.forEach((item, index) => {
         const songNameEl = document.getElementById(`song-name-${index}`);
+        const eqBars = item.querySelectorAll('.eq-bar');
+
         if (index === currentIndex) {
           item.classList.add('active');
+          // Actualiza las barras de ecualización con el color del aura actual
+          eqBars.forEach(bar => bar.style.backgroundColor = currentSong.colors[0]);
+
           if (!audio.paused) {
             item.classList.add('playing');
             item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
@@ -663,7 +667,6 @@
       document.body.classList.add('is-playing');
 
       if (!hasPlayedFirstTime) {
-        // PRIMERA VEZ: Inicia con el primer gif, y a los 5 segundos exactos cambia al gif de la nube y aparecen las tarjetas
         bgGifImg.src = "https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif";
         document.body.classList.add('intro-mode');
         appContainer.classList.add('hidden-intro');
@@ -679,7 +682,6 @@
           hasPlayedFirstTime = true;
         }, 5000);
       } else {
-        // SIGUIENTES REPRODUCCIONES
         bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
         if (!document.body.classList.contains('ui-hidden')) {
           appContainer.classList.remove('hidden-intro');
