@@ -74,7 +74,7 @@
       transform: scale(0.98);
     }
 
-    /* Tarjetas principales */
+    /* Tarjetas principales con soporte para borde degradado de 2 colores */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
@@ -592,8 +592,8 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + GIF Camuflado + Foto Volteable (Borde Neón Dinámico con la Música) -->
-    <div class="card" id="profile-card">
+    <!-- Tarjeta 1: Foto -->
+    <div class="card card-neon" id="card-1">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
       <div class="header-container">
@@ -614,14 +614,14 @@
     </div>
 
     <!-- Tarjeta 2: Playlist -->
-    <div class="card">
+    <div class="card card-neon" id="card-2">
       <div class="song-list" id="song-list-container">
         <!-- Canciones cargadas por script -->
       </div>
     </div>
 
     <!-- Tarjeta 3: Reproductor Lateral -->
-    <div class="card player-card">
+    <div class="card player-card card-neon" id="card-3">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/SNpwtmnZ/images.jpg" alt="On My Way">
       </div>
@@ -673,7 +673,6 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PLAYLIST ACTUALIZADA */
     const playlist = [
       { file: 'CADU! - On My Way.mp3', title: 'On My Way', artist: 'CADU!', cover: 'https://i.postimg.cc/SNpwtmnZ/images.jpg', colors: ['#ffee00', '#00f0ff'] },
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] },
@@ -681,7 +680,7 @@
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#00f0ff', '#2a0845'] },
-      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZen56/Nf-Happy.jpg', colors: ['#00f0ff', '#2a0845'] },
+      { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#2a0845'] },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ff0033', '#00f0ff'] },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#00f0ff'] },
       { file: 'Kygo - Think About You.mp3', title: 'Think About You', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#2a0845'] },
@@ -704,7 +703,9 @@
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
-    const profileCard = document.getElementById('profile-card');
+    const card1 = document.getElementById('card-1');
+    const card2 = document.getElementById('card-2');
+    const card3 = document.getElementById('card-3');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
     const appContainer = document.getElementById('app-container');
@@ -805,9 +806,16 @@
       const color2 = currentSong.colors[1];
 
       if (!audio.paused) {
-        /* Borde y Aura de la Tarjeta Principal de la Foto */
-        profileCard.style.borderColor = `${color1}a0`;
-        profileCard.style.boxShadow = `0 0 25px ${color1}50, 0 20px 40px rgba(0, 0, 0, 0.9)`;
+        /* Bordes y auras degradadas de las 3 tarjetas usando los dos colores */
+        const dualBorderCardStyle = `1px solid transparent`;
+        const dualBorderImageStyle = `linear-gradient(135deg, ${color1}, ${color2}) 1`;
+        const dualBoxShadowStyle = `0 0 22px ${color1}40, 0 0 22px ${color2}40, 0 20px 40px rgba(0, 0, 0, 0.9)`;
+
+        [card1, card2, card3].forEach(card => {
+          card.style.border = dualBorderCardStyle;
+          card.style.borderImage = dualBorderImageStyle;
+          card.style.boxShadow = dualBoxShadowStyle;
+        });
 
         /* Controles de la barra */
         customPlayerBox.style.borderColor = `${color1}80`;
@@ -829,9 +837,12 @@
         progressBar.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
         volSlider.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
       } else {
-        /* Estado pausado: apagar auras */
-        profileCard.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-        profileCard.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.9)';
+        /* Estado pausado: resetear auras */
+        [card1, card2, card3].forEach(card => {
+          card.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+          card.style.borderImage = 'none';
+          card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.9)';
+        });
 
         customPlayerBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
         customPlayerBox.style.boxShadow = '0 8px 20px rgba(0,0,0,0.6)';
