@@ -168,14 +168,14 @@
       transform: scale(1.05);
     }
 
-    /* Contenedor del título y el GIF camuflado */
+    /* Contenedor del título y el GIF camuflado más grande */
     .header-container {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
       margin-bottom: 12px;
-      height: 32px;
+      height: 36px;
     }
 
     .header-title {
@@ -189,12 +189,12 @@
       width: 44px;
       height: 44px;
       object-fit: contain;
-      display: none; /* Oculto por defecto */
-      mix-blend-mode: screen; /* Elimina por completo el fondo negro/cuadrado del GIF */
+      display: none;
+      mix-blend-mode: screen; /* Elimina el fondo negro para camuflarlo */
     }
 
     body.is-playing .header-active-gif {
-      display: block; /* Visible únicamente cuando suena la música */
+      display: block;
     }
 
     /* Tarjeta 1: Foto Volteable */
@@ -382,6 +382,7 @@
       align-items: center;
       text-align: center;
       justify-content: center;
+      position: relative;
     }
 
     .disc-container {
@@ -517,6 +518,7 @@
       position: relative;
     }
 
+    /* Bocina fija en blanco al pausar */
     .speaker-icon {
       font-size: 13px;
       cursor: pointer;
@@ -575,6 +577,31 @@
       cursor: pointer;
       letter-spacing: 1px;
       color: #ffffff;
+    }
+
+    /* Sección inferior para perfiles en pequeño (prueba) */
+    .bottom-profiles-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .profile-avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      display: block;
+    }
+
+    .profile-avatar-small:hover {
+      transform: scale(1.15);
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     audio {
@@ -655,6 +682,13 @@
         </div>
       </div>
 
+      <!-- Sección baja para perfiles pequeños (enlace de prueba) -->
+      <div class="bottom-profiles-container">
+        <a href="#" target="_blank" title="Perfil de prueba">
+          <img src="https://xatimg.com/image/3wLThl1T4zKy.jpg" alt="Perfil" class="profile-avatar-small">
+        </a>
+      </div>
+
       <audio id="main-audio" crossorigin="anonymous" src="MGMT - Kids.mp3"></audio>
     </div>
 
@@ -678,12 +712,13 @@
       document.body.classList.remove('ui-hidden');
     }
 
+    /* PRIMERAS 6 CANCIONES ORDENADAS SEGÚN TUS SELECCIONES */
     const playlist = [
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
-      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] },
-      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#00f0ff', '#2a0845'] },
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
+      { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
+      { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#00f0ff', '#2a0845'] },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#2a0845'] },
       { file: 'Avicii - I Could Be The One (Avicii Vs. Nicky Romero) (Radio Edit).mp3', title: 'I Could Be The One', artist: 'Avicii Vs. Nicky Romero', cover: 'https://i.postimg.cc/wj89HNvZ/ab67616d0000b273d1f3c40cd2e251e04ae6413f.jpg', colors: ['#ff0033', '#00f0ff'] },
       { file: 'Green Day - Whatsername.mp3', title: 'Whatsername', artist: 'Green Day', cover: 'https://i.postimg.cc/SxC1F22V/ab67616d0000b27308a1b1e0674086d3f1995e1b.jpg', colors: ['#39ff14', '#00f0ff'] },
