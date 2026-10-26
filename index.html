@@ -24,7 +24,7 @@
       position: relative;
     }
 
-    /* Fondo GIF Dinámico */
+    /* Fondo GIF Dinámico (Directo con el segundo GIF) */
     #bg-gif-container {
       position: fixed;
       top: 0;
@@ -43,11 +43,6 @@
       height: 100%;
       object-fit: cover;
       filter: brightness(0.45) contrast(1.1);
-      transition: filter 1s ease-in-out;
-    }
-
-    body.intro-mode #bg-gif-container img {
-      filter: brightness(0.95) contrast(1.15);
     }
 
     /* Fondo de Canvas */
@@ -73,7 +68,6 @@
       position: relative;
     }
 
-    .app-container.hidden-intro,
     .app-container.hidden-manual {
       opacity: 0;
       pointer-events: none;
@@ -588,9 +582,9 @@
   <!-- Botón para mostrar las tarjetas -->
   <button class="show-ui-trigger" onclick="showUI()">Mostrar Tarjetas</button>
 
-  <!-- Fondo GIF Dinámico -->
+  <!-- Fondo GIF Dinámico (Solo el segundo GIF con la música) -->
   <div id="bg-gif-container">
-    <img id="bg-gif-img" src="https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif" alt="Fondo Animado">
+    <img id="bg-gif-img" src="https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif" alt="Fondo Animado">
   </div>
 
   <!-- Canvas para Partículas y Estrellas Neón -->
@@ -706,13 +700,11 @@
     ];
 
     let currentIndex = 0;
-    let hasPlayedFirstTime = false;
     const audio = document.getElementById('main-audio');
     const playerCover = document.getElementById('player-cover');
     const discWrapper = document.getElementById('disc-wrapper');
     const songListContainer = document.getElementById('song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
-    const bgGifImg = document.getElementById('bg-gif-img');
     const appContainer = document.getElementById('app-container');
 
     const customPlayerBox = document.getElementById('custom-player-box');
@@ -723,8 +715,6 @@
     const volumePopup = document.getElementById('volume-popup');
     const volSlider = document.getElementById('vol-slider');
     const dotsIcon = document.getElementById('dots-icon');
-
-    let gifSwitchTimeout = null;
 
     function renderPlaylist() {
       songListContainer.innerHTML = '';
@@ -974,29 +964,6 @@
       bgGifContainer.style.opacity = '1';
       document.body.classList.add('is-playing');
 
-      if (!hasPlayedFirstTime) {
-        bgGifImg.src = "https://i.postimg.cc/Dw7QrCgK/3e6e0c0d7728ecb249950b8cf3cdccb3.gif";
-        document.body.classList.add('intro-mode');
-        appContainer.classList.add('hidden-intro');
-
-        if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
-
-        gifSwitchTimeout = setTimeout(() => {
-          bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
-          if (!document.body.classList.contains('ui-hidden')) {
-            appContainer.classList.remove('hidden-intro');
-          }
-          document.body.classList.remove('intro-mode');
-          hasPlayedFirstTime = true;
-        }, 5000);
-      } else {
-        bgGifImg.src = "https://i.postimg.cc/tJHp1VHN/Goku-Nube.gif";
-        if (!document.body.classList.contains('ui-hidden')) {
-          appContainer.classList.remove('hidden-intro');
-        }
-        document.body.classList.remove('intro-mode');
-      }
-
       updateActiveSongClass();
       updateAudioBarColor();
       try {
@@ -1008,13 +975,7 @@
       playBtn.textContent = '▶';
       discWrapper.classList.remove('rotating');
       bgGifContainer.style.opacity = '0';
-      document.body.classList.remove('intro-mode');
       document.body.classList.remove('is-playing');
-      
-      if (gifSwitchTimeout) clearTimeout(gifSwitchTimeout);
-      if (!document.body.classList.contains('ui-hidden')) {
-        appContainer.classList.remove('hidden-intro');
-      }
 
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
