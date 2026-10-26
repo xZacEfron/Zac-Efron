@@ -168,14 +168,14 @@
       transform: scale(1.05);
     }
 
-    /* Contenedor del título y el GIF grande (solo visible al reproducir) */
+    /* Contenedor del título y el GIF camuflado */
     .header-container {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
       margin-bottom: 12px;
-      height: 30px;
+      height: 32px;
     }
 
     .header-title {
@@ -186,11 +186,11 @@
     }
 
     .header-active-gif {
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       object-fit: contain;
       display: none; /* Oculto por defecto */
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+      mix-blend-mode: screen; /* Elimina por completo el fondo negro/cuadrado del GIF */
     }
 
     body.is-playing .header-active-gif {
@@ -517,7 +517,6 @@
       position: relative;
     }
 
-    /* Bocina fija en blanco al pausar, color neón solo al reproducir */
     .speaker-icon {
       font-size: 13px;
       cursor: pointer;
@@ -598,7 +597,7 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: 𝑹𝒖 + GIF Grande (visible solo al reproducir) + Foto Volteable -->
+    <!-- Tarjeta 1: 𝑹𝒖 + GIF Camuflado (visible solo al reproducir) + Foto Volteable -->
     <div class="card">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -839,7 +838,6 @@
         timeText.style.color = '#ffffff';
         timeText.style.textShadow = 'none';
         
-        /* Bocina y 3 puntos totalmente blancos y neutrales al pausar */
         speakerIcon.style.color = '#ffffff';
         speakerIcon.style.textShadow = 'none';
         dotsIcon.style.color = '#ffffff';
