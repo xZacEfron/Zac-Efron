@@ -74,7 +74,7 @@
       transform: scale(0.98);
     }
 
-    /* Tarjetas principales más grandes */
+    /* Tarjetas principales */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
@@ -192,7 +192,7 @@
       display: block;
     }
 
-    /* Foto de perfil más grande (160px) con fondo negro y sin zoom */
+    /* Foto de perfil con círculo completamente negro y sin zoom */
     .profile-section-top {
       display: flex;
       flex-direction: column;
@@ -206,8 +206,8 @@
       height: 160px;
       border-radius: 50%;
       overflow: hidden;
-      border: 3px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      border: 3px solid #000000;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
       background-color: #000000;
       position: relative;
       cursor: pointer;
@@ -215,8 +215,8 @@
     }
 
     .profile-circle-wrapper:hover {
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.9);
+      border-color: #1a1a1a;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 1);
     }
 
     .profile-circle-wrapper img {
@@ -512,7 +512,7 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: Foto grande con fondo negro y clic interactivo -->
+    <!-- Tarjeta 1: Foto con fondo negro puro y clic interactivo -->
     <div class="card card-neon" id="card-1">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -523,7 +523,7 @@
 
       <div class="profile-section-top">
         <div class="profile-circle-wrapper" onclick="toggleProfileImage()">
-          <img id="profile-img" src="https://xatimg.com/image/6m6HFdXTscio.jpg" alt="Ru Photo">
+          <img id="profile-img" src="https://xatimg.com/image/YK3BJIfpJQHB.png" alt="Ru Photo">
         </div>
       </div>
 
@@ -570,14 +570,14 @@
 
   <script>
     /* --- LÓGICA DE CAMBIO DE FOTO AL DAR CLIC --- */
-    const img1 = "https://xatimg.com/image/6m6HFdXTscio.jpg";
+    const img1 = "https://xatimg.com/image/YK3BJIfpJQHB.png";
     const img2 = "https://xatimg.com/image/Jg23jlU0z2hq.png";
 
     function toggleProfileImage() {
       const profileImg = document.getElementById('profile-img');
       profileImg.style.opacity = '0.3';
       setTimeout(() => {
-        if (profileImg.src.includes('6m6HFdXTscio.jpg') || profileImg.src === img1) {
+        if (profileImg.src.includes('YK3BJIfpJQHB.png') || profileImg.src === img1) {
           profileImg.src = img2;
         } else {
           profileImg.src = img1;
