@@ -59,7 +59,7 @@
     .app-container {
       display: flex;
       gap: 20px;
-      max-width: 1200px;
+      max-width: 900px;
       width: 100%;
       justify-content: center;
       flex-wrap: wrap;
@@ -191,7 +191,7 @@
       display: block;
     }
 
-    /* --- TARJETA 1: Perfil con Círculo Original + Mini Canciones Abajo --- */
+    /* Tarjeta 1: Perfil con Círculo Original + Mini Canciones Abajo */
     .profile-section-top {
       display: flex;
       flex-direction: column;
@@ -200,8 +200,8 @@
     }
 
     .profile-circle-wrapper {
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid rgba(255, 255, 255, 0.12);
@@ -287,113 +287,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Tarjeta 2: Playlist Principal */
-    .song-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      height: 100%;
-      overflow-y: auto;
-      padding-right: 6px;
-    }
-
-    .song-list::-webkit-scrollbar {
-      width: 5px;
-    }
-    .song-list::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.01);
-      border-radius: 10px;
-    }
-    .song-list::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-    }
-
-    .song-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid transparent;
-      cursor: pointer;
-      position: relative;
-      transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .song-item:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.03);
-      transform: translateX(4px);
-    }
-
-    .song-item.active {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .song-item.playing {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid transparent;
-      border-radius: 12px;
-    }
-
-    .song-item img {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .song-info {
-      flex: 1;
-    }
-
-    .song-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: #f1f5f9;
-      transition: color 0.2s ease, text-shadow 0.2s ease;
-    }
-
-    .song-artist {
-      font-size: 13px;
-      color: #94a3b8;
-    }
-
-    /* Ecualizador Animado */
-    .equalizer {
-      display: none;
-      align-items: flex-end;
-      gap: 3px;
-      height: 16px;
-      padding-right: 4px;
-    }
-
-    .song-item.active .equalizer {
-      display: flex;
-    }
-
-    .eq-bar {
-      width: 3px;
-      background-color: rgba(255, 255, 255, 0.4);
-      border-radius: 2px;
-      height: 4px;
-      transition: height 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .song-item.playing .eq-bar {
-      animation: eqBounce 0.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes eqBounce {
-      0% { height: 20%; }
-      100% { height: 100%; }
-    }
-
-    /* Reproductor Lateral */
+    /* Reproductor Lateral (Tarjeta 2) */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -535,7 +429,6 @@
       position: relative;
     }
 
-    /* Bocina fija en blanco al pausar */
     .speaker-icon {
       font-size: 13px;
       cursor: pointer;
@@ -547,7 +440,6 @@
       transform: scale(1.2);
     }
 
-    /* Control deslizante de volumen flotante */
     .volume-popup {
       position: absolute;
       bottom: 40px;
@@ -636,15 +528,10 @@
       </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist Principal -->
-    <div class="card card-neon" id="card-2">
-      <div class="song-list" id="song-list-container">
-        <!-- Canciones cargadas por script -->
-      </div>
-    </div>
+    <!-- Tarjeta 2: Reproductor Lateral -->
+    <div class="card player-card card-neon" id="card-2">
+      <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
-    <!-- Tarjeta 3: Reproductor Lateral -->
-    <div class="card player-card card-neon" id="card-3">
       <div class="disc-container" id="disc-wrapper">
         <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
       </div>
@@ -663,7 +550,6 @@
           <div class="options-group">
             <span class="speaker-icon" id="speaker-icon" onclick="toggleVolumePopup(event)">🔊</span>
             
-            <!-- Control de volumen desplegable -->
             <div class="volume-popup" id="volume-popup">
               <input type="range" class="vol-slider-custom" id="vol-slider" min="0" max="1" step="0.05" value="1" oninput="changeVolume(this.value)">
             </div>
@@ -724,8 +610,6 @@
     const discWrapper = document.getElementById('disc-wrapper');
     const card1 = document.getElementById('card-1');
     const card2 = document.getElementById('card-2');
-    const card3 = document.getElementById('card-3');
-    const songListContainer = document.getElementById('song-list-container');
     const miniSongListContainer = document.getElementById('mini-song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
     const appContainer = document.getElementById('app-container');
@@ -739,32 +623,9 @@
     const volSlider = document.getElementById('vol-slider');
     const dotsIcon = document.getElementById('dots-icon');
 
-    function renderPlaylists() {
-      // Playlist Principal (Tarjeta 2)
-      songListContainer.innerHTML = '';
-      playlist.forEach((song, index) => {
-        const item = document.createElement('div');
-        item.className = `song-item ${index === currentIndex ? 'active' : ''}`;
-        item.onclick = () => playSongByIndex(index);
-
-        item.innerHTML = `
-          <img src="${song.cover}" alt="${song.title}">
-          <div class="song-info">
-            <div class="song-name" id="song-name-${index}">${song.title}</div>
-            <div class="song-artist">${song.artist}</div>
-          </div>
-          <div class="equalizer" id="eq-${index}">
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-          </div>
-        `;
-        songListContainer.appendChild(item);
-      });
-
-      // Mini Playlist en la Tarjeta 1 (Mostramos las primeras 3 canciones como tu referencia)
+    function renderMiniPlaylist() {
       miniSongListContainer.innerHTML = '';
-      playlist.slice(0, 3).forEach((song, index) => {
+      playlist.forEach((song, index) => {
         const miniItem = document.createElement('div');
         miniItem.className = `mini-song-item`;
         miniItem.onclick = () => playSongByIndex(index);
@@ -796,7 +657,6 @@
       document.getElementById('player-artist').textContent = song.artist;
       playerCover.src = song.cover;
 
-      updateActiveSongClass();
       updateAudioBarColor();
     }
 
@@ -848,7 +708,7 @@
         const dualBorderImageStyle = `linear-gradient(135deg, ${color1}, ${color2}) 1`;
         const dualBoxShadowStyle = `0 0 22px ${color1}40, 0 0 22px ${color2}40, 0 20px 40px rgba(0, 0, 0, 0.9)`;
 
-        [card1, card2, card3].forEach(card => {
+        [card1, card2].forEach(card => {
           card.style.border = dualBorderCardStyle;
           card.style.borderImage = dualBorderImageStyle;
           card.style.boxShadow = dualBoxShadowStyle;
@@ -873,7 +733,7 @@
         progressBar.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
         volSlider.style.background = `linear-gradient(90deg, ${color1} 0%, ${color2} 100%)`;
       } else {
-        [card1, card2, card3].forEach(card => {
+        [card1, card2].forEach(card => {
           card.style.border = '1px solid rgba(255, 255, 255, 0.08)';
           card.style.borderImage = 'none';
           card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.9)';
@@ -900,71 +760,6 @@
       }
     }
 
-    function updateActiveSongClass() {
-      const items = document.querySelectorAll('.song-item');
-      const currentSong = playlist[currentIndex];
-
-      items.forEach((item, index) => {
-        const songNameEl = document.getElementById(`song-name-${index}`);
-        const eqBars = item.querySelectorAll('.eq-bar');
-
-        if (index === currentIndex) {
-          item.classList.add('active');
-
-          if (!audio.paused) {
-            item.classList.add('playing');
-            item.style.border = '1px solid transparent';
-            item.style.borderImage = `linear-gradient(90deg, ${currentSong.colors[0]}, ${currentSong.colors[1]}) 1`;
-            
-            if (eqBars.length >= 3) {
-              eqBars[0].style.backgroundColor = currentSong.colors[0];
-              eqBars[0].style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
-
-              eqBars[1].style.backgroundColor = `color-mix(in srgb, ${currentSong.colors[0]} 50%, ${currentSong.colors[1]} 50%)`;
-              eqBars[1].style.boxShadow = `0 0 6px ${currentSong.colors[0]}`;
-
-              eqBars[2].style.backgroundColor = currentSong.colors[1];
-              eqBars[2].style.boxShadow = `0 0 6px ${currentSong.colors[1]}`;
-            }
-
-            if (songNameEl) {
-              songNameEl.style.color = '#ffffff';
-              songNameEl.style.textShadow = `0 0 8px ${currentSong.colors[0]}`;
-            }
-          } else {
-            item.classList.remove('playing');
-            item.style.borderImage = 'none';
-            item.style.borderColor = 'rgba(255,255,255,0.2)';
-            
-            eqBars.forEach(bar => {
-              bar.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-              bar.style.boxShadow = 'none';
-            });
-
-            if (songNameEl) {
-              songNameEl.style.color = '#f1f5f9';
-              songNameEl.style.textShadow = 'none';
-            }
-          }
-        } else {
-          item.classList.remove('active', 'playing');
-          item.style.borderImage = 'none';
-          item.style.borderColor = 'transparent';
-
-          eqBars.forEach(bar => {
-            bar.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
-            bar.style.boxShadow = 'none';
-          });
-
-          if (songNameEl) {
-            songNameEl.style.color = '#f1f5f9';
-            songNameEl.style.textShadow = 'none';
-          }
-        }
-      });
-    }
-
-    /* --- SISTEMA DE BAJOS / AURA 2 COLORES --- */
     let audioCtx, analyser, source;
 
     function initAudioVisualizer() {
@@ -988,7 +783,6 @@
         analyser.getByteFrequencyData(dataArray);
 
         const bassValue = (dataArray[0] + dataArray[1] + dataArray[2] + dataArray[3]) / 4;
-        
         const glowSize = Math.floor((bassValue / 255) * 35) + 6;
         const opacity = (bassValue / 255) * 0.8 + 0.2;
 
@@ -1024,7 +818,6 @@
       bgGifContainer.style.opacity = '1';
       document.body.classList.add('is-playing');
 
-      updateActiveSongClass();
       updateAudioBarColor();
       try {
         initAudioVisualizer();
@@ -1039,7 +832,6 @@
 
       discWrapper.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.8)';
       discWrapper.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-      updateActiveSongClass();
       updateAudioBarColor();
     });
 
@@ -1048,10 +840,10 @@
       playSongByIndex(currentIndex);
     });
 
-    renderPlaylists();
+    renderMiniPlaylist();
     updateAudioBarColor();
 
-    /* --- ESTRELLAS NEÓN DINÁMICAS --- */
+    /* --- ESTRELLAS NEÓN --- */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -1089,10 +881,8 @@
     function drawNeonStar(ctx, x, y, size, opacity, color) {
       ctx.save();
       ctx.translate(x, y);
-
       ctx.shadowBlur = size * 5;
       ctx.shadowColor = color;
-
       ctx.fillStyle = color;
       ctx.globalAlpha = opacity;
       ctx.beginPath();
@@ -1107,7 +897,6 @@
       ctx.beginPath();
       ctx.arc(0, 0, size * 0.4, 0, Math.PI * 2);
       ctx.fill();
-
       ctx.restore();
     }
 
@@ -1201,7 +990,6 @@
       ctx.stroke();
 
       drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
-
       ctx.restore();
     }
 
