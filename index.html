@@ -191,7 +191,7 @@
       display: block;
     }
 
-    /* Tarjeta 1: Perfil con Círculo Original + Mini Canciones Abajo */
+    /* Tarjeta 1: Perfil con Círculo Original + Efecto Zoom y Cambio al Clic */
     .profile-section-top {
       display: flex;
       flex-direction: column;
@@ -208,18 +208,25 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
       background-color: #000000;
       position: relative;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .profile-circle-wrapper:hover {
-      transform: scale(1.02);
-      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.08); /* Zoom al pasar el mouse */
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
     }
 
     .profile-circle-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+    }
+
+    .profile-circle-wrapper:hover img {
+      transform: scale(1.05);
     }
 
     /* Mini Lista en la Tarjeta 1 */
@@ -508,7 +515,7 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: Foto Actualizada con Círculo Original + Mini Canciones Abajo -->
+    <!-- Tarjeta 1: Foto interactiva (Zoom + Cambio al Clic) -->
     <div class="card card-neon" id="card-1">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -518,8 +525,8 @@
       </div>
 
       <div class="profile-section-top">
-        <div class="profile-circle-wrapper">
-          <img src="https://xatimg.com/image/YK3BJIfpJQHB.png" alt="Ru Photo">
+        <div class="profile-circle-wrapper" onclick="toggleProfileImage()">
+          <img id="profile-img" src="https://xatimg.com/image/bQoCAUvTG7PC.png" alt="Ru Photo">
         </div>
       </div>
 
@@ -565,6 +572,23 @@
   </div>
 
   <script>
+    /* --- LÓGICA DE CAMBIO DE FOTO AL DAR CLIC --- */
+    const img1 = "https://xatimg.com/image/bQoCAUvTG7PC.png";
+    const img2 = "https://xatimg.com/image/Jg23jlU0z2hq.png";
+
+    function toggleProfileImage() {
+      const profileImg = document.getElementById('profile-img');
+      profileImg.style.opacity = '0.3';
+      setTimeout(() => {
+        if (profileImg.src === img1) {
+          profileImg.src = img2;
+        } else {
+          profileImg.src = img1;
+        }
+        profileImg.style.opacity = '1';
+      }, 150);
+    }
+
     function hideUI() {
       const appContainer = document.getElementById('app-container');
       appContainer.classList.add('hidden-manual');
