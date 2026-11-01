@@ -168,20 +168,20 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 12px;
-      height: 36px;
+      margin-bottom: 10px;
+      height: 32px;
     }
 
     .header-title {
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.5px;
       color: #ffffff;
     }
 
     .header-active-gif {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
       display: none;
       mix-blend-mode: screen;
@@ -191,24 +191,21 @@
       display: block;
     }
 
-    /* Tarjeta 1: Círculo grande y proporcionado dentro de la tarjeta */
-    .profile-circle-container {
-      width: 100%;
-      flex: 1;
+    /* --- TARJETA 1 MODIFICADA: Perfil Arriba + Mini Playlist Abajo --- */
+    .profile-section-top {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      position: relative;
+      margin-bottom: 14px;
     }
 
     .profile-circle-wrapper {
-      width: 270px;
-      height: 270px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       overflow: hidden;
-      border: 4px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      border: 3px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.8);
       background-color: #000000;
       position: relative;
       transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
@@ -225,7 +222,72 @@
       object-fit: cover;
     }
 
-    /* Tarjeta 2: Playlist */
+    /* Mini Playlist dentro de la tarjeta 1 */
+    .mini-song-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .mini-song-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .mini-song-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .mini-song-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, border-color 0.2s;
+    }
+
+    .mini-song-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(2px);
+    }
+
+    .mini-song-item img {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .mini-song-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .mini-song-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f1f5f9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mini-song-artist {
+      font-size: 11px;
+      color: #94a3b8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Tarjeta 2: Playlist Principal */
     .song-list {
       display: flex;
       flex-direction: column;
@@ -554,7 +616,7 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: Foto con Círculo Grande -->
+    <!-- Tarjeta 1: Perfil Circular Arriba + Mini Playlist Abajo -->
     <div class="card card-neon" id="card-1">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -563,14 +625,18 @@
         <img class="header-active-gif" src="https://i.postimg.cc/Xq9vWyzw/d073c3f982bb6dac9967ac46a5c49038.gif" alt="GIF Activo">
       </div>
 
-      <div class="profile-circle-container">
+      <div class="profile-section-top">
         <div class="profile-circle-wrapper">
           <img src="https://xatimg.com/image/bQoCAUvTG7PC.png" alt="Ru Photo">
         </div>
       </div>
+
+      <div class="mini-song-list" id="mini-song-list-container">
+        <!-- Canciones miniatura cargadas por script -->
+      </div>
     </div>
 
-    <!-- Tarjeta 2: Playlist -->
+    <!-- Tarjeta 2: Playlist Principal -->
     <div class="card card-neon" id="card-2">
       <div class="song-list" id="song-list-container">
         <!-- Canciones cargadas por script -->
@@ -625,7 +691,7 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PLAYLIST RESTAURADA AL ORDEN CLÁSICO CON CADU! ABAJO */
+    /* PLAYLIST */
     const playlist = [
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] },
@@ -660,6 +726,7 @@
     const card2 = document.getElementById('card-2');
     const card3 = document.getElementById('card-3');
     const songListContainer = document.getElementById('song-list-container');
+    const miniSongListContainer = document.getElementById('mini-song-list-container');
     const bgGifContainer = document.getElementById('bg-gif-container');
     const appContainer = document.getElementById('app-container');
 
@@ -672,7 +739,8 @@
     const volSlider = document.getElementById('vol-slider');
     const dotsIcon = document.getElementById('dots-icon');
 
-    function renderPlaylist() {
+    function renderPlaylists() {
+      // Playlist Principal (Tarjeta 2)
       songListContainer.innerHTML = '';
       playlist.forEach((song, index) => {
         const item = document.createElement('div');
@@ -692,6 +760,23 @@
           </div>
         `;
         songListContainer.appendChild(item);
+      });
+
+      // Mini Playlist (Tarjeta 1 - Abajo del perfil)
+      miniSongListContainer.innerHTML = '';
+      playlist.forEach((song, index) => {
+        const miniItem = document.createElement('div');
+        miniItem.className = `mini-song-item`;
+        miniItem.onclick = () => playSongByIndex(index);
+
+        miniItem.innerHTML = `
+          <img src="${song.cover}" alt="${song.title}">
+          <div class="mini-song-info">
+            <div class="mini-song-name">${song.title}</div>
+            <div class="mini-song-artist">${song.artist}</div>
+          </div>
+        `;
+        miniSongListContainer.appendChild(miniItem);
       });
     }
 
@@ -963,7 +1048,7 @@
       playSongByIndex(currentIndex);
     });
 
-    renderPlaylist();
+    renderPlaylists();
     updateAudioBarColor();
 
     /* --- ESTRELLAS NEÓN DINÁMICAS --- */
