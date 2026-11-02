@@ -512,7 +512,7 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: Foto con fondo negro puro y clic interactivo -->
+    <!-- Tarjeta 1: Foto actualizada con fondo negro puro y clic interactivo -->
     <div class="card card-neon" id="card-1">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -523,7 +523,7 @@
 
       <div class="profile-section-top">
         <div class="profile-circle-wrapper" onclick="toggleProfileImage()">
-          <img id="profile-img" src="https://xatimg.com/image/YK3BJIfpJQHB.png" alt="Ru Photo">
+          <img id="profile-img" src="https://xatimg.com/image/R1uCu72yrPmS.jpg" alt="Ru Photo">
         </div>
       </div>
 
@@ -570,14 +570,14 @@
 
   <script>
     /* --- LÓGICA DE CAMBIO DE FOTO AL DAR CLIC --- */
-    const img1 = "https://xatimg.com/image/YK3BJIfpJQHB.png";
+    const img1 = "https://xatimg.com/image/R1uCu72yrPmS.jpg";
     const img2 = "https://xatimg.com/image/Jg23jlU0z2hq.png";
 
     function toggleProfileImage() {
       const profileImg = document.getElementById('profile-img');
       profileImg.style.opacity = '0.3';
       setTimeout(() => {
-        if (profileImg.src.includes('YK3BJIfpJQHB.png') || profileImg.src === img1) {
+        if (profileImg.src.includes('R1uCu72yrPmS.jpg') || profileImg.src === img1) {
           profileImg.src = img2;
         } else {
           profileImg.src = img1;
