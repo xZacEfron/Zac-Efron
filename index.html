@@ -523,7 +523,7 @@
 
       <div class="profile-section-top">
         <div class="profile-circle-wrapper" onclick="toggleProfileImage()">
-          <img id="profile-img" src="https://xatimg.com/image/UjwKjI8ZTaBT.jpg" alt="Ru Photo">
+          <img id="profile-img" src="https://xatimg.com/image/us3bIdAFOEag.png" alt="Ru Photo">
         </div>
       </div>
 
@@ -570,14 +570,14 @@
 
   <script>
     /* --- LÓGICA DE CAMBIO DE FOTO AL DAR CLIC --- */
-    const img1 = "https://xatimg.com/image/UjwKjI8ZTaBT.jpg";
+    const img1 = "https://xatimg.com/image/us3bIdAFOEag.png";
     const img2 = "https://xatimg.com/image/Jg23jlU0z2hq.png";
 
     function toggleProfileImage() {
       const profileImg = document.getElementById('profile-img');
       profileImg.style.opacity = '0.3';
       setTimeout(() => {
-        if (profileImg.src.includes('UjwKjI8ZTaBT.jpg')) {
+        if (profileImg.src.includes('us3bIdAFOEag.png')) {
           profileImg.src = img2;
         } else {
           profileImg.src = img1;
