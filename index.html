@@ -291,14 +291,14 @@
       text-overflow: ellipsis;
     }
 
-    /* Reproductor Lateral (Tarjeta 2) */
+    /* Reproductor Lateral (Tarjeta 2) - Posición más baja según tu indicación */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       justify-content: center;
-      padding-top: 36px;
+      padding-top: 48px;
     }
 
     .disc-container {
@@ -306,7 +306,7 @@
       height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 5px;
+      margin-top: 8px;
       margin-bottom: 12px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
@@ -347,7 +347,7 @@
     /* Barra de audio personalizada */
     .custom-player-box {
       width: 100%;
-      margin-top: 18px;
+      margin-top: 24px;
       background: rgba(20, 20, 25, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
@@ -618,7 +618,7 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PLAYLIST (Con Fade Into Darkness en primer lugar) */
+    /* PLAYLIST */
     const playlist = [
       { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
@@ -939,7 +939,7 @@
       ctx.moveTo(0, -size * 2);
       ctx.quadraticCurveTo(0, 0, size * 2, 0);
       ctx.quadraticCurveTo(0, 0, 0, size * 2);
-      ctx.quadraticCurveTo(0, 0, -size * 2, 0);
+      ctx.quadraticCurveTo(0, 0, 0, -size * 2);
       ctx.quadraticCurveTo(0, 0, 0, -size * 2);
       ctx.fill();
 
