@@ -291,7 +291,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Reproductor Lateral (Tarjeta 2) - Bajado un poquito más */
+    /* Reproductor Lateral (Tarjeta 2) */
     .player-card {
       display: flex;
       flex-direction: column;
@@ -458,7 +458,6 @@
       transform: scale(1.2);
     }
 
-    /* Barra de volumen desplegable */
     .volume-popup {
       position: absolute;
       bottom: 45px;
@@ -552,11 +551,11 @@
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
       <div class="disc-container" id="disc-wrapper">
-        <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
+        <img id="player-cover" src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="Fade Into Darkness">
       </div>
 
-      <div class="current-title" id="player-title">Kids</div>
-      <div class="current-artist" id="player-artist">MGMT</div>
+      <div class="current-title" id="player-title">Fade Into Darkness</div>
+      <div class="current-artist" id="player-artist">Avicii</div>
 
       <!-- Barra de audio con flechas y volumen -->
       <div class="custom-player-box" id="custom-player-box">
@@ -584,7 +583,7 @@
         </div>
       </div>
 
-      <audio id="main-audio" crossorigin="anonymous" src="MGMT - Kids.mp3"></audio>
+      <audio id="main-audio" crossorigin="anonymous" src="Avicii - Fade Into Darkness (Vocal Radio Mix).mp3"></audio>
     </div>
 
   </div>
@@ -619,11 +618,11 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PLAYLIST */
+    /* PLAYLIST (Con Fade Into Darkness en primer lugar) */
     const playlist = [
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] },
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#00f0ff', '#2a0845'] },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#2a0845'] },
