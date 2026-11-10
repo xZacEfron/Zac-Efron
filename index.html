@@ -58,8 +58,8 @@
 
     .app-container {
       display: flex;
-      gap: 20px;
-      max-width: 900px;
+      gap: 24px;
+      max-width: 960px;
       width: 100%;
       justify-content: center;
       flex-wrap: wrap;
@@ -74,16 +74,16 @@
       transform: scale(0.98);
     }
 
-    /* Tarjetas principales con soporte para borde degradado de 2 colores */
+    /* Tarjetas principales */
     .card {
       background: rgba(10, 10, 12, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
-      padding: 24px;
-      width: 340px;
-      height: 480px;
+      padding: 28px;
+      width: 380px;
+      height: 540px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
@@ -168,12 +168,13 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       height: 30px;
+      flex-shrink: 0;
     }
 
     .header-title {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.5px;
       color: #ffffff;
@@ -191,49 +192,45 @@
       display: block;
     }
 
-    /* Tarjeta 1: Perfil con Círculo Original + Efecto Zoom y Cambio al Clic */
+    /* Foto de perfil con círculo completamente negro y sin zoom */
     .profile-section-top {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      flex-shrink: 0;
     }
 
     .profile-circle-wrapper {
-      width: 130px;
-      height: 130px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       overflow: hidden;
-      border: 3px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+      border: 3px solid #000000;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
       background-color: #000000;
       position: relative;
       cursor: pointer;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .profile-circle-wrapper:hover {
-      transform: scale(1.08); /* Zoom al pasar el mouse */
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
+      border-color: #1a1a1a;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 1);
     }
 
     .profile-circle-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease, opacity 0.3s ease;
-    }
-
-    .profile-circle-wrapper:hover img {
-      transform: scale(1.05);
+      transition: opacity 0.3s ease;
     }
 
     /* Mini Lista en la Tarjeta 1 */
     .mini-song-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       flex: 1;
       overflow-y: auto;
       padding-right: 4px;
@@ -250,9 +247,9 @@
     .mini-song-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 7px 10px;
-      border-radius: 10px;
+      gap: 12px;
+      padding: 9px 12px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid transparent;
       cursor: pointer;
@@ -266,9 +263,9 @@
     }
 
     .mini-song-item img {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       object-fit: cover;
     }
 
@@ -278,7 +275,7 @@
     }
 
     .mini-song-name {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: #f1f5f9;
       white-space: nowrap;
@@ -287,20 +284,21 @@
     }
 
     .mini-song-artist {
-      font-size: 10px;
+      font-size: 11px;
       color: #94a3b8;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* Reproductor Lateral (Tarjeta 2) */
+    /* Reproductor Lateral (Tarjeta 2) - Bajado un poquito más */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       justify-content: center;
+      padding-top: 36px;
     }
 
     .disc-container {
@@ -308,9 +306,9 @@
       height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 10px;
+      margin-top: 5px;
       margin-bottom: 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
     }
@@ -335,7 +333,7 @@
     }
 
     .current-title {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
       margin-bottom: 2px;
     }
@@ -349,7 +347,7 @@
     /* Barra de audio personalizada */
     .custom-player-box {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 18px;
       background: rgba(20, 20, 25, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
@@ -403,7 +401,13 @@
       width: 100%;
     }
 
-    .custom-play-btn {
+    .controls-group-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-play-btn, .control-btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.2);
       width: 32px;
@@ -413,17 +417,24 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 11px;
       transition: transform 0.2s, background 0.2s;
+      color: #ffffff;
     }
 
-    .custom-play-btn:hover {
+    .custom-play-btn {
+      width: 34px;
+      height: 34px;
+      font-size: 13px;
+    }
+
+    .custom-play-btn:hover, .control-btn:hover {
       transform: scale(1.1);
       background: rgba(255, 255, 255, 0.2);
     }
 
     .time-display-custom {
-      font-size: 12px;
+      font-size: 11px;
       font-family: monospace;
       letter-spacing: 0.5px;
       font-weight: 600;
@@ -432,7 +443,7 @@
     .options-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       position: relative;
     }
 
@@ -447,13 +458,14 @@
       transform: scale(1.2);
     }
 
+    /* Barra de volumen desplegable */
     .volume-popup {
       position: absolute;
-      bottom: 40px;
-      right: 20px;
+      bottom: 45px;
+      right: 10px;
       background: rgba(15, 15, 20, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.8);
       display: none;
@@ -468,7 +480,7 @@
     .vol-slider-custom {
       -webkit-appearance: none;
       appearance: none;
-      width: 90px;
+      width: 80px;
       height: 4px;
       border-radius: 2px;
       background: rgba(255, 255, 255, 0.2);
@@ -488,7 +500,7 @@
     }
 
     .dots-icon {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       cursor: pointer;
       letter-spacing: 1px;
@@ -515,7 +527,7 @@
 
   <div class="app-container" id="app-container">
     
-    <!-- Tarjeta 1: Foto interactiva (Zoom + Cambio al Clic) -->
+    <!-- Tarjeta 1 -->
     <div class="card card-neon" id="card-1">
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
@@ -526,7 +538,7 @@
 
       <div class="profile-section-top">
         <div class="profile-circle-wrapper" onclick="toggleProfileImage()">
-          <img id="profile-img" src="https://xatimg.com/image/bQoCAUvTG7PC.png" alt="Ru Photo">
+          <img id="profile-img" src="https://xatimg.com/image/us3bIdAFOEag.png" alt="Ru Photo">
         </div>
       </div>
 
@@ -546,14 +558,20 @@
       <div class="current-title" id="player-title">Kids</div>
       <div class="current-artist" id="player-artist">MGMT</div>
 
-      <!-- Barra de audio -->
+      <!-- Barra de audio con flechas y volumen -->
       <div class="custom-player-box" id="custom-player-box">
         <div class="progress-container">
           <input type="range" class="progress-bar-custom" id="progress-bar" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)">
         </div>
         <div class="player-controls-row">
-          <div class="custom-play-btn" id="play-btn" onclick="togglePlayPause()">▶</div>
+          <div class="controls-group-center">
+            <button class="control-btn" onclick="prevSong()" title="Anterior">⏮</button>
+            <div class="custom-play-btn" id="play-btn" onclick="togglePlayPause()">▶</div>
+            <button class="control-btn" onclick="nextSong()" title="Siguiente">⏭</button>
+          </div>
+
           <div class="time-display-custom" id="time-text">0:00 / 0:00</div>
+
           <div class="options-group">
             <span class="speaker-icon" id="speaker-icon" onclick="toggleVolumePopup(event)">🔊</span>
             
@@ -573,14 +591,14 @@
 
   <script>
     /* --- LÓGICA DE CAMBIO DE FOTO AL DAR CLIC --- */
-    const img1 = "https://xatimg.com/image/bQoCAUvTG7PC.png";
+    const img1 = "https://xatimg.com/image/us3bIdAFOEag.png";
     const img2 = "https://xatimg.com/image/Jg23jlU0z2hq.png";
 
     function toggleProfileImage() {
       const profileImg = document.getElementById('profile-img');
       profileImg.style.opacity = '0.3';
       setTimeout(() => {
-        if (profileImg.src === img1) {
+        if (profileImg.src.includes('us3bIdAFOEag.png')) {
           profileImg.src = img2;
         } else {
           profileImg.src = img1;
@@ -690,6 +708,16 @@
       } else {
         audio.pause();
       }
+    }
+
+    function nextSong() {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      playSongByIndex(currentIndex);
+    }
+
+    function prevSong() {
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      playSongByIndex(currentIndex);
     }
 
     function seekAudio(val) {
@@ -860,8 +888,7 @@
     });
 
     audio.addEventListener('ended', () => {
-      currentIndex = (currentIndex + 1) % playlist.length;
-      playSongByIndex(currentIndex);
+      nextSong();
     });
 
     renderMiniPlaylist();
@@ -923,178 +950,6 @@
       ctx.fill();
       ctx.restore();
     }
-
-    let activeBall = null;
-
-    function spawnDragonBall() {
-      const fromLeft = Math.random() > 0.5;
-      const speed = Math.random() * 0.3 + 0.4;
-      const starsCount = Math.floor(Math.random() * 4) + 1;
-      const randomY = Math.random() * 35 + 15;
-
-      activeBall = {
-        fromLeft: fromLeft,
-        x: fromLeft ? -50 : canvas.width + 50,
-        y: randomY,
-        speedX: fromLeft ? speed : -speed,
-        speedY: 0,
-        stars: starsCount,
-        radius: 11,
-        angle: 0,
-        spinSpeed: (Math.random() - 0.5) * 0.02,
-        flashTimer: 0
-      };
-    }
-
-    function scheduleNextDragonBall() {
-      setTimeout(() => {
-        spawnDragonBall();
-      }, 18000);
-    }
-
-    setTimeout(spawnDragonBall, 10000);
-
-    function drawStarVector(ctx, x, y, radius) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.beginPath();
-      const spikes = 5;
-      let rot = Math.PI / 2 * 3;
-      let step = Math.PI / spikes;
-
-      ctx.moveTo(0, -radius);
-      for (let i = 0; i < spikes; i++) {
-        let xCoord = Math.cos(rot) * radius;
-        let yCoord = Math.sin(rot) * radius;
-        ctx.lineTo(xCoord, yCoord);
-        rot += step;
-
-        xCoord = Math.cos(rot) * (radius * 0.4);
-        yCoord = Math.sin(rot) * (radius * 0.4);
-        ctx.lineTo(xCoord, yCoord);
-        rot += step;
-      }
-      ctx.lineTo(0, -radius);
-      ctx.closePath();
-      ctx.fillStyle = '#e60000';
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawDragonBall(ball) {
-      ctx.save();
-      ctx.translate(ball.x, ball.y);
-      ctx.rotate(ball.angle);
-
-      ball.flashTimer += 0.03;
-      const pulse = Math.sin(ball.flashTimer);
-      const glowAlpha = pulse > 0.7 ? (pulse - 0.7) * 1.5 : 0.05;
-
-      if (glowAlpha > 0.05) {
-        const glowGradient = ctx.createRadialGradient(0, 0, 2, 0, 0, ball.radius * 2.2);
-        glowGradient.addColorStop(0, `rgba(255, 200, 50, ${glowAlpha})`);
-        glowGradient.addColorStop(1, 'rgba(255, 120, 0, 0)');
-        ctx.fillStyle = glowGradient;
-        ctx.beginPath();
-        ctx.arc(0, 0, ball.radius * 2.2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      const ballGradient = ctx.createRadialGradient(-2, -2, 1, 0, 0, ball.radius);
-      ballGradient.addColorStop(0, 'rgba(255, 230, 120, 0.98)');
-      ballGradient.addColorStop(0.5, 'rgba(255, 150, 20, 0.92)');
-      ballGradient.addColorStop(1, 'rgba(200, 70, 0, 0.95)');
-
-      ctx.beginPath();
-      ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
-      ctx.fillStyle = ballGradient;
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 240, 200, 0.5)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      drawRedStarsVector(ctx, ball.stars, ball.radius * 0.5);
-      ctx.restore();
-    }
-
-    function drawRedStarsVector(ctx, count, R) {
-      const starSize = R * 0.42;
-      if (count === 1) {
-        drawStarVector(ctx, 0, 0, starSize);
-      } else if (count === 2) {
-        drawStarVector(ctx, -R * 0.35, 0, starSize);
-        drawStarVector(ctx, R * 0.35, 0, starSize);
-      } else if (count === 3) {
-        drawStarVector(ctx, 0, -R * 0.3, starSize);
-        drawStarVector(ctx, -R * 0.4, R * 0.35, starSize);
-        drawStarVector(ctx, R * 0.4, R * 0.35, starSize);
-      } else if (count === 4) {
-        drawStarVector(ctx, -R * 0.35, -R * 0.35, starSize);
-        drawStarVector(ctx, R * 0.35, -R * 0.35, starSize);
-        drawStarVector(ctx, -R * 0.35, R * 0.35, starSize);
-        drawStarVector(ctx, R * 0.35, R * 0.35, starSize);
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-        ctx.fill();
-      });
-
-      const isPlaying = !audio.paused;
-      const currentNeonColor = playlist[currentIndex].colors[0];
-
-      neonStars.forEach(star => {
-        if (isPlaying) {
-          star.alpha += star.pulseSpeed;
-          if (star.alpha > star.targetAlpha || star.alpha < 0.1) {
-            star.pulseSpeed = -star.pulseSpeed;
-          }
-        } else {
-          if (star.alpha > 0) {
-            star.alpha -= 0.04;
-          }
-        }
-
-        if (star.alpha > 0.01) {
-          drawNeonStar(ctx, star.x, star.y, star.size, star.alpha, currentNeonColor);
-        }
-      });
-
-      if (activeBall) {
-        activeBall.x += activeBall.speedX;
-        activeBall.y += activeBall.speedY;
-        activeBall.angle += activeBall.spinSpeed;
-
-        drawDragonBall(activeBall);
-
-        const isOut = activeBall.fromLeft 
-          ? (activeBall.x > canvas.width + 60)
-          : (activeBall.x < -60);
-
-        if (isOut) {
-          activeBall = null;
-          scheduleNextDragonBall();
-        }
-      }
-
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
   </script>
-
 </body>
 </html>
