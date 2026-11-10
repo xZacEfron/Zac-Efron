@@ -291,14 +291,14 @@
       text-overflow: ellipsis;
     }
 
-    /* Reproductor Lateral (Tarjeta 2) - Posición más baja según tu indicación */
+    /* Reproductor Lateral (Tarjeta 2) - Bajado un poco más */
     .player-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       justify-content: center;
-      padding-top: 48px;
+      padding-top: 65px;
     }
 
     .disc-container {
@@ -306,8 +306,8 @@
       height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 8px;
-      margin-bottom: 12px;
+      margin-top: 10px;
+      margin-bottom: 14px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -347,7 +347,7 @@
     /* Barra de audio personalizada */
     .custom-player-box {
       width: 100%;
-      margin-top: 24px;
+      margin-top: 26px;
       background: rgba(20, 20, 25, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
@@ -939,7 +939,7 @@
       ctx.moveTo(0, -size * 2);
       ctx.quadraticCurveTo(0, 0, size * 2, 0);
       ctx.quadraticCurveTo(0, 0, 0, size * 2);
-      ctx.quadraticCurveTo(0, 0, 0, -size * 2);
+      ctx.quadraticCurveTo(0, 0, -size * 2, 0);
       ctx.quadraticCurveTo(0, 0, 0, -size * 2);
       ctx.fill();
 
