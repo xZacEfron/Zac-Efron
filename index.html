@@ -298,15 +298,16 @@
       align-items: center;
       text-align: center;
       justify-content: center;
+      padding-top: 36px;
     }
 
     .disc-container {
-      width: 220px;
-      height: 220px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
-      margin-top: 10px;
-      margin-bottom: 16px;
+      margin-top: 5px;
+      margin-bottom: 12px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
       border: 4px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.1s ease, box-shadow 0.1s ease;
@@ -332,13 +333,13 @@
     }
 
     .current-title {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       margin-bottom: 2px;
     }
 
     .current-artist {
-      font-size: 14px;
+      font-size: 13px;
       color: #94a3b8;
       margin-bottom: 0px;
     }
@@ -346,14 +347,14 @@
     /* Barra de audio personalizada */
     .custom-player-box {
       width: 100%;
-      margin-top: 24px;
+      margin-top: 18px;
       background: rgba(20, 20, 25, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      padding: 14px 18px;
+      padding: 12px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
       transition: border-color 0.4s ease, box-shadow 0.4s ease;
       position: relative;
@@ -400,27 +401,40 @@
       width: 100%;
     }
 
-    .custom-play-btn {
+    .controls-group-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-play-btn, .control-btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 11px;
       transition: transform 0.2s, background 0.2s;
+      color: #ffffff;
     }
 
-    .custom-play-btn:hover {
+    .custom-play-btn {
+      width: 34px;
+      height: 34px;
+      font-size: 13px;
+    }
+
+    .custom-play-btn:hover, .control-btn:hover {
       transform: scale(1.1);
       background: rgba(255, 255, 255, 0.2);
     }
 
     .time-display-custom {
-      font-size: 12px;
+      font-size: 11px;
       font-family: monospace;
       letter-spacing: 0.5px;
       font-weight: 600;
@@ -429,12 +443,12 @@
     .options-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       position: relative;
     }
 
     .speaker-icon {
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       transition: transform 0.2s, color 0.3s ease, text-shadow 0.3s ease;
       color: #ffffff;
@@ -447,10 +461,10 @@
     .volume-popup {
       position: absolute;
       bottom: 45px;
-      right: 20px;
+      right: 10px;
       background: rgba(15, 15, 20, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.8);
       display: none;
@@ -465,7 +479,7 @@
     .vol-slider-custom {
       -webkit-appearance: none;
       appearance: none;
-      width: 90px;
+      width: 80px;
       height: 4px;
       border-radius: 2px;
       background: rgba(255, 255, 255, 0.2);
@@ -485,7 +499,7 @@
     }
 
     .dots-icon {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       cursor: pointer;
       letter-spacing: 1px;
@@ -537,20 +551,26 @@
       <div class="close-card-btn" onclick="hideUI()" title="Ocultar interfaz">✕</div>
 
       <div class="disc-container" id="disc-wrapper">
-        <img id="player-cover" src="https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg" alt="Kids">
+        <img id="player-cover" src="https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg" alt="Fade Into Darkness">
       </div>
 
-      <div class="current-title" id="player-title">Kids</div>
-      <div class="current-artist" id="player-artist">MGMT</div>
+      <div class="current-title" id="player-title">Fade Into Darkness</div>
+      <div class="current-artist" id="player-artist">Avicii</div>
 
-      <!-- Barra de audio -->
+      <!-- Barra de audio con flechas y volumen -->
       <div class="custom-player-box" id="custom-player-box">
         <div class="progress-container">
           <input type="range" class="progress-bar-custom" id="progress-bar" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)">
         </div>
         <div class="player-controls-row">
-          <div class="custom-play-btn" id="play-btn" onclick="togglePlayPause()">▶</div>
+          <div class="controls-group-center">
+            <button class="control-btn" onclick="prevSong()" title="Anterior">⏮</button>
+            <div class="custom-play-btn" id="play-btn" onclick="togglePlayPause()">▶</div>
+            <button class="control-btn" onclick="nextSong()" title="Siguiente">⏭</button>
+          </div>
+
           <div class="time-display-custom" id="time-text">0:00 / 0:00</div>
+
           <div class="options-group">
             <span class="speaker-icon" id="speaker-icon" onclick="toggleVolumePopup(event)">🔊</span>
             
@@ -563,7 +583,7 @@
         </div>
       </div>
 
-      <audio id="main-audio" crossorigin="anonymous" src="MGMT - Kids.mp3"></audio>
+      <audio id="main-audio" crossorigin="anonymous" src="Avicii - Fade Into Darkness (Vocal Radio Mix).mp3"></audio>
     </div>
 
   </div>
@@ -598,11 +618,11 @@
       document.body.classList.remove('ui-hidden');
     }
 
-    /* PLAYLIST */
+    /* PLAYLIST (Con Fade Into Darkness en primer lugar) */
     const playlist = [
+      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'MGMT - Kids.mp3', title: 'Kids', artist: 'MGMT', cover: 'https://i.postimg.cc/3wcdxfVc/1900x1900-000000-80-0-0-(1).jpg', colors: ['#00f0ff', '#ff0033'] },
       { file: 'Kygo - Before You Know It.mp3', title: 'Before You Know It', artist: 'Kygo', cover: 'https://i.postimg.cc/sXFZmG2z/8cc38ce80cb43e99d974f011f7714c19.jpg', colors: ['#ffee00', '#00f0ff'] },
-      { file: 'Avicii - Fade Into Darkness (Vocal Radio Mix).mp3', title: 'Fade Into Darkness', artist: 'Avicii', cover: 'https://i.postimg.cc/zvCR7rPN/ab67616d0000b273a26cc58b4d64c2ece3376389.jpg', colors: ['#ffee00', '#ff0033'] },
       { file: 'Men at Work - Down Under.mp3', title: 'Down Under', artist: 'Men at Work', cover: 'https://i.postimg.cc/W39WqBr1/R-1687205-1236953371.jpg', colors: ['#ff0033', '#00f0ff'] },
       { file: 'TV on the Radio - Wolf Like Me.mp3', title: 'Wolf Like Me', artist: 'TV on the Radio', cover: 'https://i.postimg.cc/wjH32D9Y/images.jpg', colors: ['#00f0ff', '#2a0845'] },
       { file: 'NF - HAPPY.mp3', title: 'HAPPY', artist: 'NF', cover: 'https://i.postimg.cc/vTNTZn56/Nf-Happy.jpg', colors: ['#00f0ff', '#2a0845'] },
@@ -687,6 +707,16 @@
       } else {
         audio.pause();
       }
+    }
+
+    function nextSong() {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      playSongByIndex(currentIndex);
+    }
+
+    function prevSong() {
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      playSongByIndex(currentIndex);
     }
 
     function seekAudio(val) {
@@ -857,8 +887,7 @@
     });
 
     audio.addEventListener('ended', () => {
-      currentIndex = (currentIndex + 1) % playlist.length;
-      playSongByIndex(currentIndex);
+      nextSong();
     });
 
     renderMiniPlaylist();
